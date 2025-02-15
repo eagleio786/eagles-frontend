@@ -32,7 +32,8 @@ const Register = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const route = queryParams.get("route");
-  const modifiedRoute = route ? route.substring(1) : "";
+  const modifiedRoute = route ? route.substring(1) : "1";
+  setUpline(modifiedRoute)
 
   const routePattern = /\d/;
   React.useEffect(() => {
