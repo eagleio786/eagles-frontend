@@ -237,17 +237,13 @@ const Home = ({ showBar, setShowBar, user }) => {
                   </div>
                   <div className="text-textColor3 ml-8">
                     <h1 className="text-2xl font-semibold font-sans capitalize">
-                      {user?.name || "Anonymous"}
+                      {user?.name || "Username"}
                     </h1>
                     {!loading ? (
                       <p className="text-lg text-yellow-300 italic font-medium">
-                        ID {userData?.[0]?.toString() || "0"}
+                        ID {userData?.[1]?.toString() || "0"}
                       </p>
-                    ) : (
-                      <p className="text-lg text-yellow-300 italic font-medium animate-pulse">
-                        Loading ID...
-                      </p>
-                    )}
+                    ) : "" }
                     <button
                       className="mt-8 text-base flex gap-2 items-center justify-center bg-Background shadow-xl shadow-[#00000079] transition-all ease-in-out text-textColor2 w-44 py-1 rounded-full"
                       onClick={() => setShowDetails(!showDetails)}
@@ -272,7 +268,7 @@ const Home = ({ showBar, setShowBar, user }) => {
                             0,
                             6
                           )}...${referralData.referrerAddress.slice(-6)}`
-                        : "No Referrer"}
+                        : ""}
                     </p>
                     <IoCopy
                       onClick={() => handleCopy(referralData?.referrerAddress)}
@@ -284,11 +280,10 @@ const Home = ({ showBar, setShowBar, user }) => {
                     <p>
                       Joined{" "}
                       {referralData?.createdAt
-                        ? new Date(referralData.createdAt).toLocaleDateString()
-                        : "N/A"}
+                        ? new Date(referralData.createdAt).toLocaleDateString() :''}
                     </p>
                     <p className="px-3 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
-                      ID {referralData?.id || "0"}
+                      ID {referralData?.id}
                     </p>
                   </div>
 
@@ -311,7 +306,7 @@ const Home = ({ showBar, setShowBar, user }) => {
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
               <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">
-                theeagles.io/{userData?.[1]?.toString() || "loading"}
+                theeagles.io/{userData?.[1]?.toString()}
                 <GoArrowUpRight className="text-lg" />
               </p>
             </div>
