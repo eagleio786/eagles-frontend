@@ -32,9 +32,12 @@ const Register = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const route = queryParams.get("route");
-  const modifiedRoute = route ? route.substring(1) : "1";
-  setUpline(modifiedRoute)
-
+  let modifiedRoute = route ? route.substring(1) : "1";
+  useEffect(() => {
+  let modifiedRoute = route ? route.substring(1) : "1";
+    setUpline(modifiedRoute)
+  }, [])
+  
   const routePattern = /\d/;
   React.useEffect(() => {
     if (routePattern.test(location.pathname)) {
@@ -114,12 +117,15 @@ const Register = () => {
   };
   const getAddress = async () => {
     try {
+
+      console.log("upline", upline)
       setLoading(true);
       if (!upline) {
         console.error("❌ Upline ID is missing or invalid.");
         alert("Invalid upline ID. Please check and try again.");
         return;
       }
+
 
       const uplineaddress = await idToAddress(upline);
       if (!uplineaddress) {
