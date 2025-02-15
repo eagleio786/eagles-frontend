@@ -1,16 +1,17 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { IoCopy, IoPersonCircleSharp, IoSettingsSharp } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
+import { HiMiniXMark } from "react-icons/hi2";
+import { useConnect, useDisconnect, useAccount, useSwitchChain } from "wagmi";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Cards from "../Components/Home/Cards";
 import Program from "../Components/Home/Program";
 import Members from "../Components/Home/Members";
 import Contract from "../Components/Home/Contract";
 import History from "../Components/Home/History";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { FaHeart } from "react-icons/fa";
-import { HiMiniXMark } from "react-icons/hi2";
-import { useConnect, useDisconnect, useAccount, useSwitchChain } from "wagmi";
 import chainConfig from "../Config/chainConfig";
 import {
   getCurrentX1Level,
@@ -18,21 +19,22 @@ import {
   getTotalUSDTReceived,
   users,
 } from "../Config/Contract-Methods";
-import axios from "axios";
+
 const Home = ({ showBar, setShowBar, user }) => {
   const [showDetails, setShowDetails] = useState(true);
   const navigate = useNavigate();
   const { connectors, connect } = useConnect();
   const { isConnected, address, chain } = useAccount();
   const { switchChain } = useSwitchChain();
-  console.log("user", address);
-
-  const [Profit, setProfit] = useState("");
-  const [Profit24, setProfit24] = useState("");
-
+  const [loading, setLoading] = useState(true);
+  const [profit, setProfit] = useState("");
+  const [profit24, setProfit24] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [referralData, setReferralData] = useState(null);
+  const [getUsdt, setGetUsdt] = useState("0");
+  const [getlevelX1, setGetlevelX1] = useState("0");
+  const [getlevelX2, setGetlevelX2] = useState("0");
 
   const handleCopy = (textToCopy) => {
     navigator.clipboard
@@ -41,56 +43,72 @@ const Home = ({ showBar, setShowBar, user }) => {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       })
-      .catch((error) => {
-        console.error("Failed to copy text: ", error);
-      });
+      .catch(console.error);
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        if (!address) return;
+
         const result = await users(address);
-
-        const referralId = result[1].toString();
-
-        const referralResponse = await axios.get(
-          `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${referralId}`
-        );
-        console.log("Referral Data:", referralResponse.data);
-        setReferralData(referralResponse.data);
-        console.log("userdata", referralResponse.data);
-
         setUserData(result);
+        if (result?.[0]) {
+          const referralResponse = await axios.get(
+            `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${result[0].toString()}`
+          );
+          setReferralData(referralResponse.data?.data?.[0] || null);
+        }
       } catch (error) {
-        console.error("Error fetching user or referral data:", error);
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchUserData();
-  }, []);
+    if (isConnected) fetchUserData();
+  }, [address, isConnected]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchProfitData = async () => {
       try {
-        const referralResponse = await axios.get(
+        const response = await axios.get(
           `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/get24hrsUSDT`
         );
-        setProfit(referralResponse.data.totalUSDTReceivedAllTime);
-        setProfit24(referralResponse.data.totalUSDTReceivedLast24Hours);
+        setProfit(response.data?.totalUSDTReceivedAllTime || "0");
+        setProfit24(response.data?.totalUSDTReceivedLast24Hours || "0");
       } catch (error) {
-        console.error("Error fetching user or referral data:", error);
+        console.error("Profit fetch error:", error);
       }
     };
 
-    fetchUserData();
+    fetchProfitData();
   }, []);
 
   useEffect(() => {
-    if (isConnected && chain?.id) {
-      const targetChainId = chainConfig[11155111]?.id;
-      if (chain.id !== targetChainId) {
-        switchChain({ chainId: targetChainId });
+    const fetchContractData = async () => {
+      try {
+        if (address) {
+          const [usdt, x1, x2] = await Promise.all([
+            getTotalUSDTReceived(address),
+            getCurrentX1Level(address),
+            getCurrentX2Level(address),
+          ]);
+          setGetUsdt(usdt?.toString() || "0");
+          setGetlevelX1(x1?.toString() || "0");
+          setGetlevelX2(x2?.toString() || "0");
+        }
+      } catch (error) {
+        console.error("Contract data error:", error);
       }
+    };
+
+    fetchContractData();
+  }, [address]);
+
+  useEffect(() => {
+    if (isConnected && chain?.id !== chainConfig[11155111]?.id) {
+      switchChain({ chainId: chainConfig[11155111]?.id });
     }
   }, [chain, isConnected]);
 
@@ -103,26 +121,6 @@ const Home = ({ showBar, setShowBar, user }) => {
       setShowBar(false);
     }
   };
-  const [getUsdt, setGetUsdt] = useState();
-  const [getlevelX1, setGetlevelX1] = useState();
-  const [getlevelX2, setGetlevelX2] = useState();
-  useEffect(() => {
-    const fetchUSDT = async () => {
-      try {
-        if (isConnected && address) {
-          let getWalletAddress = await getTotalUSDTReceived(address);
-          setGetUsdt(getWalletAddress.toString());
-          let getCurrentlevelX1 = await getCurrentX1Level(address);
-          setGetlevelX1(getCurrentlevelX1.toString());
-          let getCurrentlevelX2 = await getCurrentX2Level(address);
-          setGetlevelX2(getCurrentlevelX2.toString());
-        }
-      } catch (error) {
-        console.error("Error fetching USDT:", error);
-      }
-    };
-    fetchUSDT();
-  }, [isConnected, address]);
 
   const wallets = [
     {
@@ -160,6 +158,7 @@ const Home = ({ showBar, setShowBar, user }) => {
       )}
 
       <div className="relative overflow-hidden">
+        {/* Wallet Connection Sidebar */}
         <div
           className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${
             showBar ? "right-0" : "-right-full"
@@ -173,7 +172,6 @@ const Home = ({ showBar, setShowBar, user }) => {
               />
             </div>
           </div>
-
           {wallets.map((wallet) => (
             <div
               key={wallet.id}
@@ -195,12 +193,13 @@ const Home = ({ showBar, setShowBar, user }) => {
               </div>
             </div>
           ))}
-
           <p className="text-textColor2 text-center mt-16 text-sm">
             Got a Question?{" "}
             <span className="text-textColor3 font-medium">Contact Support</span>
           </p>
         </div>
+
+        {/* Main Content */}
         <div className="w-full px-4 pt-6 pb-5 homebg bg-[#a67a1240]">
           <div className="relative">
             <div className="absolute inset-0 h-full opacity-10 left-20 -top-3">
@@ -210,14 +209,14 @@ const Home = ({ showBar, setShowBar, user }) => {
                 className="w-full h-full object-cover"
               />
             </div>
+
+            {/* User Profile Section */}
             <div className="bg-eagles relative inset-0 z-10">
               <div className="h-auto flex justify-between">
                 <div className="flex gap-6">
                   <div className="gradient-border h-20 w-20 rounded-full ms-3">
                     <div className="relative flex items-center justify-center text-white h-full w-full rounded-full bg-Background">
-                      <p className="text-[#bcbcbc] shadow-md absolute shadow-white rounded-full">
-                        <IoPersonCircleSharp className="text-7xl text-textColor3" />
-                      </p>
+                      <IoPersonCircleSharp className="text-7xl text-textColor3" />
                       <img
                         src="/assets/HomeImages/logo.png"
                         alt="logo"
@@ -236,90 +235,92 @@ const Home = ({ showBar, setShowBar, user }) => {
                       </Link>
                     </div>
                   </div>
-                  <div className="text-textColor3 ml-8 ">
+                  <div className="text-textColor3 ml-8">
                     <h1 className="text-2xl font-semibold font-sans capitalize">
-                      {user?.name}
+                      {user?.name || "Anonymous"}
                     </h1>
-                    <p className="text-lg text-yellow-300 italic font-medium">
-                      ID {userData?.[1]?.toString() ?? "Loading..."}
-                    </p>
+                    {!loading ? (
+                      <p className="text-lg text-yellow-300 italic font-medium">
+                        ID {userData?.[0]?.toString() || "0"}
+                      </p>
+                    ) : (
+                      <p className="text-lg text-yellow-300 italic font-medium animate-pulse">
+                        Loading ID...
+                      </p>
+                    )}
                     <button
                       className="mt-8 text-base flex gap-2 items-center justify-center bg-Background shadow-xl shadow-[#00000079] transition-all ease-in-out text-textColor2 w-44 py-1 rounded-full"
                       onClick={() => setShowDetails(!showDetails)}
                     >
                       {showDetails ? "Show less" : "Show more"}
-                      <span>
-                        {showDetails ? (
-                          <IoIosArrowUp className="text-base" />
-                        ) : (
-                          <IoIosArrowDown className="text-base" />
-                        )}
-                      </span>
+                      {showDetails ? <IoIosArrowUp /> : <IoIosArrowDown />}
                     </button>
                   </div>
                 </div>
-                <div>
-                  <IoSettingsSharp
-                    className="text-textColor3 text-3xl mt-1"
-                    onClick={() => navigate("/profile")}
-                  />
-                </div>
+                <IoSettingsSharp
+                  className="text-textColor3 text-3xl mt-1 cursor-pointer"
+                  onClick={() => navigate("/profile")}
+                />
               </div>
+
               {showDetails && (
                 <div className="mt-3">
                   <div className="flex gap-x-2 items-center text-sm text-textColor3">
                     <p>
-                      {referralData?.data?.[0]?.referrer
-                        ? `${referralData.data[0].referrer.slice(
+                      {referralData?.referrerAddress
+                        ? `${referralData.referrerAddress.slice(
                             0,
                             6
-                          )}...${referralData.data[0].referrer.slice(-6)}`
-                        : ""}
+                          )}...${referralData.referrerAddress.slice(-6)}`
+                        : "No Referrer"}
                     </p>
-
                     <IoCopy
-                      onClick={() =>
-                        handleCopy(referralData?.data?.[0]?.referrer)
-                      }
+                      onClick={() => handleCopy(referralData?.referrerAddress)}
                       className="cursor-pointer"
                     />
                   </div>
-                  <div className="flex gap-2 items-center text-textColor3 text-sm">
+
+                  <div className="flex gap-2 items-center text-textColor3 text-sm mt-2">
                     <p>
-                      Invited{" "}
-                      {referralData?.data?.[0]?.createdAt
-                        ? new Date(
-                            referralData.data[0].createdAt
-                          ).toLocaleDateString()
-                        : "N/A"}{" "}
-                      by
+                      Joined{" "}
+                      {referralData?.createdAt
+                        ? new Date(referralData.createdAt).toLocaleDateString()
+                        : "N/A"}
                     </p>
-                    <p className="px-3 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35  rounded-full italic">
-                      ID{" "}
-                      {referralData
-                        ? referralData?.data?.[0]?.id
-                        : "Loading..."}
+                    <p className="px-3 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
+                      ID {referralData?.id || "0"}
                     </p>
                   </div>
+
+                  {/* Added Referrer ID Display */}
+                  {referralData?.referrerId && (
+                    <div className="mt-2 text-textColor3 text-sm flex items-center gap-2">
+                      <span>Referred by ID:</span>
+                      <span className="px-2 py-1 bg-[#333333] bg-opacity-35 rounded-full">
+                        {referralData.referrerId}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-2 py-5  rounded-lg mt-6">
+          {/* Referral Section */}
+          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-2 py-5 rounded-lg mt-6">
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
               <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">
-                theeagles.io/{userData?.[1]?.toString() ?? "Loading..."}
-                <span>
-                  <GoArrowUpRight className="text-textColor3 text-lg" />
-                </span>
+                theeagles.io/{userData?.[1]?.toString() || "loading"}
+                <GoArrowUpRight className="text-lg" />
               </p>
             </div>
             <div className="text-lg flex gap-3">
               <button
                 className="bg-[#a67912] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
-                onClick={() => handleCopy(`theeagles.io/${userData?.[1]}`)}
+                onClick={() =>
+                  handleCopy(`theeagles.io/${userData?.[1]?.toString()}`)
+                }
               >
                 Copy
               </button>
@@ -329,11 +330,12 @@ const Home = ({ showBar, setShowBar, user }) => {
             </div>
           </div>
 
+          {/* Components */}
           <Cards
             referralData={referralData}
             getUsdt={getUsdt}
-            profit={Profit}
-            Profit24={Profit24}
+            profit={profit}
+            Profit24={profit24}
           />
           <Program getlevelX1={getlevelX1} getlevelX2={getlevelX2} />
           <Members />
