@@ -54,7 +54,7 @@ const Home = ({ showBar, setShowBar, user }) => {
         const referralId = result[1].toString();
 
         const referralResponse = await axios.get(
-          `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/refferal/${referralId}`
+          `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${referralId}`
         );
         console.log("Referral Data:", referralResponse.data);
         setReferralData(referralResponse.data);
