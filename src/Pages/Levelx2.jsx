@@ -6,7 +6,7 @@ import UserTable from '../Components/Lvl1/UserTable';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RiLock2Fill } from 'react-icons/ri';
-import { activateLevel } from '../Config/Contract-Methods';
+import { activateLevel, getTxn } from '../Config/Contract-Methods';
 import axios from 'axios';
 
 const Levelx2 = () => {
@@ -80,10 +80,10 @@ const Levelx2 = () => {
 
   const handleLevelActivation = async (level) => {
     try {
-      const approvetx = await activateLevel("1", level);
+      const approvetx = await activateLevel("2", level);
       const receipt = await getTxn(approvetx);
       if (!receipt) {
-        // console.log("Level activation failed");
+        console.log("Level activation failed");
         return;
       }
       setActiveLevels((prev) => [...prev, level]);
