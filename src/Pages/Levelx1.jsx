@@ -11,28 +11,27 @@ import axios from "axios";
 
 const Levelx1 = () => {
   const levels = [
-    { level: 1, cost: 2.5, peopleCount: 28, timer: "00" },
-    { level: 2, cost: 5, peopleCount: 2, timer: "00" },
-    { level: 3, cost: 10, peopleCount: 36, timer: "00" },
-    { level: 4, cost: 20, peopleCount: 66, timer: "00" },
-    { level: 5, cost: 40, peopleCount: 0, timer: "00" },
-    { level: 6, cost: 80, peopleCount: 65, timer: "00" },
-    { level: 7, cost: 160, peopleCount: 23, timer: "00" },
-    { level: 8, cost: 320, peopleCount: 1, timer: "00" },
-    { level: 9, cost: 640, peopleCount: 765, timer: "00" },
-    { level: 10, cost: 1250, peopleCount: 53, timer: "00" },
-    { level: 11, cost: 2500, peopleCount: 5, timer: "00" },
-    { level: 12, cost: 5000, peopleCount: 86, timer: "00" },
+    { level: 1, cost: 2.5 },
+    { level: 2, cost: 5 },
+    { level: 3, cost: 10 },
+    { level: 4, cost: 20 },
+    { level: 5, cost: 40 },
+    { level: 6, cost: 80 },
+    { level: 7, cost: 160 },
+    { level: 8, cost: 320 },
+    { level: 9, cost: 640 },
+    { level: 10, cost: 1250 },
+    { level: 11, cost: 2500 },
+    { level: 12, cost: 5000 },
   ];
 
   const [userData, setUserData] = useState(null);
   const [referredUsers, setReferredUsers] = useState([]);
-  const userID = 1; // Replace with dynamic user ID if needed
+  const userID = 1;
   const maxDivs = 4;
   const defaultColor = "bg-white";
   const filledColor = "bg-[#a67912]";
 
-  // Slot system state
   const [resetCount, setResetCount] = useState(0);
   const [divColors, setDivColors] = useState(
     new Array(maxDivs).fill(defaultColor)
@@ -45,8 +44,8 @@ const Levelx1 = () => {
         const response = await axios.get(
           `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${userID}`
         );
-        setUserData(response.data.data); // Set user data
-        setReferredUsers(response.data.referredUsers); // Set referred users
+        setUserData(response.data.data); 
+        setReferredUsers(response.data.referredUsers); 
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -54,10 +53,7 @@ const Levelx1 = () => {
     fetchUserData();
   }, [userID]);
 
-  // Calculate referred users length
   const referredUsersCount = referredUsers.length;
-
-  // Slot system effect
   useEffect(() => {
     if (referredUsersCount === 0) {
       setResetCount(0);
@@ -80,23 +76,29 @@ const Levelx1 = () => {
 
   const handleLevelActivation = async (level) => {
     try {
-      console.log("Level for this is ",level);
-       const approvetx = await USDTapprove("5000000000000000000");
-              const receipt = await getTxn(approvetx);
-      try {
-        const approvetx = await activateLevel("1", level);
-        const receipt = await getTxn(approvetx);
-        
-      } catch (error) {
-        console.log(error);
-        
+      const levelData = levels.find((l) => l.level === level);
+      if (!levelData) {
+        console.log("Invalid level");
+        return;
       }
-      if (!receipt) {
+      const costInWei = (levelData.cost * 1e18).toString();
+      console.log(`Activating Level: ${level}, Cost: ${costInWei} Wei`);
+      const approveTx = await USDTapprove(costInWei);
+      const approveReceipt = await getTxn(approveTx);
+      if (!approveReceipt) {
+        console.log("USDT approval failed");
+        return;
+      }
+      const activationTx = await activateLevel("1", level);
+      const activationReceipt = await getTxn(activationTx);
+      if (!activationReceipt) {
         console.log("Level activation failed");
         return;
       }
       setActiveLevels((prev) => [...prev, level]);
       setActiveLevels((prev) => prev.filter((lvl) => lvl !== level - 1));
+
+      console.log(`Level ${level} activated successfully!`);
     } catch (err) {
       console.log("Error activating level:", err);
     }
@@ -105,7 +107,6 @@ const Levelx1 = () => {
   const totalCost = levels
     .filter((item) => activeLevels.includes(item.level))
     .reduce((sum, item) => sum + item.cost, 0);
-    
 
   return (
     <>

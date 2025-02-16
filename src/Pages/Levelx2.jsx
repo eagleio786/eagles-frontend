@@ -11,18 +11,18 @@ import axios from "axios";
 
 const Levelx2 = () => {
   const levels = [
-    { level: 1, cost: 2.5, peopleCount: 28 },
-    { level: 2, cost: 5, peopleCount: 2 },
-    { level: 3, cost: 10, peopleCount: 36 },
-    { level: 4, cost: 20, peopleCount: 66 },
-    { level: 5, cost: 40, peopleCount: 0 },
-    { level: 6, cost: 80, peopleCount: 65 },
-    { level: 7, cost: 160, peopleCount: 23 },
-    { level: 8, cost: 320, peopleCount: 1 },
-    { level: 9, cost: 640, peopleCount: 765 },
-    { level: 10, cost: 1250, peopleCount: 53 },
-    { level: 11, cost: 2500, peopleCount: 5 },
-    { level: 12, cost: 5000, peopleCount: 86 },
+    { level: 1, cost: 2.5 },
+    { level: 2, cost: 5 },
+    { level: 3, cost: 10 },
+    { level: 4, cost: 20 },
+    { level: 5, cost: 40 },
+    { level: 6, cost: 80 },
+    { level: 7, cost: 160 },
+    { level: 8, cost: 320 },
+    { level: 9, cost: 640 },
+    { level: 10, cost: 1250 },
+    { level: 11, cost: 2500 },
+    { level: 12, cost: 5000 },
   ];
 
   const [userData, setUserData] = useState(null);
@@ -79,7 +79,7 @@ const Levelx2 = () => {
         console.log("Invalid level");
         return;
       }
-      const costInWei = (levelData.cost * 1e18).toString(); 
+      const costInWei = (levelData.cost * 1e18).toString();
       console.log(`Activating Level: ${level}, Cost: ${costInWei} Wei`);
       const approveTx = await USDTapprove(costInWei);
       const approveReceipt = await getTxn(approveTx);
