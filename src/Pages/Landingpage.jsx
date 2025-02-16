@@ -118,12 +118,11 @@ function Landingpage() {
           </p>
 
           {/* Buttons */}
-          <div className='flex justify-between px-2 mt-8 w-[100%] z-10'>
+          <div className='flex justify-between px-2 mt-8 w-[90%] z-10'>
             <div className='w-[45%]'>
               <Link to='/login' state={{ type: 'login' }}>
                 <button
-                  className={`w-[100%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-not-allowed opacity-50`}
-                  disabled='true'
+                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
                 >
                   Sign in
                 </button>
@@ -132,8 +131,7 @@ function Landingpage() {
             <div className='w-[50%]'>
               <Link to='/login' state={{ type: 'register' }}>
                 <button
-                  className={`w-[100%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-not-allowed opacity-50`}
-                  disabled='true'
+                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
                 >
                   <div className='flex items-center justify-center gap-2'>
                     Register
@@ -179,7 +177,6 @@ function Landingpage() {
           </div>
         </div>
         <div className='relative mt-20 h-44 '>
-          {/* <PiGraduationCapThin className='text-landingtext absolute text-6xl -z-10 -top-8 -rotate-45 left-2' /> */}
           <p className='text-textColor3 text-xs w-4/5 text-center mx-auto font-medium'>
             <span className='text-[#a67912] font-bold'>The Eagles School</span>{' '}
             is an exclusive training course designed specifically for the who

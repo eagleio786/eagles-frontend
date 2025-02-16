@@ -236,7 +236,7 @@ const Home = ({ showBar, setShowBar, user }) => {
                       </Link>
                     </div>
                   </div>
-                  <div className="text-textColor3 ml-8">
+                  <div className="text-textColor3 ml-10">
                     <h1 className="text-2xl font-semibold font-sans capitalize">
                       {user?.name || "Username"}
                     </h1>
@@ -261,8 +261,8 @@ const Home = ({ showBar, setShowBar, user }) => {
               </div>
 
               {showDetails && (
-                <div className="mt-3">
-                  <div className="flex gap-x-2 items-center text-sm text-textColor3">
+                <div className="mt-1">
+                  <div className="flex gap-x-1 items-center text-sm text-textColor3">
                     <p>
                       {referralData?.referrerAddress
                         ? `${referralData.referrerAddress.slice(
@@ -283,7 +283,7 @@ const Home = ({ showBar, setShowBar, user }) => {
                       {referralData?.createdAt
                         ? new Date(referralData.createdAt).toLocaleDateString() :''}
                     </p>
-                    <p className="px-3 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
+                    <p className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
                       ID {referralData?.id}
                     </p>
                   </div>
@@ -303,7 +303,7 @@ const Home = ({ showBar, setShowBar, user }) => {
           </div>
 
           {/* Referral Section */}
-          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-2 py-5 rounded-lg mt-6">
+          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
               <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">

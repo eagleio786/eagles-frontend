@@ -34,10 +34,10 @@ const Register = () => {
   const route = queryParams.get("route");
   let modifiedRoute = route ? route.substring(1) : "1";
   useEffect(() => {
-  let modifiedRoute = route ? route.substring(1) : "1";
-    setUpline(modifiedRoute)
-  }, [])
-  
+    let modifiedRoute = route ? route.substring(1) : "1";
+    setUpline(modifiedRoute);
+  }, []);
+
   const routePattern = /\d/;
   React.useEffect(() => {
     if (routePattern.test(location.pathname)) {
@@ -54,8 +54,7 @@ const Register = () => {
         switchChain({ chainId: 56 });
       }
     },
-    onDisconnect() {
-    },
+    onDisconnect() {},
   });
   useEffect(() => {
     if (isConnected && chain?.id) {
@@ -115,7 +114,6 @@ const Register = () => {
   };
   const getAddress = async () => {
     try {
-
       // console.log("upline", upline)
       setLoading(true);
       if (!upline) {
@@ -123,7 +121,6 @@ const Register = () => {
         alert("Invalid upline ID. Please check and try again.");
         return;
       }
-
 
       const uplineaddress = await idToAddress(upline);
       if (!uplineaddress) {
@@ -147,7 +144,7 @@ const Register = () => {
 
       // Approve USDT transaction
       try {
-        setLoading(true)
+        setLoading(true);
 
         const approvetx = await USDTapprove("5000000000000000000");
         if (!approvetx) {
@@ -188,13 +185,11 @@ const Register = () => {
           return;
         }
 
-        // console.log("✅ Registration successful:", registerReceipt);
-        setLoading(false)
-
+        setLoading(false);
       } catch (err) {
         console.error("❌ Error during registration:", err);
         alert("An error occurred during registration. Please try again.");
-        setLoading(false)
+        setLoading(false);
 
         return;
       }
@@ -264,7 +259,7 @@ const Register = () => {
           <div className="flex-1 p-2 md:p-4 lg:p-2">
             <div className="flex justify-end">
               <p
-                className="text-textColor3 inline-block text-xs px-3 py-2 rounded-full bg-textColor3 bg-opacity-30 w-[105px] overflow-x-scroll cursor-pointer"
+                className="text-textColor3 inline-block text-xs px-2 py-4 rounded-full bg-textColor3 bg-opacity-30 w-[200px] overflow-x-scroll cursor-pointer"
                 style={{
                   scrollbarWidth: "none",
                 }}
