@@ -6,7 +6,7 @@ import Notify from "../Components/Lvl1/Notify";
 import UserTable from "../Components/Lvl1/UserTable";
 import { Link } from "react-router-dom";
 import { RiLock2Fill } from "react-icons/ri";
-import { activateLevel } from "../Config/Contract-Methods";
+import { activateLevel, getTxn, USDTapprove } from "../Config/Contract-Methods";
 import axios from "axios";
 
 const Levelx1 = () => {
