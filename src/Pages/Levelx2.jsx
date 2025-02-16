@@ -1,38 +1,36 @@
-import { useEffect, useState } from 'react';
-import { GoPeople } from 'react-icons/go';
-import { HiOutlineArrowPath } from 'react-icons/hi2';
-import Notify from '../Components/Lvl1/Notify';
-import UserTable from '../Components/Lvl1/UserTable';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import { RiLock2Fill } from 'react-icons/ri';
-import { activateLevel, getTxn, USDTapprove } from '../Config/Contract-Methods';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { GoPeople } from "react-icons/go";
+import { HiOutlineArrowPath } from "react-icons/hi2";
+import Notify from "../Components/Lvl1/Notify";
+import UserTable from "../Components/Lvl1/UserTable";
+import { BsFillQuestionCircleFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { RiLock2Fill } from "react-icons/ri";
+import { activateLevel, getTxn, USDTapprove } from "../Config/Contract-Methods";
+import axios from "axios";
 
 const Levelx2 = () => {
   const levels = [
-    { level: 1, cost: 2.5, peopleCount: 28, timer: "00" },
-    { level: 2, cost: 5, peopleCount: 2, timer: "00" },
-    { level: 3, cost: 10, peopleCount: 36, timer: "00" },
-    { level: 4, cost: 20, peopleCount: 66, timer: "00" },
-    { level: 5, cost: 40, peopleCount: 0, timer: "00" },
-    { level: 6, cost: 80, peopleCount: 65, timer: "00" },
-    { level: 7, cost: 160, peopleCount: 23, timer: "00" },
-    { level: 8, cost: 320, peopleCount: 1, timer: "00" },
-    { level: 9, cost: 640, peopleCount: 765, timer: "00" },
-    { level: 10, cost: 1250, peopleCount: 53, timer: "00" },
-    { level: 11, cost: 2500, peopleCount: 5, timer: "00" },
-    { level: 12, cost: 5000, peopleCount: 86, timer: "00" },
+    { level: 1, cost: 2.5, peopleCount: 28 },
+    { level: 2, cost: 5, peopleCount: 2 },
+    { level: 3, cost: 10, peopleCount: 36 },
+    { level: 4, cost: 20, peopleCount: 66 },
+    { level: 5, cost: 40, peopleCount: 0 },
+    { level: 6, cost: 80, peopleCount: 65 },
+    { level: 7, cost: 160, peopleCount: 23 },
+    { level: 8, cost: 320, peopleCount: 1 },
+    { level: 9, cost: 640, peopleCount: 765 },
+    { level: 10, cost: 1250, peopleCount: 53 },
+    { level: 11, cost: 2500, peopleCount: 5 },
+    { level: 12, cost: 5000, peopleCount: 86 },
   ];
 
   const [userData, setUserData] = useState(null);
   const [referredUsers, setReferredUsers] = useState([]);
-  const userID = 1; // Replace with dynamic user ID if needed
+  const userID = 1;
   const maxDivs = 4;
   const defaultColor = "bg-white";
   const filledColor = "bg-[#a67912]";
-
-  // Slot system state
   const [resetCount, setResetCount] = useState(0);
   const [divColors, setDivColors] = useState(
     new Array(maxDivs).fill(defaultColor)
@@ -45,19 +43,15 @@ const Levelx2 = () => {
         const response = await axios.get(
           `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${userID}`
         );
-        setUserData(response.data.data); // Set user data
-        setReferredUsers(response.data.referredUsers); // Set referred users
+        setUserData(response.data.data);
+        setReferredUsers(response.data.referredUsers);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     };
     fetchUserData();
   }, [userID]);
-
-  // Calculate referred users length
   const referredUsersCount = referredUsers.length;
-
-  // Slot system effect
   useEffect(() => {
     if (referredUsersCount === 0) {
       setResetCount(0);
@@ -79,28 +73,34 @@ const Levelx2 = () => {
   }, [referredUsersCount]);
 
   const handleLevelActivation = async (level) => {
-      try {
-        console.log("Level for this is ",level);
-         const approvetx = await USDTapprove("5000000000000000000");
-                const receipt = await getTxn(approvetx);
-        try {
-          const approvetx = await activateLevel("2", level);
-          const receipt = await getTxn(approvetx);
-          
-        } catch (error) {
-          console.log(error);
-          
-        }
-        if (!receipt) {
-          console.log("Level activation failed");
-          return;
-        }
-        setActiveLevels((prev) => [...prev, level]);
-        setActiveLevels((prev) => prev.filter((lvl) => lvl !== level - 1));
-      } catch (err) {
-        console.log("Error activating level:", err);
+    try {
+      const levelData = levels.find((l) => l.level === level);
+      if (!levelData) {
+        console.log("Invalid level");
+        return;
       }
-    };
+      const costInWei = (levelData.cost * 1e18).toString(); 
+      console.log(`Activating Level: ${level}, Cost: ${costInWei} Wei`);
+      const approveTx = await USDTapprove(costInWei);
+      const approveReceipt = await getTxn(approveTx);
+      if (!approveReceipt) {
+        console.log("USDT approval failed");
+        return;
+      }
+      const activationTx = await activateLevel("2", level);
+      const activationReceipt = await getTxn(activationTx);
+      if (!activationReceipt) {
+        console.log("Level activation failed");
+        return;
+      }
+      setActiveLevels((prev) => [...prev, level]);
+      setActiveLevels((prev) => prev.filter((lvl) => lvl !== level - 1));
+
+      console.log(`Level ${level} activated successfully!`);
+    } catch (err) {
+      console.log("Error activating level:", err);
+    }
+  };
 
   const totalCost = levels
     .filter((item) => activeLevels.includes(item.level))
@@ -108,22 +108,22 @@ const Levelx2 = () => {
 
   return (
     <>
-      <div className='px-3 mt-3'>
-        <h4 className='text-[#7b7b7b] text-sm'>
-          ID 1848323 /{' '}
-          <span className='text-textColor2 text-base font-medium'>
+      <div className="px-3 mt-3">
+        <h4 className="text-[#7b7b7b] text-sm">
+          ID 1848323 /{" "}
+          <span className="text-textColor2 text-base font-medium">
             The Eagles.io x2 (1/12)
           </span>
         </h4>
-        <div className='text-textColor3 text-lg mt-4 flex justify-between'>
+        <div className="text-textColor3 text-lg mt-4 flex justify-between">
           <h1>The Eagles.io x2</h1>
           <h1>{totalCost} USDT</h1>
         </div>
       </div>
 
-      <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] w-full h-auto px-2 py-6 mt-3'>
-        <div className='grid grid-cols-2 gap-3'>
-        {levels.map((item, index) => {
+      <div className="bg-gradient-to-r from-[#a67912] to-[#1a1303] w-full h-auto px-2 py-6 mt-3">
+        <div className="grid grid-cols-2 gap-3">
+          {levels.map((item, index) => {
             const isNextToActivate =
               activeLevels.includes(item.level - 1) &&
               !activeLevels.includes(item.level);
@@ -176,16 +176,16 @@ const Levelx2 = () => {
                     } -translate-y-1/2 text-gray-400 text-xl`}
                   />
                 )}
-                
+
                 {activeLevels.includes(item.level) && (
                   <div>
-                    <div className='flex flex-col items-center my-2 gap-y-2 leading-4'>
-                      <div className='flex gap-x-11'>
+                    <div className="flex flex-col items-center my-2 gap-y-2 leading-4">
+                      <div className="flex gap-x-11">
                         <div
                           className={`h-9 w-9 rounded-full ${divColors[0]}`}
                         ></div>
                       </div>
-                      <div className='flex gap-x-4'>
+                      <div className="flex gap-x-4">
                         <div
                           className={`h-6 w-6 rounded-full ${divColors[1]}`}
                         ></div>
@@ -198,48 +198,47 @@ const Levelx2 = () => {
                       </div>
                     </div>
 
-                    <div className='flex justify-between'>
-                      <p className='flex gap-1 items-center text-textColor3'>
-                        <GoPeople className='text-textColor2' />
+                    <div className="flex justify-between">
+                      <p className="flex gap-1 items-center text-textColor3">
+                        <GoPeople className="text-textColor2" />
                         {referredUsersCount}
                       </p>
-                      <p className='flex gap-1 items-center text-textColor3'>
-                        <HiOutlineArrowPath className='text-textColor2' />
+                      <p className="flex gap-1 items-center text-textColor3">
+                        <HiOutlineArrowPath className="text-textColor2" />
                         {resetCount}
                       </p>
                     </div>
                   </div>
                 )}
-
               </div>
             );
           })}
         </div>
 
-        <div className='mt-7'>
-          <div className='flex items-center'>
-            <div className='flex gap-2 items-center w-1/2'>
-              <GoPeople className='text-textColor3 text-xl' />
-              <p className='text-textColor2 text-sm'>Partners on level</p>
+        <div className="mt-7">
+          <div className="flex items-center">
+            <div className="flex gap-2 items-center w-1/2">
+              <GoPeople className="text-textColor3 text-xl" />
+              <p className="text-textColor2 text-sm">Partners on level</p>
             </div>
-            <div className='flex items-center gap-2 w-1/2'>
-              <div className='h-5 w-5 rounded-full bg-[#d9d9d9]'></div>
-              <p className='text-textColor2'>Direct partner</p>
-            </div>
-          </div>
-          <div className='flex mt-5 items-center'>
-            <div className='flex gap-2 items-center w-1/2'>
-              <HiOutlineArrowPath className='text-textColor3 text-xl' />
-              <p className='text-textColor2 text-sm'>Level Cycle</p>
-            </div>
-            <div className='flex items-center gap-2 w-1/2'>
-              <div className='h-5 w-5 rounded-full bg-[#50c8ca]'></div>
-              <p className='text-textColor2'>Gift</p>
+            <div className="flex items-center gap-2 w-1/2">
+              <div className="h-5 w-5 rounded-full bg-[#d9d9d9]"></div>
+              <p className="text-textColor2">Direct partner</p>
             </div>
           </div>
-          <button className='bg-[#26a17b] shadow-xl shadow-[#00000079] text-textColor3 px-8 mt-5 py-3 rounded-full font-medium flex gap-2'>
-            <Link to='/Upgradextwo' className='flex gap-2 items-center'>
-              <BsFillQuestionCircleFill className=' text-textColor3' />
+          <div className="flex mt-5 items-center">
+            <div className="flex gap-2 items-center w-1/2">
+              <HiOutlineArrowPath className="text-textColor3 text-xl" />
+              <p className="text-textColor2 text-sm">Level Cycle</p>
+            </div>
+            <div className="flex items-center gap-2 w-1/2">
+              <div className="h-5 w-5 rounded-full bg-[#50c8ca]"></div>
+              <p className="text-textColor2">Gift</p>
+            </div>
+          </div>
+          <button className="bg-[#26a17b] shadow-xl shadow-[#00000079] text-textColor3 px-8 mt-5 py-3 rounded-full font-medium flex gap-2">
+            <Link to="/Upgradextwo" className="flex gap-2 items-center">
+              <BsFillQuestionCircleFill className=" text-textColor3" />
               Marketing legend
             </Link>
           </button>
@@ -252,4 +251,4 @@ const Levelx2 = () => {
   );
 };
 
-export default Levelx2;
+export default Levelx2;
