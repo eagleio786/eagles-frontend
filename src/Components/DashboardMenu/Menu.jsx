@@ -22,7 +22,7 @@ const Menu = ({ menu, home }) => {
 const [isLoggingOut, setIsLoggingOut] = useState(false);
 const { disconnect } = useDisconnect({
   onSuccess: () => {
-    console.log('Disconnected successfully inside onSuccess');
+    
     navigate('/auth');
   }
 });

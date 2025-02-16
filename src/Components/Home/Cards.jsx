@@ -6,7 +6,7 @@ const Cards = ({referralData, getUsdt,profit,Profit24}) => {
   const teamCount = referralData?.Team ?? 0;
   const USDTProfit = getUsdt
   let x=profit
-  console.log("Profits here",x);
+  
   
   return (
     <>

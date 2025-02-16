@@ -71,7 +71,7 @@ function Profile({user}) {
         'http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile',
         userData
       );
-      console.log('Profile Created:', response?.data.data);
+      // console.log('Profile Created:', response?.data.data);
       alert('Profile saved successfully!');
       navigate('/home');
     } catch (error) {

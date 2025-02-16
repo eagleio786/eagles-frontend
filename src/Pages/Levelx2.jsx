@@ -83,7 +83,7 @@ const Levelx2 = () => {
       const approvetx = await activateLevel("1", level);
       const receipt = await getTxn(approvetx);
       if (!receipt) {
-        console.log("Level activation failed");
+        // console.log("Level activation failed");
         return;
       }
       setActiveLevels((prev) => [...prev, level]);

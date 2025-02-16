@@ -33,7 +33,7 @@ export const activateLevel = async (matrix, level) => {
     functionName: 'activateLevel',
     args: [matrix, level],
   });
-  console.log('activateLevel :', result);
+  // console.log('activateLevel :', result);
   return result;
 };
 //2
@@ -44,7 +44,7 @@ export const buyNewLevelFor = async (address, matrix, level) => {
     functionName: 'buyNewLevelFor',
     args: [address, matrix, level],
   });
-  console.log('buyNewLevelFor :', result);
+  // console.log('buyNewLevelFor :', result);
   return result;
 };
 //4
@@ -55,7 +55,7 @@ export const register = async (address) => {
     functionName: 'register',
     args: [address],
   });
-  console.log('register :', result);
+  // console.log('register :', result);
   return result;
 };
 //5
@@ -66,7 +66,7 @@ export const registrationFor = async (userAddress, refferAddress) => {
     functionName: 'registrationFor',
     args: [userAddress, refferAddress],
   });
-  console.log('registrationFor :', result);
+  // console.log('registrationFor :', result);
   return result;
 };
 //6
@@ -77,7 +77,7 @@ export const withdrawLostTokens = async (tokenAddress) => {
     functionName: 'withdrawLostTokens',
     args: [tokenAddress],
   });
-  console.log('withdrawLostTokens :', result);
+  // console.log('withdrawLostTokens :', result);
   return result;
 };
 
@@ -88,7 +88,7 @@ export const USDTapprove = async (amount) => {
     functionName: 'approve',
     args: [ContractAdress, amount],
   });
-  console.log('approve:', result);
+  // console.log('approve:', result);
   return result;
 };
 
@@ -99,7 +99,7 @@ export const getTotalUSDTReceived = async (adress) => {
     functionName: 'getTotalUSDTReceived',
     args: [adress]
   });
-  console.log('getTotalUSDTReceived :', result);
+  // console.log('getTotalUSDTReceived :', result);
   return result;
 };
 
@@ -110,7 +110,7 @@ export const getCurrentX1Level = async (adress) => {
     functionName: 'getCurrentX1Level',
     args: [adress]
   });
-  console.log('getCurrentX1Level :', result);
+  // console.log('getCurrentX1Level :', result);
   return result;
 };
 
@@ -121,7 +121,7 @@ export const getCurrentX2Level = async (adress) => {
     functionName: 'getCurrentX2Level',
     args: [adress]
   });
-  console.log('getCurrentX2Level :', result);
+  // console.log('getCurrentX2Level :', result);
   return result;
 };
 ///////////////////////////////////////////////////READ METHODS///////////////////////////////////
@@ -132,7 +132,7 @@ export const BASIC_PRICE = async () => {
     address: ContractAdress,
     functionName: 'BASIC_PRICE',
   });
-  console.log('BASIC_PRICE :', result);
+  // console.log('BASIC_PRICE :', result);
   return result;
 };
 // 2:
@@ -142,7 +142,7 @@ export const LAST_LEVEL = async () => {
     address: ContractAdress,
     functionName: 'LAST_LEVEL',
   });
-  console.log('LAST_LEVEL :', result);
+  // console.log('LAST_LEVEL :', result);
   return result;
 };
 // 3:
@@ -153,7 +153,7 @@ export const balances = async () => {
     functionName: 'balances',
     args: ['0x722f3A7D715ceB9F3BE92643e4C750310c6B1982'],
   });
-  console.log('balances :', result);
+  // console.log('balances :', result);
   return result;
 };
 // 4:
@@ -163,7 +163,7 @@ export const contractOwner = async () => {
     address: ContractAdress,
     functionName: 'contractOwner',
   });
-  console.log('contractOwner :', result);
+  // console.log('contractOwner :', result);
   return result;
 };
 //5
@@ -173,7 +173,7 @@ export const depositToken = async () => {
     address: ContractAdress,
     functionName: 'depositToken',
   });
-  console.log('depositToken :', result);
+  // console.log('depositToken :', result);
   return result;
 };
 //8
@@ -183,7 +183,7 @@ export const id1 = async () => {
     address: ContractAdress,
     functionName: 'id1',
   });
-  console.log('id1 :', result);
+  // console.log('id1 :', result);
   return result;
 };
 //9
@@ -194,7 +194,7 @@ export const idToAddress = async (id) => {
     functionName: 'idToAddress',
     args: [id],
   });
-  console.log('idToAddress :', result);
+  // console.log('idToAddress :', result);
   return result;
 };
 //10
@@ -205,7 +205,7 @@ export const isUserExists = async (address) => {
     functionName: 'isUserExists',
     args: [address],
   });
-  console.log('isUserExists :', result);
+  // console.log('isUserExists :', result);
   return result;
 };
 //11
@@ -215,7 +215,7 @@ export const lastUserId = async () => {
     address: ContractAdress,
     functionName: 'lastUserId',
   });
-  console.log('lastUserId :', result);
+  // console.log('lastUserId :', result);
   return result;
 };
 //12
@@ -226,7 +226,7 @@ export const levelPrice = async (Level) => {
     functionName: 'levelPrice',
     args: [Level],
   });
-  console.log('levelPrice :', result);
+  // console.log('levelPrice :', result);
   return result;
 };
 //13
@@ -237,7 +237,7 @@ export const locked = async () => {
     address: ContractAdress,
     functionName: 'locked',
   });
-  console.log('locked :', result);
+  // console.log('locked :', result);
   return result;
 };
 
@@ -250,7 +250,7 @@ export const userIds = async (ID) => {
     functionName: 'userIds',
     args: [ID],
   });
-  console.log('userIds :', result);
+  // console.log('userIds :', result);
   return result;
 };
 

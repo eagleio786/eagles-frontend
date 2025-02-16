@@ -25,7 +25,7 @@ const Navbar = ({ home, setShowBar }) => {
   };
 
   const handleConnectClick = () => {
-    console.log('Connect Wallet Clicked!');
+   
     setShowBar(true);
   };
 

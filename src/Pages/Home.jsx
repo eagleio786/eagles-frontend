@@ -75,7 +75,7 @@ const Home = ({ showBar, setShowBar, user }) => {
         const response = await axios.get(
           `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/get24hrsUSDT`
         );
-        console.log(response)
+        // console.log(response) 
         setProfit(response.data?.totalUSDTReceivedAllTime || "0");
         setProfit24(response.data?.totalUSDTReceivedLast24Hours || "0");
       } catch (error) {

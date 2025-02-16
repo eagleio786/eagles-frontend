@@ -55,8 +55,6 @@ const Register = () => {
       }
     },
     onDisconnect() {
-      console.log("log is working???");
-      console.log("disconnected");
     },
   });
   useEffect(() => {
@@ -118,7 +116,7 @@ const Register = () => {
   const getAddress = async () => {
     try {
 
-      console.log("upline", upline)
+      // console.log("upline", upline)
       setLoading(true);
       if (!upline) {
         console.error("❌ Upline ID is missing or invalid.");
@@ -190,7 +188,7 @@ const Register = () => {
           return;
         }
 
-        console.log("✅ Registration successful:", registerReceipt);
+        // console.log("✅ Registration successful:", registerReceipt);
         setLoading(false)
 
       } catch (err) {
@@ -257,7 +255,7 @@ const Register = () => {
       image: "/assets/AuthImages/connect.png",
     },
   ];
-  console.log("LOading state      ssssssssssssssssssssss", loading);
+  // console.log("LOading state      ssssssssssssssssssssss", loading);
 
   return (
     <>

@@ -36,7 +36,7 @@ const AccountSearch = () => {
     const foundUser = users.find((user) => user.id === searchId);
     setUserData(foundUser || null);
   };
-  console.log(users);
+  // console.log(users);
 
   return (
     <div className='w-full min-h-screen text-textColor3 bg-gradient-to-r from-[#a67912] to-[#302408]'>

@@ -80,8 +80,17 @@ const Levelx1 = () => {
 
   const handleLevelActivation = async (level) => {
     try {
-      const approvetx = await activateLevel("1", level);
-      const receipt = await getTxn(approvetx);
+      console.log("Level for this is ",level);
+       const approvetx = await USDTapprove("5000000000000000000");
+              const receipt = await getTxn(approvetx);
+      try {
+        const approvetx = await activateLevel("1", level);
+        const receipt = await getTxn(approvetx);
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
       if (!receipt) {
         console.log("Level activation failed");
         return;
@@ -96,6 +105,7 @@ const Levelx1 = () => {
   const totalCost = levels
     .filter((item) => activeLevels.includes(item.level))
     .reduce((sum, item) => sum + item.cost, 0);
+    
 
   return (
     <>
