@@ -6,7 +6,7 @@ import UserTable from '../Components/Lvl1/UserTable';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RiLock2Fill } from 'react-icons/ri';
-import { activateLevel, getTxn } from '../Config/Contract-Methods';
+import { activateLevel, getTxn, USDTapprove } from '../Config/Contract-Methods';
 import axios from 'axios';
 
 const Levelx2 = () => {
@@ -79,19 +79,28 @@ const Levelx2 = () => {
   }, [referredUsersCount]);
 
   const handleLevelActivation = async (level) => {
-    try {
-      const approvetx = await activateLevel("2", level);
-      const receipt = await getTxn(approvetx);
-      if (!receipt) {
-        console.log("Level activation failed");
-        return;
+      try {
+        console.log("Level for this is ",level);
+         const approvetx = await USDTapprove("5000000000000000000");
+                const receipt = await getTxn(approvetx);
+        try {
+          const approvetx = await activateLevel("2", level);
+          const receipt = await getTxn(approvetx);
+          
+        } catch (error) {
+          console.log(error);
+          
+        }
+        if (!receipt) {
+          console.log("Level activation failed");
+          return;
+        }
+        setActiveLevels((prev) => [...prev, level]);
+        setActiveLevels((prev) => prev.filter((lvl) => lvl !== level - 1));
+      } catch (err) {
+        console.log("Error activating level:", err);
       }
-      setActiveLevels((prev) => [...prev, level]);
-      setActiveLevels((prev) => prev.filter((lvl) => lvl !== level - 1));
-    } catch (err) {
-      console.log("Error activating level:", err);
-    }
-  };
+    };
 
   const totalCost = levels
     .filter((item) => activeLevels.includes(item.level))
