@@ -77,7 +77,6 @@ export const withdrawLostTokens = async (tokenAddress) => {
     functionName: 'withdrawLostTokens',
     args: [tokenAddress],
   });
-  // console.log('withdrawLostTokens :', result);
   return result;
 };
 
@@ -88,7 +87,6 @@ export const USDTapprove = async (amount) => {
     functionName: 'approve',
     args: [ContractAdress, amount],
   });
-  // console.log('approve:', result);
   return result;
 };
 

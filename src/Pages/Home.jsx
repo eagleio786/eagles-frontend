@@ -36,6 +36,7 @@ const Home = ({ showBar, setShowBar, user }) => {
   const [getlevelX1, setGetlevelX1] = useState("0");
   const [getlevelX2, setGetlevelX2] = useState("0");
 
+  // Function to copy text to clipboard
   const handleCopy = (textToCopy) => {
     navigator.clipboard
       .writeText(textToCopy)
@@ -46,17 +47,25 @@ const Home = ({ showBar, setShowBar, user }) => {
       .catch(console.error);
   };
 
+  // Fetch user data and referral data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (!address) return;
+        if (!address) return; // Check if the wallet address exists
 
+        // Fetch user data using the wallet address
         const result = await users(address);
-        setUserData(result);
-        if (result?.[0]) {
+        console.log("User Data API Response:", result);
+
+        if (result?.[1]) {
+          const userId = result[1];
+          setUserData(result);
+
+          // Fetch referral data using the user ID
           const referralResponse = await axios.get(
-            `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${result[0].toString()}`
+            `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${userId}`
           );
+          console.log("Referral Data API Response:", referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
         }
       } catch (error) {
@@ -75,7 +84,7 @@ const Home = ({ showBar, setShowBar, user }) => {
         const response = await axios.get(
           `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/get24hrsUSDT`
         );
-        // console.log(response) 
+        console.log("Profit Data API Response:", response.data);
         setProfit(response.data?.totalUSDTReceivedAllTime || "0");
         setProfit24(response.data?.totalUSDTReceivedLast24Hours || "0");
       } catch (error) {
@@ -86,6 +95,7 @@ const Home = ({ showBar, setShowBar, user }) => {
     fetchProfitData();
   }, []);
 
+  // Fetch contract data (USDT, X1, X2 levels)
   useEffect(() => {
     const fetchContractData = async () => {
       try {
@@ -107,12 +117,14 @@ const Home = ({ showBar, setShowBar, user }) => {
     fetchContractData();
   }, [address]);
 
+  // Switch to the correct chain if not already connected
   useEffect(() => {
     if (isConnected && chain?.id !== chainConfig[11155111]?.id) {
       switchChain({ chainId: chainConfig[11155111]?.id });
     }
   }, [chain, isConnected]);
 
+  // Handle wallet connection
   const handleConnect = (walletName) => {
     const connector = connectors.find(
       (c) => c.name.toLowerCase() === walletName.toLowerCase()
@@ -123,6 +135,7 @@ const Home = ({ showBar, setShowBar, user }) => {
     }
   };
 
+  // Wallet options
   const wallets = [
     {
       id: 1,
@@ -203,6 +216,7 @@ const Home = ({ showBar, setShowBar, user }) => {
         {/* Main Content */}
         <div className="w-full px-4 pt-6 pb-5 homebg bg-[#a67a1240]">
           <div className="relative">
+            {/* Background Image */}
             <div className="absolute inset-0 h-full opacity-10 left-20 -top-3">
               <img
                 src="assets/HomeImages/eaglebg.jpg"
@@ -240,11 +254,12 @@ const Home = ({ showBar, setShowBar, user }) => {
                     <h1 className="text-2xl font-semibold font-sans capitalize">
                       {user?.name || "Username"}
                     </h1>
-                    {!loading ? (
+                    {!loading && userData ? (
                       <p className="text-lg text-yellow-300 italic font-medium">
-                        ID {userData?.[1]?.toString() || "0"}
+                        ID {userData?.[1]?.toString() || "Display Soon"}
                       </p>
-                    ) : "" }
+                    ) : null}
+
                     <button
                       className="mt-8 text-base flex gap-2 items-center justify-center bg-Background shadow-xl shadow-[#00000079] transition-all ease-in-out text-textColor2 w-44 py-1 rounded-full"
                       onClick={() => setShowDetails(!showDetails)}
@@ -263,14 +278,17 @@ const Home = ({ showBar, setShowBar, user }) => {
               {showDetails && (
                 <div className="mt-1">
                   <div className="flex gap-x-1 items-center text-sm text-textColor3">
-                    <p>
-                      {referralData?.referrerAddress
-                        ? `${referralData.referrerAddress.slice(
-                            0,
-                            6
-                          )}...${referralData.referrerAddress.slice(-6)}`
-                        : ""}
-                    </p>
+                    {referralData?.[0] ? (
+                      <p>
+                        {`${referralData[0].slice(
+                          0,
+                          6
+                        )}...${referralData[0].slice(-6)}`}
+                      </p>
+                    ) : (
+                      <p>No Referrer</p>
+                    )}
+
                     <IoCopy
                       onClick={() => handleCopy(referralData?.referrerAddress)}
                       className="cursor-pointer"
@@ -281,14 +299,14 @@ const Home = ({ showBar, setShowBar, user }) => {
                     <p>
                       Joined{" "}
                       {referralData?.createdAt
-                        ? new Date(referralData.createdAt).toLocaleDateString() :''}
+                        ? new Date(referralData.createdAt).toLocaleDateString()
+                        : ""}
                     </p>
                     <p className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
                       ID {referralData?.id}
                     </p>
                   </div>
 
-                  {/* Added Referrer ID Display */}
                   {referralData?.referrerId && (
                     <div className="mt-2 text-textColor3 text-sm flex items-center gap-2">
                       <span>Referred by ID:</span>
@@ -302,7 +320,7 @@ const Home = ({ showBar, setShowBar, user }) => {
             </div>
           </div>
 
-          {/* Referral Section */}
+          {/* Referral Link Section */}
           <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
@@ -326,7 +344,7 @@ const Home = ({ showBar, setShowBar, user }) => {
             </div>
           </div>
 
-          {/* Components */}
+          {/* Additional Components */}
           <Cards
             referralData={referralData}
             getUsdt={getUsdt}
