@@ -9,8 +9,7 @@ const Cards = ({ referralData, getUsdt, profit, Profit24 }) => {
 
   return (
     <div className="space-y-4">
-      {/* Profit Card */}
-      <div className="bg-Background w-full rounded-lg shadow-xl shadow-[#00000079] px-2 py-3">
+      <div className="bg-Background w-full rounded-lg shadow-xl bg-image shadow-[#00000079] px-2 py-3">
         <div className="flex justify-between items-center">
           <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
             Profits
@@ -27,16 +26,16 @@ const Cards = ({ referralData, getUsdt, profit, Profit24 }) => {
         </div>
       </div>
       <div className="flex gap-2">
-        <StatCard title="Partners" count={partnerCount} />
-        <StatCard title="Team" count={teamCount} />
+        <StatCard title="Partners" count={partnerCount} bg="bg-person2" />
+        <StatCard title="Team" count={teamCount} bg="bg-person3"/>
       </div>
     </div>
   );
 };
 
-const StatCard = ({ title, count }) => {
+const StatCard = ({ title, count, bg }) => {
   return (
-    <div className="bg-Background px-2 shadow-xl shadow-[#00000079] py-3 w-1/2 rounded-lg">
+    <div className={`bg-Background px-2 shadow-xl shadow-[#00000079] py-3 w-1/2 rounded-lg ${bg}`}>
       <p className="text-textColor3 text-base flex items-center gap-2">
         {title}
         <span className="bg-[#5c5c5c] rounded-full p-1">

@@ -30,6 +30,7 @@ import NumberRedirect from './NumberRedirect';
 import SocialRewards from './Pages/SocialRewards';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
+import { isUserExists } from './Config/Contract-Methods';
 
 const ScrollToTop = () => {
   const location = useLocation();
