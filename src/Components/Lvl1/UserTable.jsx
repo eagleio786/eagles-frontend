@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { IoCopy } from 'react-icons/io5';
 import { RiShare2Line } from 'react-icons/ri';
 
-const UserTable = () => {
+const UserTable = ({apiData}) => {
   const [showToast, setShowToast] = useState(false);
+
+  const allRef = apiData?.referredUsers || []; 
+
+  console.log('SpecificUserdata', allRef)
 
   const handleCopy = (textToCopy) => {
     navigator.clipboard
@@ -16,16 +20,6 @@ const UserTable = () => {
         console.error('Failed to copy text: ', error);
       });
   };
-
-  const data = [
-    { id: 1, date: '2025-01-01', level: 1, wallet: '100 USDT' },
-    { id: 2, date: '2025-01-02', level: 2, wallet: '200 USDT' },
-    { id: 3, date: '2025-01-03', level: 3, wallet: '300 USDT' },
-    { id: 4, date: '2025-01-04', level: 4, wallet: '400 USDT' },
-    { id: 5, date: '2025-01-05', level: 5, wallet: '500 USDT' },
-    { id: 6, date: '2025-01-06', level: 6, wallet: '600 USDT' },
-    { id: 7, date: '2025-01-07', level: 7, wallet: '700 USDT' },
-  ];
 
   const [visibleRows, setVisibleRows] = useState(2);
 
@@ -53,20 +47,23 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody className='overflow-x-auto'>
-              {data.slice(0, visibleRows).map((user) => (
+              {allRef.slice(0, visibleRows).map((user) => (
                 <tr key={user.id} className='text-textColor2 h-12'>
                   <td className='ps-3 w-1/5'>
                     <div className='h-5 w-5 rounded-full bg-[#d9d9d9]'></div>
                   </td>
-                  <td className='w-1/5'>{user.date}</td>
+                  <td className='w-1/5'>
+                  {user?.createdAt
+                        ? new Date(user.createdAt).toLocaleDateString()
+                        : ""}</td>
                   <td className='w-1/5'>{user.id}</td>
-                  <td className='w-1/5'>{user.level}</td>
+                  <td className='w-1/5'>{user.currentLevel}</td>
                   <td className='w-[180px] translate-y-1/2 grid grid-cols-2 gap-4'>
-                    {user.wallet}
+                    {user.totalUSDTReceived.$numberDecimal/1e18}
                     <span className='flex gap-2'>
                       <IoCopy
                         className='text-textColor3 text-xl'
-                        onClick={() => handleCopy('theeagles.io/******')}
+                        onClick={() => handleCopy(user.Personal)}
                       />
                       <RiShare2Line className='text-textColor3 text-xl rotate-45' />
                     </span>

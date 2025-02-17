@@ -63,7 +63,7 @@ const Home = ({ showBar, setShowBar, user }) => {
 
           // Fetch referral data using the user ID
           const referralResponse = await axios.get(
-            `https://eatb5n39ca.execute-api.us-east-1.amazonaws.com/dev/refferal/${userId}`
+            `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/refferal/${userId}`
           );
           console.log("Referral Data API Response:", referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
@@ -278,19 +278,19 @@ const Home = ({ showBar, setShowBar, user }) => {
               {showDetails && (
                 <div className="mt-1">
                   <div className="flex gap-x-1 items-center text-sm text-textColor3">
-                    {referralData?.[0] ? (
+                    {referralData?.referrer ? (
                       <p>
-                        {`${referralData[0].slice(
+                        {`${referralData.referrer.slice(
                           0,
                           6
-                        )}...${referralData[0].slice(-6)}`}
+                        )}...${referralData.referrer.slice(-6)}`}
                       </p>
                     ) : (
                       <p>No Referrer</p>
                     )}
 
                     <IoCopy
-                      onClick={() => handleCopy(referralData?.referrerAddress)}
+                      onClick={() => handleCopy(referralData?.referrer)}
                       className="cursor-pointer"
                     />
                   </div>
