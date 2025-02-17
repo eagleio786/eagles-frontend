@@ -3,6 +3,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
@@ -30,7 +31,13 @@ import NumberRedirect from './NumberRedirect';
 import SocialRewards from './Pages/SocialRewards';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
-import { isUserExists } from './Config/Contract-Methods';
+
+const ProtectedRoute = ({ element, isConnected }) => {
+  if (!isConnected) {
+    return <Navigate to={'/'} />;
+  }
+  return element;
+};
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -42,12 +49,10 @@ const ScrollToTop = () => {
   return null;
 };
 
-
-
 function App() {
   const location = useLocation();
   const { address, isConnected } = useAccount();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     if (isConnected && address) {
@@ -57,7 +62,9 @@ function App() {
 
   const fetchUser = async (walletAddress) => {
     try {
-      const response = await axios.get(`http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/user/${walletAddress}`);
+      const response = await axios.get(
+        `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/user/${walletAddress}`
+      );
       setUser(response.data.data);
     } catch (err) {
       console.log(err.response?.data?.message || 'Error fetching user data');
@@ -93,27 +100,95 @@ function App() {
         {showHome && (
           <Route
             path='/home'
-            element={<Home showBar={showBar} setShowBar={setShowBar} user={user} />}
+            element={
+              <ProtectedRoute
+                element={<Home showBar={showBar} setShowBar={setShowBar} user={user} />}
+                isConnected={isConnected}
+              />
+            }
           />
         )}
-        <Route path='/social' element={<Social />} />
-        <Route path='/socialReward' element={<SocialRewards />} />
+        <Route path='/social' element={
+              <ProtectedRoute
+                element={<Social />}
+                isConnected={isConnected}
+              />
+            } />
+        <Route path='/socialReward' element={
+              <ProtectedRoute
+                element={<SocialRewards />}
+                isConnected={isConnected}
+              />
+            } />
         <Route path='/login' element={<Login />} />
-        <Route path='/profile' element={<Profile user= {user} />} />
-        {showHome && <Route path='/lvlxone' element={<Levelx1 />} />}
-        {showHome && <Route path='/lvlxtwo' element={<Levelx2 />} />}
-        <Route path='/Upgradexone' element={<UpgradeLvl1 />} />
-        <Route path='/Upgradextwo' element={<UpgradeLvl2 />} />
+        <Route
+          path='/profile'
+          element={<ProtectedRoute element={<Profile user={user} />} isConnected={isConnected} />}
+        />
+        {showHome && <Route path='/lvlxone' element={
+              <ProtectedRoute
+                element={<Levelx1 />}
+                isConnected={isConnected}
+              />
+            } />}
+        {showHome && <Route path='/lvlxtwo' element={
+              <ProtectedRoute
+                element={<Levelx2 />}
+                isConnected={isConnected}
+              />
+            } />}
+        <Route path='/Upgradexone' element={
+              <ProtectedRoute
+                element={<UpgradeLvl1 />}
+                isConnected={isConnected}
+              />
+            } />
+        <Route path='/Upgradextwo' element={
+              <ProtectedRoute
+                element={<UpgradeLvl2 />}
+                isConnected={isConnected}
+              />
+            } />
         <Route path='/auth' element={<Authenticate />} />
-        <Route path='/passId' element={<Passid />} />
+        <Route path='/passId' element={
+              <ProtectedRoute
+                element={<Passid />}
+                isConnected={isConnected}
+              />
+            } />
         <Route path='/register' element={<Register />} />
-        {showHome && <Route path='/partner' element={<Partner />} />}
+        {showHome && <Route path='/partner' element={
+              <ProtectedRoute
+                element={<Partner />}
+                isConnected={isConnected}
+              />
+            } />}
         {showHome && (
-          <Route path='/accountSearch' element={<AccountSearch />} />
+          <Route path='/accountSearch' element={
+              <ProtectedRoute
+                element={<AccountSearch />}
+                isConnected={isConnected}
+              />
+            } />
         )}
-        {showHome && <Route path='/links' element={<Links />} />}
-        {showHome && <Route path='/stats' element={<Stats />} />}
-        {showHome && <Route path='/calculator' element={<Calculator />} />}
+        {showHome && <Route path='/links' element={
+              <ProtectedRoute
+                element={<Links />}
+                isConnected={isConnected}
+              />
+            } />}
+        {showHome && <Route path='/stats' element={
+              <ProtectedRoute
+                element={<Stats />}
+                isConnected={isConnected}
+              />
+            } />}
+        {showHome && <Route path='/calculator' element={
+              <ProtectedRoute
+                element={<Calculator />}
+                isConnected={isConnected}
+              />
+            } />}
         <Route path='/support' element={<Support />} />
         <Route path='/redirect' element={<Register />} />
       </Routes>
