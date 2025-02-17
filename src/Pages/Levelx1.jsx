@@ -6,21 +6,46 @@ import { HiOutlineArrowPath } from "react-icons/hi2";
 import { GoPeople } from "react-icons/go";
 import { RiLockLine } from "react-icons/ri";
 import "./Pages.css";
+import { activateLevel, getTxn, users } from "../Config/Contract-Methods";
+import { useAccount } from "wagmi";
 
 const Levelx1 = () => {
   const [apiData, setApiData] = useState(null);
   const [activeLevel, setActiveLevel] = useState(1);
+  const { isConnected, address } = useAccount();
+  const [referredUsersCountByLevel, setReferredUsersCountByLevel] = useState({});
 
+  console.log(apiData)
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const id = 2; 
-        const response = await axios.get(`
-          http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${id}
-        `);
-        console.log("API Response:", response.data);
+        const result = await users(address);
+               console.log("User Data API Response:", result);
+       
+               if (result?.[1]) {
+                 const userId = result[1];
+        const response = await axios.get(
+          `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${userId}`
+        );
+
         setApiData(response.data);
         setActiveLevel(response.data?.data?.currentX1Level || 1);
+
+        const referralUsers = response.data?.referredUsers || [];
+        const connectedUserLevel = response.data?.data?.currentX1Level;
+
+        const userCountByLevel = referralUsers.reduce((acc, user) => {
+          const level = user?.currentX1Level;
+          if (level && level <= connectedUserLevel) {
+            acc[level] = (acc[level] || 0) + 1;
+          }
+          return acc;
+        }, {});
+
+        setReferredUsersCountByLevel(userCountByLevel);
+                       }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -29,7 +54,6 @@ const Levelx1 = () => {
     fetchData();
   }, []);
 
-  const referredUsers = apiData?.data?.TotalReferred?.length || 0;
 
   const levels = [
     { level: 1, cost: 2.5 },
@@ -47,22 +71,35 @@ const Levelx1 = () => {
   ];
 
   const updatedLevels = levels.map((level) => {
-    const recycleCount = Math.floor(referredUsers / 4);
-    return {
-      ...level,
-      maxUsers: referredUsers, 
-      recycleCount,
-    };
-  });
+  const filteredUsersCount = referredUsersCountByLevel[level.level] || 0;
+  const recycleCount = Math.floor(filteredUsersCount / 4);
 
-  const handleActivateNextLevel = () => {
-    setActiveLevel((prevLevel) => Math.min(prevLevel + 1, 12));
+  return {
+    ...level,
+    maxUsers: filteredUsersCount,
+    recycleCount,
+  };
+});
+
+
+  const handleActivateNextLevel = async (level) => {
+    try {
+      const approvetx = await activateLevel("1", level);
+      const receipt = await getTxn(approvetx);
+      if (!receipt) {
+        console.log("Level activation failed");
+        return;
+      }
+      setActiveLevel((prevLevel) => Math.min(prevLevel + 1, 12));
+    } catch (err) {
+      console.error("Error activating level:", err);
+    }
   };
 
   return (
     <>
       <div className="text-white p-2 m-4 hello">
-        <p>ID 345 / Theeagles.io x1 (1/12)</p>
+        <p>ID 345 / Theeagles.io x1 ({activeLevel}/12)</p>
         <div className="flex justify-between p-2 m-4 items-center">
           <p>Theeagles.io x1</p>
           <p>{updatedLevels[0].cost} USDT</p>
@@ -73,6 +110,7 @@ const Levelx1 = () => {
           const isActive = level.level <= activeLevel;
           const isNextLevel = level.level === activeLevel + 1;
           const currentUsers = level.maxUsers % 4;
+          const filteredUsersCount = referredUsersCountByLevel[level.level] || 0;
 
           return (
             <div className="levels" key={level.level}>
@@ -112,7 +150,7 @@ const Levelx1 = () => {
               ) : (
                 <div className="locked-level">
                   {isNextLevel ? (
-                    <button className="active-btn" onClick={handleActivateNextLevel}>
+                    <button className="active-btn" onClick={() => handleActivateNextLevel(level.level)}>
                       Activate
                     </button>
                   ) : (
@@ -124,7 +162,7 @@ const Levelx1 = () => {
               <div className="level-value">
                 <div className="logo-usdt">
                   <GoPeople />
-                  {level.maxUsers}
+                  {filteredUsersCount}
                 </div>
                 <div className="logo-usdt">
                   <HiOutlineArrowPath />
@@ -136,9 +174,9 @@ const Levelx1 = () => {
         })}
       </div>
       <Notify />
-      <UserTable />
+      <UserTable apiData={apiData} />
     </>
   );
 };
 
-export default Levelx1;
+export default Levelx1;
