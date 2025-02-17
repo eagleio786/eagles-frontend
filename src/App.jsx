@@ -33,11 +33,15 @@ import axios from 'axios';
 import { useAccount } from 'wagmi';
 
 const ProtectedRoute = ({ element, isConnected }) => {
+  if (isConnected === null) {
+    return <div>Loading...</div>;
+  }
   if (!isConnected) {
-    return <Navigate to={'/'} />;
+    return <Navigate to="/" />;
   }
   return element;
 };
+
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -54,11 +58,12 @@ function App() {
   const { address, isConnected } = useAccount();
   const [user, setUser] = useState('');
 
-  useEffect(() => {
-    if (isConnected && address) {
-      fetchUser(address);
-    }
-  }, [address, isConnected]);
+useEffect(() => {
+  if (isConnected && address && !user) {
+    fetchUser(address);
+  }
+}, [address, isConnected, user]);
+
 
   const fetchUser = async (walletAddress) => {
     try {
