@@ -15,7 +15,6 @@ import { useAccountEffect } from "wagmi";
 import React from "react";
 import {
   idToAddress,
-  register,
   USDTapprove,
   getTxn,
 } from "../../Config/Contract-Methods";
@@ -109,99 +108,99 @@ const Register = () => {
   //   }
   // };
 
-  const handleClick = async () => {
-    getAddress();
-  };
-  const getAddress = async () => {
-    try {
-      // console.log("upline", upline)
-      setLoading(true);
-      if (!upline) {
-        console.error("❌ Upline ID is missing or invalid.");
-        alert("Invalid upline ID. Please check and try again.");
-        return;
-      }
+  // const handleClick = async () => {
+  //   getAddress();
+  // };
+  // const getAddress = async () => {
+  //   try {
+  //     // console.log("upline", upline)
+  //     setLoading(true);
+  //     if (!upline) {
+  //       console.error("❌ Upline ID is missing or invalid.");
+  //       alert("Invalid upline ID. Please check and try again.");
+  //       return;
+  //     }
 
-      const uplineaddress = await idToAddress(upline);
-      if (!uplineaddress) {
-        console.error("❌ Unable to fetch wallet address for given upline.");
-        alert("Failed to get upline wallet address. Please try again.");
-        return;
-      }
+  //     const uplineaddress = await idToAddress(upline);
+  //     if (!uplineaddress) {
+  //       console.error("❌ Unable to fetch wallet address for given upline.");
+  //       alert("Failed to get upline wallet address. Please try again.");
+  //       return;
+  //     }
 
-      // Chain validation
-      if (!chain || !chain.id) {
-        console.error("❌ Chain information is missing.");
-        alert("Switch to BSC Mainnet first.");
-        return;
-      }
+  //     // Chain validation
+  //     if (!chain || !chain.id) {
+  //       console.error("❌ Chain information is missing.");
+  //       alert("Switch to BSC Mainnet first.");
+  //       return;
+  //     }
 
-      if (chain.id !== 56) {
-        console.warn("⚠️ User is on the wrong network.");
-        alert("Switch to BSC Mainnet first.");
-        return;
-      }
+  //     if (chain.id !== 56) {
+  //       console.warn("⚠️ User is on the wrong network.");
+  //       alert("Switch to BSC Mainnet first.");
+  //       return;
+  //     }
 
-      // Approve USDT transaction
-      try {
-        setLoading(true);
+  //     // Approve USDT transaction
+  //     try {
+  //       setLoading(true);
 
-        const approvetx = await USDTapprove("5000000000000000000");
-        if (!approvetx) {
-          console.error("❌ USDT Approval transaction failed to initiate.");
-          alert("USDT Approval failed. Please try again.");
-          return;
-        }
+  //       const approvetx = await USDTapprove("5000000000000000000");
+  //       if (!approvetx) {
+  //         console.error("❌ USDT Approval transaction failed to initiate.");
+  //         alert("USDT Approval failed. Please try again.");
+  //         return;
+  //       }
 
-        const receipt = await getTxn(approvetx);
-        if (!receipt) {
-          console.error("❌ USDT Approval transaction failed.");
-          alert("USDT Approval transaction failed. Please check your wallet.");
-          return;
-        }
+  //       const receipt = await getTxn(approvetx);
+  //       if (!receipt) {
+  //         console.error("❌ USDT Approval transaction failed.");
+  //         alert("USDT Approval transaction failed. Please check your wallet.");
+  //         return;
+  //       }
 
-        setReceipt(receipt);
-      } catch (err) {
-        console.error("❌ Error during USDT approval:", err);
-        alert("An error occurred during USDT approval. Please try again.");
-        setLoading(false);
-        return;
-      }
+  //       setReceipt(receipt);
+  //     } catch (err) {
+  //       console.error("❌ Error during USDT approval:", err);
+  //       alert("An error occurred during USDT approval. Please try again.");
+  //       setLoading(false);
+  //       return;
+  //     }
 
-      // Register User
-      try {
-        setLoading(true);
-        const registerTx = await register(uplineaddress);
-        if (!registerTx) {
-          console.error("❌ Registration transaction failed to initiate.");
-          alert("Registration failed. Please try again.");
-          return;
-        }
+  //     // Register User
+  //     try {
+  //       setLoading(true);
+  //       const registerTx = await register(uplineaddress);
+  //       if (!registerTx) {
+  //         console.error("❌ Registration transaction failed to initiate.");
+  //         alert("Registration failed. Please try again.");
+  //         return;
+  //       }
 
-        const registerReceipt = await getTxn(registerTx);
-        if (!registerReceipt) {
-          console.error("❌ Registration transaction failed.");
-          alert("Registration transaction failed. Please check your wallet.");
-          return;
-        }
+  //       const registerReceipt = await getTxn(registerTx);
+  //       if (!registerReceipt) {
+  //         console.error("❌ Registration transaction failed.");
+  //         alert("Registration transaction failed. Please check your wallet.");
+  //         return;
+  //       }
 
-        setLoading(false);
-      } catch (err) {
-        console.error("❌ Error during registration:", err);
-        alert("An error occurred during registration. Please try again.");
-        setLoading(false);
+  //       setLoading(false);
+  //     } catch (err) {
+  //       console.error("❌ Error during registration:", err);
+  //       alert("An error occurred during registration. Please try again.");
+  //       setLoading(false);
 
-        return;
-      }
+  //       return;
+  //     }
 
-      navigate("/home");
-    } catch (err) {
-      console.error("❌ Unexpected error:", err);
-      alert("An unexpected error occurred. Please try again.");
-      setLoading(false);
-    }
-    setLoading(false);
-  };
+  //     navigate("/home");
+  //   } catch (err) {
+  //     console.error("❌ Unexpected error:", err);
+  //     alert("An unexpected error occurred. Please try again.");
+  //     setLoading(false);
+  //   }
+  //   setLoading(false);
+  // };
 
   const handleConnect = (walletName) => {
     const connector = connectors.find(
@@ -327,8 +326,9 @@ const Register = () => {
                   ? "cursor-not-allowed opacity-50"
                   : "cursor-pointer"
               }`}
-              disabled={!isConnected || loading}
-              onClick={handleClick}
+              disabled={true}
+              // disabled={!isConnected || loading}
+              // onClick={handleClick}
             >
               {loading ? (
                 <div role="status">

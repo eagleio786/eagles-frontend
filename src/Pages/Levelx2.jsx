@@ -43,8 +43,8 @@ const Levelx2 = () => {
   return (
     <>
       <div className="text-white p-2 m-4 hello">
-        <p>ID {345} / Theeagles.io x1 (1/12)</p>
-        <div className="flex justify-between p-2 m-4 justify-start items-center">
+        <p>ID {345} / Theeagles.io x2 (1/12)</p>
+        <div className="flex justify-between p-2 m-4 items-center">
           <p>Theeagles.io x1</p>
           <p>{234} USDT</p>
         </div>
