@@ -192,6 +192,13 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "isExist",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "user", type: "address" },
       { internalType: "uint256", name: "program", type: "uint256" },
@@ -274,4 +281,4 @@ export const USDTTestNetABI = [
   },
 ];
 
-export const ContractAdress = "0xEe66B9c47cAAb9D59a31E7Ac741697C6a00b8E39";
+export const ContractAdress = "0xFA708eE5857382a8Bca8eFb2f5e563cF0b4B82B5";
