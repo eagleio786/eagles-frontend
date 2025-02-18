@@ -73,6 +73,26 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "checkActiveuplineX1",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "checkUplineActive",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "userAddress", type: "address" }],
     name: "getCurrentX1Level",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -90,6 +110,13 @@ export const ABI = [
     inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
     name: "getIdToAddress",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "level", type: "uint256" }],
+    name: "getRandomUser",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -119,6 +146,17 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "uint256", name: "program", type: "uint256" },
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "getUserActiveLevel",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "userAddress", type: "address" }],
     name: "getUserInfo",
     outputs: [
@@ -128,6 +166,28 @@ export const ABI = [
       { internalType: "uint256", name: "activeX2Level", type: "uint256" },
       { internalType: "uint256", name: "referralarReward", type: "uint256" },
     ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "program", type: "uint256" },
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "getUserPermanetUnlockLevel",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "program", type: "uint256" },
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "getUserSlotLevel",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -214,4 +274,4 @@ export const USDTTestNetABI = [
   },
 ];
 
-export const ContractAdress = "0x663362a17207585225cb0F9947F5612B1013E3AC";
+export const ContractAdress = "0xEe66B9c47cAAb9D59a31E7Ac741697C6a00b8E39";

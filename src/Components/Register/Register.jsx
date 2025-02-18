@@ -81,7 +81,7 @@ const Register = () => {
 
       const uplineaddress = await getIdToAddress(upline);
       if (!uplineaddress) {
-        console.error("❌ Unable to fetch wallet address for given upline.");
+          .error("❌ Unable to fetch wallet address for given upline.");
         alert("Failed to get upline wallet address. Please try again.");
         return;
       }

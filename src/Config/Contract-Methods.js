@@ -98,7 +98,7 @@ export const getTotalUSDTReceived = async (adress) => {
     args: [adress]
   });
   // console.log('getTotalUSDTReceived :', result);
-  return result;
+  return result;
 };
 
 export const getCurrentX1Level = async (adress) => {
@@ -120,7 +120,7 @@ export const getCurrentX2Level = async (adress) => {
     args: [adress]
   });
   // console.log('getCurrentX2Level :', result);
-  return result;
+  return result;
 };
 ///////////////////////////////////////////////////READ METHODS///////////////////////////////////
 // 1:
@@ -181,7 +181,6 @@ export const id1 = async () => {
     address: ContractAdress,
     functionName: 'id1',
   });
-  // console.log('id1 :', result);
   return result;
 };
 //9
@@ -203,7 +202,6 @@ export const isUserExists = async (address) => {
     functionName: 'isUserExists',
     args: [address],
   });
-  // console.log('isUserExists :', result);
   return result;
 };
 //11
@@ -213,7 +211,6 @@ export const lastUserId = async () => {
     address: ContractAdress,
     functionName: 'lastUserId',
   });
-  // console.log('lastUserId :', result);
   return result;
 };
 //12
