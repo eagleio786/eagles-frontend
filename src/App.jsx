@@ -3,7 +3,6 @@ import {
   Route,
   Routes,
   useLocation,
-  Navigate,
 } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
@@ -31,16 +30,6 @@ import NumberRedirect from './NumberRedirect';
 import SocialRewards from './Pages/SocialRewards';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
-
-const ProtectedRoute = ({ element, isConnected }) => {
-  if (isConnected === null) {
-    return <div>Loading...</div>;
-  }
-  if (!isConnected) {
-    return <Navigate to="/" />;
-  }
-  return element;
-};
 
 
 const ScrollToTop = () => {
@@ -106,93 +95,54 @@ useEffect(() => {
           <Route
             path='/home'
             element={
-              <ProtectedRoute
-                element={<Home showBar={showBar} setShowBar={setShowBar} user={user} />}
-                isConnected={isConnected}
-              />
+              <Home showBar={showBar} setShowBar={setShowBar} user={user} />
             }
           />
         )}
         <Route path='/social' element={
-              <ProtectedRoute
-                element={<Social />}
-                isConnected={isConnected}
-              />
+             <Social />
             } />
         <Route path='/socialReward' element={
-              <ProtectedRoute
-                element={<SocialRewards />}
-                isConnected={isConnected}
-              />
+             <SocialRewards />
             } />
         <Route path='/login' element={<Login />} />
         <Route
           path='/profile'
-          element={<ProtectedRoute element={<Profile user={user} />} isConnected={isConnected} />}
+          element={<Profile user={user} />}
         />
         {showHome && <Route path='/lvlxone' element={
-              <ProtectedRoute
-                element={<Levelx1 />}
-                isConnected={isConnected}
-              />
+              <Levelx1 />
             } />}
         {showHome && <Route path='/lvlxtwo' element={
-              <ProtectedRoute
-                element={<Levelx2 />}
-                isConnected={isConnected}
-              />
+            <Levelx2 />
             } />}
         <Route path='/Upgradexone' element={
-              <ProtectedRoute
-                element={<UpgradeLvl1 />}
-                isConnected={isConnected}
-              />
+              <UpgradeLvl1 />
             } />
         <Route path='/Upgradextwo' element={
-              <ProtectedRoute
-                element={<UpgradeLvl2 />}
-                isConnected={isConnected}
-              />
+              <UpgradeLvl2 />
             } />
         <Route path='/auth' element={<Authenticate />} />
         <Route path='/passId' element={
-              <ProtectedRoute
-                element={<Passid />}
-                isConnected={isConnected}
-              />
+              <Passid />
             } />
         <Route path='/register' element={<Register />} />
         {showHome && <Route path='/partner' element={
-              <ProtectedRoute
-                element={<Partner />}
-                isConnected={isConnected}
-              />
+              <Partner />
             } />}
         {showHome && (
           <Route path='/accountSearch' element={
-              <ProtectedRoute
-                element={<AccountSearch />}
-                isConnected={isConnected}
-              />
+              <AccountSearch />
             } />
         )}
         {showHome && <Route path='/links' element={
-              <ProtectedRoute
-                element={<Links />}
-                isConnected={isConnected}
-              />
+            <Links />
             } />}
         {showHome && <Route path='/stats' element={
-              <ProtectedRoute
-                element={<Stats />}
-                isConnected={isConnected}
-              />
+            <Stats />
             } />}
         {showHome && <Route path='/calculator' element={
-              <ProtectedRoute
-                element={<Calculator />}
-                isConnected={isConnected}
-              />
+             <Calculator />
             } />}
         <Route path='/support' element={<Support />} />
         <Route path='/redirect' element={<Register />} />

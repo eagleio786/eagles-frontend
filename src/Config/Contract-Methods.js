@@ -48,16 +48,16 @@ export const buyNewLevelFor = async (address, matrix, level) => {
   return result;
 };
 //4
-// export const register = async (address) => {
-//   const result = await writeContract(config, {
-//     abi: ABI,
-//     address: ContractAdress,
-//     functionName: 'register',
-//     args: [address],
-//   });
-//   // console.log('register :', result);
-//   return result;
-// };
+export const register = async (address) => {
+  const result = await writeContract(config, {
+    abi: ABI,
+    address: ContractAdress,
+    functionName: 'register',
+    args: [address],
+  });
+  // console.log('register :', result);
+  return result;
+};
 //5
 export const registrationFor = async (userAddress, refferAddress) => {
   const result = await writeContract(config, {
@@ -192,7 +192,7 @@ export const idToAddress = async (id) => {
     functionName: 'idToAddress',
     args: [id],
   });
-  // console.log('idToAddress :', result);
+  console.log('idToAddress :', result);
   return result;
 };
 //10
