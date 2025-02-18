@@ -123,6 +123,7 @@ function Landingpage() {
               <Link to='/login' state={{ type: 'login' }}>
                 <button
                   className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
+                  disabled={true}
                 >
                   Sign in
                 </button>
@@ -132,6 +133,8 @@ function Landingpage() {
               <Link to='/login' state={{ type: 'register' }}>
                 <button
                   className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
+                                    disabled={true}
+
                 >
                   <div className='flex items-center justify-center gap-2'>
                     Register
@@ -146,7 +149,7 @@ function Landingpage() {
             A decentralized networking platform based on smart contracts, which{' '}
             <span className='text-[#a67912]'>brings people together</span> from
             all over the world and{' '}
-            <span className='text-[#a67912]'>
+            <span className='text-[#a67912]' onClick={()=> navigate('/register')}>
               opens up endless possibilities
             </span>{' '}
             new economic financial systems
@@ -183,7 +186,7 @@ function Landingpage() {
             want to unlock thier full potential with The Eagles.io!
           </p>
           <div className='w-4/5 mx-auto'>
-            <button className='bg-Background bg-opacity-75 text-[#a67912] font-medium mt-3 py-2 rounded-full w-full' onClick={()=> navigate('/login')}>
+            <button className='bg-Background bg-opacity-75 text-[#a67912] font-medium mt-3 py-2 rounded-full w-full'>
               Go to School
             </button>
           </div>

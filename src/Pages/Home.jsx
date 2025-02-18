@@ -46,7 +46,7 @@ const Home = ({ showBar, setShowBar, user }) => {
       })
       .catch(console.error);
   };
-
+  
   // Fetch user data and referral data
   useEffect(() => {
     const fetchUserData = async () => {
