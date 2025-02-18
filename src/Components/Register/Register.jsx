@@ -11,10 +11,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAccountEffect } from "wagmi";
 import React from "react";
 import {
-  idToAddress,
   USDTapprove,
   register,
   getTxn,
+  getIdToAddress,
 } from "../../Config/Contract-Methods";
 const Register = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -66,52 +66,12 @@ const Register = () => {
     setShowSidebar(true);
   };
 
-  // const getAddress = async () => {
-  //   const uplineaddress = await idToAddress(upline);
-  //   console.log('✅ Wallet Address:', uplineaddress);
-
-  //   if (uplineaddress) {
-  //     try {
-  //       console.log('hello');
-  //       const approvetx = await USDTapprove('5000000000000000000');
-  //       const receipt = await getTxn(approvetx);
-  //       setReceipt(receipt)
-  //       if (!receipt) {
-  //         console.log('Approve failed');
-
-  //         return;
-  //       }
-  //       console.log('first');
-  //       try {
-  //         console.log('register start');
-
-  //         let x = await register(uplineaddress);
-  //         const registerreceipt = await getTxn(x);
-  //         if (!registerreceipt) {
-  //           console.log('registration failed');
-  //           return;
-  //         }
-  //         console.log('register End');
-  //         console.log(x);
-  //         console.log('📤 Registering with Address:', x);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //       navigate('/home')
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   } else {
-  //     console.log('❌ Address not available!');
-  //   }
-  // };
 
   const handleClick = async () => {
     getAddress();
   };
   const getAddress = async () => {
     try {
-      // console.log("upline", upline)
       setLoading(true);
       if (!upline) {
         console.error("❌ Upline ID is missing or invalid.");
@@ -119,7 +79,7 @@ const Register = () => {
         return;
       }
 
-      const uplineaddress = await idToAddress(upline);
+      const uplineaddress = await getIdToAddress(upline);
       if (!uplineaddress) {
         console.error("❌ Unable to fetch wallet address for given upline.");
         alert("Failed to get upline wallet address. Please try again.");
@@ -213,7 +173,7 @@ const Register = () => {
   useEffect(() => {
     const handlClickToAddress = () => {
       if (upline) {
-        idToAddress(upline);
+        getIdToAddress(upline);
       } else {
         alert("please enter a valid address");
       }
@@ -324,7 +284,6 @@ const Register = () => {
                   ? "cursor-not-allowed opacity-50"
                   : "cursor-pointer"
               }`}
-              // disabled={true}
               disabled={!isConnected || loading}
               onClick={handleClick}
             >
