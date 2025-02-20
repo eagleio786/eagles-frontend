@@ -185,13 +185,15 @@ export const id1 = async () => {
 };
 //9
 export const getIdToAddress = async (id) => {
+  console.log("id comming from frontend is ",id);
+  
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'getIdToAddress',
+    functionName: 'idToAddress',
     args: [id],
   });
-  console.log('getIdToAddress :', result);
+  console.log('idToAddress :', result);
   return result;
 };
 //10
