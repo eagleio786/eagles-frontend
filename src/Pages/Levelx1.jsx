@@ -25,18 +25,14 @@ const Levelx1 = () => {
     const fetchData = async () => {
       try {
         const result = await users(address);
-        console.log('User Data API Response:', result);
         const level = result[2]?.toString();
         setActiveLevel(level);
         setData(result);
 
         if (result?.[1]) {
           const userId = result[1];
-          const response = await axios.get(`${ApiUrl}/getalldata/${userId}`, {
-            withCredentials: true,
-          });
+          const response = await axios.get(`${ApiUrl}/getalldata/${userId}`);
           setApiData(response.data);
-
           const referralUsers = response.data?.referredUsers || [];
           const connectedUserLevel = response.data?.data?.currentX1Level;
 
