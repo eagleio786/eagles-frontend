@@ -122,8 +122,7 @@ function Landingpage() {
             <div className='w-[45%]'>
               <Link to='/login' state={{ type: 'login' }}>
                 <button
-                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
-                  disabled={true}
+                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer`}
                 >
                   Sign in
                 </button>
@@ -132,9 +131,7 @@ function Landingpage() {
             <div className='w-[50%]'>
               <Link to='/login' state={{ type: 'register' }}>
                 <button
-                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer opacity-50`}
-                                    disabled={true}
-
+                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer`}
                 >
                   <div className='flex items-center justify-center gap-2'>
                     Register
@@ -149,7 +146,7 @@ function Landingpage() {
             A decentralized networking platform based on smart contracts, which{' '}
             <span className='text-[#a67912]'>brings people together</span> from
             all over the world and{' '}
-            <span className='text-[#a67912]' onClick={()=> navigate('/register')}>
+            <span className='text-[#a67912]'>
               opens up endless possibilities
             </span>{' '}
             new economic financial systems
