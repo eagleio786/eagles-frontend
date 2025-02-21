@@ -13,7 +13,7 @@ import Members from '../Components/Home/Members';
 import Contract from '../Components/Home/Contract';
 import History from '../Components/Home/History';
 import chainConfig from '../Config/chainConfig';
-import { ApiUrl, RandomAdress } from '../Config/config';
+import { ApiUrl } from '../Config/config';
 import { users } from '../Config/Contract-Methods';
 const Home = ({ showBar, setShowBar, user }) => {
   const [showDetails, setShowDetails] = useState(true);
@@ -46,12 +46,8 @@ const Home = ({ showBar, setShowBar, user }) => {
         if (result?.[1]) {
           const userId = result[1];
           setUserData(result);
-
           const referralResponse = await axios.get(
-            `${ApiUrl}/refferal/${userId}`,
-            {
-              withCredentials: true,
-            }
+            `${ApiUrl}/refferal/${userId}`
           );
           console.log('Referral Data API Response:', referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
