@@ -68,6 +68,7 @@ const Register = () => {
 
   const handleClick = async () => {
     getAddress();
+    console.log('clicked');
   };
   const getAddress = async () => {
     try {
@@ -349,8 +350,11 @@ const Register = () => {
             <div className='mt-4 flex items-center gap-2 text-gray-300'>
               <AiOutlineMessage />
               <p>
-                Need <span onClick={handleClick}>help</span> with registration?{' '}
-                <br /> Talk to experts in
+                Need{' '}
+                <span onClick={handleClick} className='text-red-600'>
+                  help
+                </span>{' '}
+                with registration? <br /> Talk to experts in
                 <span className='text-blue-400 cursor-pointer'>
                   {' '}
                   support chat
