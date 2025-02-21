@@ -332,5 +332,5 @@ export const USDTTestNetABI = [
 export const ContractAdress = '0x59EBC3795692Cc4D9C847787298Afb2a53d4Aac7';
 
 export const ApiUrl =
-  'http://reffaralmoney.com';
+  'https://reffaralmoney.com';
 export const RandomAdress = '';
