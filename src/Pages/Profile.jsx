@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
 
-function Profile({user}) {
+function Profile({ user }) {
   const { address } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-   const [name, setName] = useState(user?.name || '');
+  const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [description, setDescription] = useState(user?.description || '');
   const [socialLinks, setSocialLinks] = useState([]);
@@ -68,7 +68,7 @@ function Profile({user}) {
 
     try {
       const response = await axios.post(
-        'https://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile',
+        'http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile',
         userData
       );
       console.log('Profile Created:', response?.data.data);
@@ -108,31 +108,37 @@ function Profile({user}) {
           <p className='text-textColor2 font-medium text-center my-2'>
             Choose your Photo
           </p>
-         <form>
-          <label className='text-textColor2 font-medium block mt-3 mb-1'>Nickname</label>
-          <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className='bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none'
-            placeholder='Your Nickname'
-          />
-          <label className='text-textColor2 font-medium block mt-3 mb-1'>Email</label>
-          <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none'
-            placeholder='Your Email'
-          />
-          <label className='text-textColor2 font-medium block mt-3 mb-1'>Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className='h-[15vh] w-[320px] text-white rounded bg-[#5c5c5c] px-3 py-2 outline-none'
-            placeholder='Your Description'
-          ></textarea>
-        </form>
+          <form>
+            <label className='text-textColor2 font-medium block mt-3 mb-1'>
+              Nickname
+            </label>
+            <input
+              type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className='bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none'
+              placeholder='Your Nickname'
+            />
+            <label className='text-textColor2 font-medium block mt-3 mb-1'>
+              Email
+            </label>
+            <input
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className='bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none'
+              placeholder='Your Email'
+            />
+            <label className='text-textColor2 font-medium block mt-3 mb-1'>
+              Description
+            </label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className='h-[15vh] w-[320px] text-white rounded bg-[#5c5c5c] px-3 py-2 outline-none'
+              placeholder='Your Description'
+            ></textarea>
+          </form>
         </div>
 
         <div className='w-full h-[20vh] px-5 py-3 bg-Background rounded-lg my-4'>
