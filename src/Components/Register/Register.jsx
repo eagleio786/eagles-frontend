@@ -328,7 +328,10 @@ const Register = () => {
 
           <div className='flex-1 p-6 bg-gray-800 rounded-lg shadow-md'>
             <div className='flex items-center gap-2 text-white'>
-              <MdInfo /> <h3 className='text-lg font-semibold'>Information</h3>
+              <MdInfo />{' '}
+              <h3 className='text-lg font-semibold' onClick={handleClick}>
+                Information
+              </h3>
             </div>
             <p className='text-gray-400 mt-2'>
               <span className='text-white font-semibold'>
