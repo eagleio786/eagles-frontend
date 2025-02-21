@@ -318,7 +318,7 @@ const Register = () => {
                   <p>
                     Registration fee is charged once when enrolling on the
                     platform and is allocated to the maintenance and development
-                    of theeagles <span onClick={handleClick}>ecosystem</span>
+                    of theeagles ecosystem
                   </p>
                 </div>
               </span>{' '}
@@ -349,7 +349,8 @@ const Register = () => {
             <div className='mt-4 flex items-center gap-2 text-gray-300'>
               <AiOutlineMessage />
               <p>
-                Need help with registration? <br /> Talk to experts in
+                Need <span onClick={handleClick}>help</span> with registration?{' '}
+                <br /> Talk to experts in
                 <span className='text-blue-400 cursor-pointer'>
                   {' '}
                   support chat

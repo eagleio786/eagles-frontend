@@ -57,7 +57,7 @@ function App() {
 
   const fetchUser = async (walletAddress) => {
     try {
-      const response = await axios.get(`${ApiUrl}user/${walletAddress}`);
+      const response = await axios.get(`${ApiUrl}/user/${walletAddress}`);
       setUser(response.data.data);
     } catch (err) {
       console.log(err.response?.data?.message || 'Error fetching user data');
