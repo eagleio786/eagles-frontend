@@ -48,7 +48,10 @@ const Home = ({ showBar, setShowBar, user }) => {
           setUserData(result);
 
           const referralResponse = await axios.get(
-            `${ApiUrl}/refferal/${userId}`
+            `${ApiUrl}/refferal/${userId}`,
+            {
+              withCredentials: true,
+            }
           );
           console.log('Referral Data API Response:', referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);

@@ -331,5 +331,6 @@ export const USDTTestNetABI = [
 
 export const ContractAdress = '0x59EBC3795692Cc4D9C847787298Afb2a53d4Aac7';
 
-export const ApiUrl = 'http://ec2-13-40-17-99.eu-west-2.compute.amazonaws.com';
+export const ApiUrl =
+  'http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com';
 export const RandomAdress = '0x92a0220ADDCC3C07Bedee23844ce65649A2C5961';

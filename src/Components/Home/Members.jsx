@@ -13,7 +13,9 @@ const Members = () => {
   useEffect(() => {
     const fetchUSDTData = async () => {
       try {
-        const response = await axios.get(`${ApiUrl}/get24hrsUSDT`);
+        const response = await axios.get(`${ApiUrl}/get24hrsUSDT`, {
+          withCredentials: true,
+        });
         const data = response.data;
         console.log('data', data);
 

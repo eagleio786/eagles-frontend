@@ -81,7 +81,10 @@ function Profile({ user }) {
         response = await axios.put(
           `
           ${ApiUrl}/update/profile/${user.id}`,
-          userData
+          userData,
+          {
+            withCredentials: true,
+          }
         );
         console.log('Profile Updated:', response?.data.data);
 

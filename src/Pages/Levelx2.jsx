@@ -30,7 +30,9 @@ const Levelx2 = () => {
 
         if (result?.[1]) {
           const userId = result[1];
-          const response = await axios.get(`${ApiUrl}/getalldata/${userId}`);
+          const response = await axios.get(`${ApiUrl}/getalldata/${userId}`, {
+            withCredentials: true,
+          });
 
           setApiData(response.data);
 

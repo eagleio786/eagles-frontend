@@ -20,10 +20,10 @@ const Cards = ({ PT, userData }) => {
           </p>
         </div>
         <div className='flex justify-between font-semibold text-textColor3 mt-2'>
-          <p>{totalProfit} USDT</p>
+          <p>{totalProfit || 0} USDT</p>
           <p className='flex items-center gap-1 text-green-600'>
             <GoArrowUp />
-            {totalProfit}
+            {totalProfit || 0}
           </p>
         </div>
       </div>
