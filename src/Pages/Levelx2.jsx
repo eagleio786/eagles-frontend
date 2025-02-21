@@ -7,6 +7,7 @@ import { RiLockLine } from "react-icons/ri";
 import { activateLevel, getTxn } from "../Config/Contract-Methods";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import { ApiUrl } from "../Config/config";
 
 const Levelx2 = () => {
  const [apiData, setApiData] = useState(null);
@@ -23,7 +24,7 @@ const Levelx2 = () => {
                       if (result?.[1]) {
                         const userId = result[1];
         const response = await axios.get(
-          `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${id}`
+          `${ApiUrl}/getalldata/${id}`
         );
 
         setApiData(response.data);

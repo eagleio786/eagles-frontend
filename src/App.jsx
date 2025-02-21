@@ -30,6 +30,7 @@ import NumberRedirect from './NumberRedirect';
 import SocialRewards from './Pages/SocialRewards';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
+import { ApiUrl } from './Config/config';
 
 
 const ScrollToTop = () => {
@@ -57,7 +58,7 @@ useEffect(() => {
   const fetchUser = async (walletAddress) => {
     try {
       const response = await axios.get(
-        `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/user/${walletAddress}`
+        `${ApiUrl}/user/${walletAddress}`
       );
       setUser(response.data.data);
     } catch (err) {

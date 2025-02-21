@@ -8,7 +8,8 @@ import { RiLockLine } from "react-icons/ri";
 import "./Pages.css";
 import { activateLevel, getTxn, users } from "../Config/Contract-Methods";
 import { useAccount } from "wagmi";
-
+import { ApiUrl } from "../Config/config";
+import { USDTapprove } from "../Config/Contract-Methods";
 const Levelx1 = () => {
   const [apiData, setApiData] = useState(null);
   const [activeLevel, setActiveLevel] = useState(1);
@@ -26,7 +27,7 @@ const Levelx1 = () => {
                if (result?.[1]) {
                  const userId = result[1];
         const response = await axios.get(
-          `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/getalldata/${userId}`
+          `${ApiUrl}/getalldata/${userId}`
         );
 
         setApiData(response.data);
@@ -75,6 +76,7 @@ const Levelx1 = () => {
   const recycleCount = Math.floor(filteredUsersCount / 4);
 
   return {
+    
     ...level,
     maxUsers: filteredUsersCount,
     recycleCount,
@@ -82,8 +84,12 @@ const Levelx1 = () => {
 });
 
 
-  const handleActivateNextLevel = async (level) => {
+  const handleActivateNextLevel = async (level,cost) => {
     try {
+      console.log("level comming",level,cost);
+      const val=cost*1e18.toString() 
+      const usdtApp=await USDTapprove(val)
+      const usdtapp_recipt = await getTxn(usdtApp);
       const approvetx = await activateLevel("1", level);
       const receipt = await getTxn(approvetx);
       if (!receipt) {
@@ -150,7 +156,7 @@ const Levelx1 = () => {
               ) : (
                 <div className="locked-level">
                   {isNextLevel ? (
-                    <button className="active-btn" onClick={() => handleActivateNextLevel(level.level)}>
+                    <button className="active-btn" onClick={() => handleActivateNextLevel(level.level,level.cost)}>
                       Activate
                     </button>
                   ) : (

@@ -13,13 +13,14 @@ import Members from "../Components/Home/Members";
 import Contract from "../Components/Home/Contract";
 import History from "../Components/Home/History";
 import chainConfig from "../Config/chainConfig";
+import { ApiUrl } from "../Config/config";
 import {
   getCurrentX1Level,
   getCurrentX2Level,
   getTotalUSDTReceived,
   users,
 } from "../Config/Contract-Methods";
-
+import { RandomAdress } from "../Config/config";
 const Home = ({ showBar, setShowBar, user }) => {
   const [showDetails, setShowDetails] = useState(true);
   const navigate = useNavigate();
@@ -46,24 +47,23 @@ const Home = ({ showBar, setShowBar, user }) => {
       })
       .catch(console.error);
   };
-  
+
   // Fetch user data and referral data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         if (!address) return; // Check if the wallet address exists
 
-        // Fetch user data using the wallet address
-        const result = await users(address);
-        console.log("User Data API Response:", result);
-
+        const result = await users(RandomAdress);
+        // const result = await users(address);
+        console.log("User Data function Response:", result);
         if (result?.[1]) {
           const userId = result[1];
           setUserData(result);
 
           // Fetch referral data using the user ID
           const referralResponse = await axios.get(
-            `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/refferal/${userId}`
+            `${ApiUrl}/refferal/${userId}`
           );
           console.log("Referral Data API Response:", referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
@@ -81,9 +81,7 @@ const Home = ({ showBar, setShowBar, user }) => {
   useEffect(() => {
     const fetchProfitData = async () => {
       try {
-        const response = await axios.get(
-          `http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/get24hrsUSDT`
-        );
+        const response = await axios.get(`${ApiUrl}/get24hrsUSDT`);
         console.log("Profit Data API Response:", response.data);
         setProfit(response.data?.totalUSDTReceivedAllTime || "0");
         setProfit24(response.data?.totalUSDTReceivedLast24Hours || "0");
@@ -252,7 +250,8 @@ const Home = ({ showBar, setShowBar, user }) => {
                   </div>
                   <div className="text-textColor3 ml-10">
                     <h1 className="text-2xl font-semibold font-sans capitalize">
-                      {user?.name || "Username"}
+                      {user?.name || "Username"} 
+                      {/* username kaa lia profile must bani honi chahiya  haa or wallet connect hons chahiya haa  */}
                     </h1>
                     {!loading && userData ? (
                       <p className="text-lg text-yellow-300 italic font-medium">

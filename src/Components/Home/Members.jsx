@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { GoArrowUp } from 'react-icons/go';
+import { ApiUrl } from '../../Config/config';
 
 const Members = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -11,7 +12,7 @@ const Members = () => {
   useEffect(() => {
     const fetchUSDTData = async () => {
       try {
-        const response = await axios.get('http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/get24hrsUSDT'); // Replace with your actual API URL
+        const response = await axios.get(`${ApiUrl}/get24hrsUSDT`); // Replace with your actual API URL
         const data = response.data;
 
         setTotalUsers(data.totalUsers);

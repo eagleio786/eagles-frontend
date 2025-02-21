@@ -33,7 +33,6 @@ export const activateLevel = async (matrix, level) => {
     functionName: 'activateLevel',
     args: [matrix, level],
   });
-  // console.log('activateLevel :', result);
   return result;
 };
 //2

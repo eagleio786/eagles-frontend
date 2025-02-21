@@ -133,7 +133,7 @@ export const ABI = [
   {
     inputs: [],
     name: "LAST_LEVEL",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -164,43 +164,12 @@ export const ABI = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "max", type: "uint256" },
-      { internalType: "uint256", name: "nonce", type: "uint256" },
-    ],
-    name: "_generateRandomNumber",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
       { internalType: "uint8", name: "matrix", type: "uint8" },
-      { internalType: "uint8", name: "level", type: "uint8" },
+      { internalType: "uint256", name: "level", type: "uint256" },
     ],
     name: "activateLevel",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "user", type: "address" }],
-    name: "getCurrentLevel",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "user", type: "address" }],
-    name: "getCurrentX1Level",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "user", type: "address" }],
-    name: "getCurrentX2Level",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -213,26 +182,6 @@ export const ABI = [
     outputs: [
       { internalType: "uint256", name: "_solts", type: "uint256" },
       { internalType: "uint256", name: "_recicle", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "user", type: "address" }],
-    name: "getTotalUSDTReceived",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "excluded", type: "address" },
-      { internalType: "uint256", name: "level", type: "uint256" },
-    ],
-    name: "getValidRandomUser",
-    outputs: [
-      { internalType: "address[3]", name: "_addresss", type: "address[3]" },
-      { internalType: "uint256[3]", name: "_randomIds", type: "uint256[3]" },
     ],
     stateMutability: "view",
     type: "function",
@@ -298,13 +247,6 @@ export const ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_newAddress", type: "address" }],
-    name: "setSystemRecipentAddress",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "systemRecipentAddress",
     outputs: [{ internalType: "address", name: "", type: "address" }],
@@ -314,6 +256,28 @@ export const ABI = [
   {
     inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_newID1Addres", type: "address" },
+    ],
+    name: "updateID1",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_systemRecipentAddress",
+        type: "address",
+      },
+    ],
+    name: "updateSystemRecipentAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -333,7 +297,6 @@ export const ABI = [
     outputs: [
       { internalType: "address", name: "referrer", type: "address" },
       { internalType: "uint256", name: "id", type: "uint256" },
-      { internalType: "uint256", name: "currentLevel", type: "uint256" },
       { internalType: "uint256", name: "currentX1Level", type: "uint256" },
       { internalType: "uint256", name: "currentX2Level", type: "uint256" },
       { internalType: "uint256", name: "totalUSDTReceived", type: "uint256" },
@@ -349,7 +312,6 @@ export const ABI = [
     type: "function",
   },
 ];
-
 export const USDTTestNetABI = [
   {
     inputs: [
@@ -363,4 +325,7 @@ export const USDTTestNetABI = [
   },
 ];
 
-export const ContractAdress = "0x38294D9196EA2f3f84E92959fdf56BDB2Bcdb724";
+export const ContractAdress = "0x62FB51899F8728CC0C820BA15f33621e00A9e477";
+
+export const ApiUrl = "http://localhost:5000";
+export const RandomAdress='0x92a0220ADDCC3C07Bedee23844ce65649A2C5961'
