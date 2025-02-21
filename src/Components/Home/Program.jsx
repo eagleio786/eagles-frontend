@@ -1,7 +1,9 @@
 import { GoArrowUpRight } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
-const Program = () => {
+const Program = ({ userData }) => {
+  const lvlx1 = userData?.[2]?.toString();
+  const lvlx2 = userData?.[3]?.toString();
   const numberOfCircles = 12;
   const circles = Array.from({ length: numberOfCircles }, (_, index) => index);
 
@@ -28,7 +30,7 @@ const Program = () => {
           <div className='flex justify-between text-textColor3'>
             <h1 className='text-2xl capitalize'>x1</h1>
             <p className='flex items-center gap-1'>
-              {/* {Price[lvlX1]?.cost || 0} USDT */}
+              {Price[lvlx1]?.cost || 0} USDT
               <span>
                 <GoArrowUpRight className='mb-4' />
               </span>
@@ -38,22 +40,22 @@ const Program = () => {
             {circles.map((_, index) => (
               <div
                 key={index}
-                // className={`w-7 h-7 rounded-full ${
-                //   index < lvlX1 ? 'bg-[#a67912]' : 'bg-[#5c5c5c]'
-                // }`}
+                className={`w-7 h-7 rounded-full ${
+                  index < lvlx1 ? 'bg-[#a67912]' : 'bg-[#5c5c5c]'
+                }`}
               ></div>
             ))}
           </div>
           <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium'>
             <button
-            // className={`text-xs text-white ${
-            //   lvlX1 >= 12 ? 'opacity-50 cursor-not-allowed' : ''
-            // }`}
-            // disabled={lvlX1 >= 12}
+              className={`text-xs text-white ${
+                lvlx1 >= 12 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={lvlx1 >= 12}
             >
-              {/* {lvlX1 >= 12
+              {lvlx1 >= 12
                 ? 'Max Level Reached'
-                : `Upgrade for ${Price[lvlX1 + 1]?.cost || 5} USDT`} */}
+                : `Upgrade for ${Price[lvlx1 + 1]?.cost || 5} USDT`}
             </button>
           </div>
         </div>
@@ -65,7 +67,7 @@ const Program = () => {
           <div className='flex justify-between text-textColor3'>
             <h1 className='text-2xl capitalize'>x2</h1>
             <p className='flex items-center gap-1'>
-              {/* {Price[lvlX2]?.cost || 0} USDT */}
+              {Price[lvlx2]?.cost || 0} USDT
               <span>
                 <GoArrowUpRight className='mb-4' />
               </span>
@@ -75,22 +77,22 @@ const Program = () => {
             {circles.map((_, index) => (
               <div
                 key={index}
-                // className={`w-7 h-7 rounded-full ${
-                //   index < lvlX2 ? 'bg-[#a67912]' : 'bg-[#5c5c5c]'
-                // }`}
+                className={`w-7 h-7 rounded-full ${
+                  index < lvlx2 ? 'bg-[#a67912]' : 'bg-[#5c5c5c]'
+                }`}
               ></div>
             ))}
           </div>
           <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium'>
             <button
-            // className={`text-xs text-white ${
-            //   lvlX2 >= 12 ? 'opacity-50 cursor-not-allowed' : ''
-            // }`}
-            // disabled={lvlX2 >= 12}
+              className={`text-xs text-white ${
+                lvlx2 >= 12 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={lvlx2 >= 12}
             >
-              {/* {lvlX2 >= 12
+              {lvlx2 >= 12
                 ? 'Max Level Reached'
-                : `Upgrade for ${Price[lvlX2 + 1]?.cost || 5} USDT`} */}
+                : `Upgrade for ${Price[lvlx2 + 1]?.cost || 5} USDT`}
             </button>
           </div>
         </div>

@@ -25,6 +25,7 @@ const Home = ({ showBar, setShowBar, user }) => {
   const [showToast, setShowToast] = useState(false);
   const [userData, setUserData] = useState([]);
   const [referralData, setReferralData] = useState(null);
+  const [PT, setPT] = useState('');
 
   const handleCopy = (textToCopy) => {
     navigator.clipboard
@@ -40,7 +41,7 @@ const Home = ({ showBar, setShowBar, user }) => {
     const fetchUserData = async () => {
       try {
         if (!address) return;
-        const result = await users(RandomAdress);
+        const result = await users(address);
         console.log('User Data function Response:', result);
         if (result?.[1]) {
           const userId = result[1];
@@ -51,6 +52,7 @@ const Home = ({ showBar, setShowBar, user }) => {
           );
           console.log('Referral Data API Response:', referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
+          setPT(referralResponse?.data);
         }
       } catch (error) {
         console.error('Fetch error:', error);
@@ -292,8 +294,8 @@ const Home = ({ showBar, setShowBar, user }) => {
           </div>
 
           {/* Additional Components */}
-          <Cards referralData={referralData} userData={userData} />
-          <Program />
+          <Cards PT={PT} userData={userData} />
+          <Program userData={userData} />
           <Members />
           <Contract />
           <History />

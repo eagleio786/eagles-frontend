@@ -5,27 +5,28 @@ import { GoArrowUp } from 'react-icons/go';
 import { ApiUrl } from '../../Config/config';
 
 const Members = () => {
-  // const [totalUsers, setTotalUsers] = useState(0);
-  // const [totalUSDTReceived, setTotalUSDTReceived] = useState(0);
-  // const [totalUSDTReceivedLast24Hours, setTotalUSDTReceivedLast24Hours] =
-  //   useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalUSDTReceived, setTotalUSDTReceived] = useState(0);
+  const [totalUSDTReceivedLast24Hours, setTotalUSDTReceivedLast24Hours] =
+    useState(0);
 
-  // useEffect(() => {
-  //   const fetchUSDTData = async () => {
-  //     try {
-  //       const response = await axios.get(`${ApiUrl}/get24hrsUSDT`); // Replace with your actual API URL
-  //       const data = response.data;
+  useEffect(() => {
+    const fetchUSDTData = async () => {
+      try {
+        const response = await axios.get(`${ApiUrl}/get24hrsUSDT`);
+        const data = response.data;
+        console.log('data', data);
 
-  //       setTotalUsers(data.totalUsers);
-  //       setTotalUSDTReceived(data.totalUSDTReceivedAllTime);
-  //       setTotalUSDTReceivedLast24Hours(data.totalUSDTReceivedLast24Hours);
-  //     } catch (error) {
-  //       console.error('Error fetching USDT data:', error);
-  //     }
-  //   };
+        setTotalUsers(data.totalUsers);
+        setTotalUSDTReceived(data.totalUSDTReceivedAllTime);
+        setTotalUSDTReceivedLast24Hours(data.totalUSDTReceivedLast24Hours);
+      } catch (error) {
+        console.error('Error fetching USDT data:', error);
+      }
+    };
 
-  //   fetchUSDTData();
-  // }, []);
+    fetchUSDTData();
+  }, []);
 
   return (
     <div className='w-full h-full mt-4 pb-3 flex justify-between gap-2'>
@@ -44,10 +45,10 @@ const Members = () => {
             </div>
           </span>
         </h5>
-        {/* <p className='text-[#a67912] text-lg mt-2'>{totalUsers}</p> */}
-        <p className='text-white flex'>
+        <p className='text-[#a67912] text-lg mt-2'>{totalUsers}</p>
+        <p className='flex text-green-600'>
           <GoArrowUp className='text-xl' />
-          {/* <span>{totalUSDTReceivedLast24Hours / 1e18}</span> */}
+          <span>{totalUsers}</span>
         </p>
       </div>
 
@@ -67,10 +68,10 @@ const Members = () => {
             </span>
           </h5>
           <p className='text-[#a67912] text-lg mt-2'>
-            {/* {totalUSDTReceived / 1e18} USDT */}
+            {totalUSDTReceived / 1e18} USDT
           </p>
-          <p className='text-white flex'>
-            {/* <span>+{totalUSDTReceivedLast24Hours / 1e18} USDT</span> */}
+          <p className='flex text-green-600'>
+            <span>+{totalUSDTReceived / 1e18} USDT</span>
           </p>
         </div>
       </div>

@@ -22,6 +22,15 @@ function Profile({ user }) {
       setName(user.name || '');
       setEmail(user.email || '');
       setDescription(user.description || '');
+      if (user.socialLinks) {
+        const links = Object.entries(user.socialLinks).map(
+          ([platform, url]) => ({
+            platform,
+            url,
+          })
+        );
+        setSocialLinks(links);
+      }
     }
   }, [user]);
 
@@ -67,12 +76,53 @@ function Profile({ user }) {
     };
 
     try {
-      const response = await axios.post(
-        'http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile',
-        userData
-      );
-      console.log('Profile Created:', response?.data.data);
-      alert('Profile saved successfully!');
+      let response;
+      if (user?.id) {
+        response = await axios.put(
+          `
+          ${ApiUrl}/update/profile/${user.id}`,
+          userData
+        );
+        console.log('Profile Updated:', response?.data.data);
+
+        setName(response?.data.data.name || name);
+        setEmail(response?.data.data.email || email);
+        setDescription(response?.data.data.description || description);
+        if (response?.data.data.socialLinks) {
+          const links = Object.entries(response?.data.data.socialLinks).map(
+            ([platform, url]) => ({
+              platform,
+              url,
+            })
+          );
+          setSocialLinks(links);
+        }
+      } else {
+        // If the user doesn't have a profile, create it
+        response = await axios.post(
+          'http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile',
+          userData
+        );
+        console.log('Profile Created:', response?.data.data);
+
+        // Update local state with the new data
+        setName(response?.data.data.name || name);
+        setEmail(response?.data.data.email || email);
+        setDescription(response?.data.data.description || description);
+        if (response?.data.data.socialLinks) {
+          const links = Object.entries(response?.data.data.socialLinks).map(
+            ([platform, url]) => ({
+              platform,
+              url,
+            })
+          );
+          setSocialLinks(links);
+        }
+      }
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       navigate('/home');
     } catch (error) {
       console.error(
@@ -151,6 +201,11 @@ function Profile({ user }) {
               >
                 Add social page
               </button>
+              {socialLinks.map((link, index) => (
+                <div key={index} className='text-white'>
+                  {link.platform}: {link.url}
+                </div>
+              ))}
             </div>
           </div>
         </div>

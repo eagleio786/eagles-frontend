@@ -4,14 +4,16 @@ import UserTable from '../Components/Lvl1/UserTable';
 import { useEffect, useState } from 'react';
 import { GoPeople } from 'react-icons/go';
 import { RiLockLine } from 'react-icons/ri';
-import { activateLevel, getTxn } from '../Config/Contract-Methods';
+import { activateLevel, getTxn, users } from '../Config/Contract-Methods';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
-import { ApiUrl } from '../Config/config';
+import { ApiUrl, RandomAdress } from '../Config/config';
 import { USDTapprove } from '../Config/Contract-Methods';
+
 const Levelx2 = () => {
   const [apiData, setApiData] = useState(null);
   const [activeLevel, setActiveLevel] = useState(1);
+  const [data, setData] = useState('');
   const { isConnected, address } = useAccount();
   const [referredUsersCountByLevel, setReferredUsersCountByLevel] = useState(
     {}
@@ -22,13 +24,15 @@ const Levelx2 = () => {
       try {
         const result = await users(address);
         console.log('User Data API Response:', result);
+        const level = result[3]?.toString();
+        setActiveLevel(level);
+        setData(result);
 
         if (result?.[1]) {
           const userId = result[1];
-          const response = await axios.get(`${ApiUrl}/getalldata/${id}`);
+          const response = await axios.get(`${ApiUrl}/getalldata/${userId}`);
 
           setApiData(response.data);
-          setActiveLevel(response.data?.data?.currentX1Level || 1);
 
           const referralUsers = response.data?.referredUsers || [];
           const connectedUserLevel = response.data?.data?.currentX1Level;
@@ -97,16 +101,16 @@ const Levelx2 = () => {
   return (
     <>
       <div className='text-white p-2 m-4 hello'>
-        <p>ID {345} / Theeagles.io x2 (1/12)</p>
+        <p>ID {data?.[1]?.toString()} / Theeagles.io x2 (1/12)</p>
         <div className='flex justify-between p-2 m-4 items-center'>
           <p>Theeagles.io x2</p>
-          <p>{234} USDT</p>
+          <p>{updatedLevels[0].cost} USDT</p>
         </div>
       </div>
       <div className='x1program'>
         {updatedLevels.map((level) => {
           const isActive = level.level <= activeLevel;
-          const isNextLevel = level.level === activeLevel + 1;
+          const isNextLevel = level.level === Number(activeLevel) + 1;
           const currentUsers = level.maxUsers % 4;
           const filteredUsersCount =
             referredUsersCountByLevel[level.level] || 0;

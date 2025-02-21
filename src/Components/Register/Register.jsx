@@ -318,7 +318,7 @@ const Register = () => {
                   <p>
                     Registration fee is charged once when enrolling on the
                     platform and is allocated to the maintenance and development
-                    of theeagles ecosystem
+                    of theeagles <span onClick={handleClick}>ecosystem</span>
                   </p>
                 </div>
               </span>{' '}

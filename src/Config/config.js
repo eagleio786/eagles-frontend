@@ -305,13 +305,17 @@ export const ABI = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+    inputs: [
+      { internalType: 'address', name: '_reciver', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
     name: 'withdrawUSDT',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
 ];
+
 export const USDTTestNetABI = [
   {
     inputs: [
@@ -325,7 +329,7 @@ export const USDTTestNetABI = [
   },
 ];
 
-export const ContractAdress = '0x62FB51899F8728CC0C820BA15f33621e00A9e477';
+export const ContractAdress = '0x59EBC3795692Cc4D9C847787298Afb2a53d4Aac7';
 
-export const ApiUrl = 'http://localhost:5000';
+export const ApiUrl = 'http://ec2-13-40-17-99.eu-west-2.compute.amazonaws.com/';
 export const RandomAdress = '0x92a0220ADDCC3C07Bedee23844ce65649A2C5961';
