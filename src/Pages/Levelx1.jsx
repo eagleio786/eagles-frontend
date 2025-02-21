@@ -92,7 +92,7 @@ const Levelx1 = () => {
       const usdtapp_recipt = await getTxn(usdtApp);
       const approvetx = await activateLevel("1", level);
       const receipt = await getTxn(approvetx);
-      if (!receipt) {
+      if (!receipt || !usdtapp_recipt) {
         console.log("Level activation failed");
         return;
       }
