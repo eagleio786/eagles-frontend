@@ -283,8 +283,8 @@ const Register = () => {
                   ? 'cursor-not-allowed opacity-50'
                   : 'cursor-pointer'
               }`}
-              disabled={!isConnected || loading}
-              onClick={handleClick}
+              // disabled={!isConnected || loading}
+              // onClick={handleClick}
             >
               {loading ? (
                 <div role='status'>
@@ -356,7 +356,7 @@ const Register = () => {
                 </span>
                 .
               </p>
-              <p onClick={handleClick}>Registration</p>
+              {/* <p onClick={handleClick}>Registration</p> */}
             </div>
           </div>
         </div>
