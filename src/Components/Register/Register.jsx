@@ -283,8 +283,7 @@ const Register = () => {
                   ? 'cursor-not-allowed opacity-50'
                   : 'cursor-pointer'
               }`}
-              // disabled={!isConnected || loading}
-              // onClick={handleClick}
+              disabled={!isConnected || loading}
             >
               {loading ? (
                 <div role='status'>
@@ -401,6 +400,7 @@ const Register = () => {
             Got a Question?{' '}
             <span className='text-textColor3 font-medium'>Contact Support</span>
           </p>
+          <span onClick={handleClick}></span>
         </div>
       </div>
       );
