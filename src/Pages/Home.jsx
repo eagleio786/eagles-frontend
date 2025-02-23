@@ -271,8 +271,6 @@ const Home = ({ showBar, setShowBar, user }) => {
               )}
             </div>
           </div>
-
-          {/* Referral Link Section */}
           <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
