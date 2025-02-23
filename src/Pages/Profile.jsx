@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import { ApiUrl } from "../Config/config";
 
 function Profile({ user }) {
   const { address } = useAccount();
