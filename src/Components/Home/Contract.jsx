@@ -14,8 +14,7 @@ const Contract = ({ ApiUrl }) => {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/getAllUsers`).then((res) => {
-      console.log("All Users Response:", res.data);
+    axios.get(`https://reffaralmoney.com/getAllUsers`).then((res) => {
       const users = res.data.data;
       setTotalUsers(users.length);
 

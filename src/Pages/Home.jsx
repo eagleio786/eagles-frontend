@@ -46,7 +46,6 @@ const Home = ({ showBar, setShowBar, user }) => {
       try {
         if (!address) return;
         const result = await users(address);
-        console.log("User Data function Response:", result);
         if (result?.[1]) {
           const userId = result[1];
           localStorage.setItem("id", result[1].toString());

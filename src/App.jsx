@@ -47,9 +47,6 @@ function App() {
   const location = useLocation();
   const { address, isConnected } = useAccount();
   const [user, setUser] = useState("");
-
-  console.log(user, "user");
-
   useEffect(() => {
     if (isConnected && address && !user) {
       fetchUser(address);

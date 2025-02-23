@@ -67,8 +67,6 @@ function Landingpage() {
     axios
       .get(`${ApiUrl}/getAllUsers`)
       .then((res) => {
-        console.log("all users: ", res.data);
-
         const totalParticipants = Array.isArray(res.data.data)
           ? res.data.data.length
           : res.data.data.length || 0;

@@ -44,10 +44,8 @@ const Home = ({ showBar, setShowBar }) => {
     const fetchUserData = async () => {
       try {
         const add = await getIdToAddress(id);
-        console.log("User Data function Response:", add);
         if (!add) return;
         const result = await users(add);
-        console.log("User Data function Response:", result);
         if (result?.[1]) {
           const userId = result[1];
           localStorage.setItem("id", result[1].toString());
@@ -55,7 +53,6 @@ const Home = ({ showBar, setShowBar }) => {
           const referralResponse = await axios.get(
             `${ApiUrl}/refferal/${userId}`
           );
-          console.log("Referral Data API Response:", referralResponse.data);
           setReferralData(referralResponse.data?.data?.[0] || null);
           setPT(referralResponse?.data);
         }
@@ -111,9 +108,6 @@ const Home = ({ showBar, setShowBar }) => {
       image: "/assets/AuthImages/connect.png",
     },
   ];
-
-  console.log("refefffff", PT);
-
   return (
     <>
       {showToast && (

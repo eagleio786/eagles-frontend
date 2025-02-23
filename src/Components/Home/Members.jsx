@@ -15,8 +15,6 @@ const Members = () => {
       try {
         const response = await axios.get(`${ApiUrl}/get24hrsUSDT`);
         const data = response.data;
-        console.log("earning ", data);
-
         setTotalUsers(data.totalUsers);
         setTotalUSDTReceived(data.totalUSDTReceivedAllTime);
         setTotalUSDTReceivedLast24Hours(data.totalUSDTReceivedLast24Hours);

@@ -19,7 +19,6 @@ const History = ({ id }) => {
     axios
       .get(`${ApiUrl}/getCompleteReferralChain/${id ? id : userID}`)
       .then((res) => {
-        console.log("Complete Referral Chain Response:", res.data);
         const formattedData = res.data.data.referralChain.map((data) => {
           const totalUsdt = (parseFloat(data.totalUSDTReceived.$numberDecimal) / 1e18).toFixed(2);
           const level = "x1";

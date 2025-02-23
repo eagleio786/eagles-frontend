@@ -43,7 +43,6 @@ export const buyNewLevelFor = async (address, matrix, level) => {
     functionName: 'buyNewLevelFor',
     args: [address, matrix, level],
   });
-  // console.log('buyNewLevelFor :', result);
   return result;
 };
 //4
@@ -54,7 +53,6 @@ export const register = async (address) => {
     functionName: 'register',
     args: [address],
   });
-  // console.log('register :', result);
   return result;
 };
 //5
@@ -65,7 +63,6 @@ export const registrationFor = async (userAddress, refferAddress) => {
     functionName: 'registrationFor',
     args: [userAddress, refferAddress],
   });
-  // console.log('registrationFor :', result);
   return result;
 };
 //6
@@ -96,7 +93,6 @@ export const getTotalUSDTReceived = async (adress) => {
     functionName: 'getTotalUSDTReceived',
     args: [adress]
   });
-  // console.log('getTotalUSDTReceived :', result);
   return result;
 };
 
@@ -107,7 +103,6 @@ export const getCurrentX1Level = async (adress) => {
     functionName: 'getCurrentX1Level',
     args: [adress]
   });
-  // console.log('getCurrentX1Level :', result);
   return result;
 };
 
@@ -118,7 +113,6 @@ export const getCurrentX2Level = async (adress) => {
     functionName: 'getCurrentX2Level',
     args: [adress]
   });
-  // console.log('getCurrentX2Level :', result);
   return result;
 };
 ///////////////////////////////////////////////////READ METHODS///////////////////////////////////
@@ -184,15 +178,13 @@ export const id1 = async () => {
 };
 //9
 export const getIdToAddress = async (id) => {
-  console.log("id comming from frontend is ",id);
-  
+
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: 'idToAddress',
     args: [id],
   });
-  console.log('idToAddress :', result);
   return result;
 };
 //10

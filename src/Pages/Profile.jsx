@@ -83,8 +83,6 @@ function Profile({ user }) {
           `${ApiUrl}/update/profile/${user.id}`,
           userData
         );
-        console.log("Profile Updated:", response?.data.data);
-
         setName(response?.data.data.name || name);
         setEmail(response?.data.data.email || email);
         setDescription(response?.data.data.description || description);
@@ -103,8 +101,6 @@ function Profile({ user }) {
           "http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile",
           userData
         );
-        console.log("Profile Created:", response?.data.data);
-
         // Update local state with the new data
         setName(response?.data.data.name || name);
         setEmail(response?.data.data.email || email);

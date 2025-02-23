@@ -21,9 +21,6 @@ const Program = ({ userData, preview }) => {
     { cost: 2500 },
     { cost: 5000 },
   ];
-
-  console.log("program preview", preview);
-
   return (
     <div className="w-full h-full mt-4 pb-3 flex justify-between gap-2">
       {/* X1 Program */}

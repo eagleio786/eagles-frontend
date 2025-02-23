@@ -14,8 +14,6 @@ const Cards = ({ PT, userData }) => {
 
   useEffect(() => {
     axios.get(`${ApiUrl}/getCompleteReferralChain/${PT.id}`).then((res) => {
-      console.log("Complete Referral Chain Response:", res.data);
-
       const referralChain = res.data.data.referralChain;
       const last24Hours = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
 

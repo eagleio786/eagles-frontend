@@ -206,7 +206,6 @@ const Register = () => {
       image: '/assets/AuthImages/connect.png',
     },
   ];
-  // console.log("LOading state      ssssssssssssssssssssss", loading);
 
   return (
     <>
@@ -284,6 +283,7 @@ const Register = () => {
                   : 'cursor-pointer'
               }`}
               disabled={!isConnected || loading}
+              onClick={handleClick}
             >
               {loading ? (
                 <div role='status'>
@@ -305,7 +305,7 @@ const Register = () => {
                   </svg>
                 </div>
               ) : (
-                'Wait'
+                'Loading'
               )}
             </button>
             <button className='flex items-center justify-center p-2 mt-2 text-gray-500   rounded-lg gap-1'>
@@ -355,7 +355,7 @@ const Register = () => {
                 </span>
                 .
               </p>
-              {/* <p onClick={handleClick}>Registration</p> */}
+              <p onClick={handleClick}>Registration</p>
             </div>
           </div>
         </div>
@@ -400,7 +400,7 @@ const Register = () => {
             Got a Question?{' '}
             <span className='text-textColor3 font-medium'>Contact Support</span>
           </p>
-          <span onClick={handleClick}></span>
+   
         </div>
       </div>
       );

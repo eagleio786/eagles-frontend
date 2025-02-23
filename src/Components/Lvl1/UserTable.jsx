@@ -7,8 +7,6 @@ const UserTable = ({apiData}) => {
 
   const allRef = apiData?.referredUsers || []; 
 
-  console.log('SpecificUserdata', allRef)
-
   const handleCopy = (textToCopy) => {
     navigator.clipboard
       .writeText(textToCopy)

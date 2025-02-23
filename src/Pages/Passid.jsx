@@ -27,7 +27,6 @@ const Passid = () => {
       if (!address) return;
       try {
         const result = await users(address);
-        console.log("User Data API Response:", result);
         setUserId(result[1]);
       } catch (error) {
         console.error("Error fetching user data:", error);

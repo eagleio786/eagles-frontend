@@ -23,7 +23,6 @@ const Levelx2 = () => {
     const fetchData = async () => {
       try {
         const result = await users(address);
-        console.log("User Data API Response:", result);
         const level = result[3]?.toString();
         setActiveLevel(level);
         setData(result);
@@ -137,8 +136,8 @@ const Levelx2 = () => {
                           key={circleIndex}
                         >
                           <div
-                            className={` w-full h-full rounded-full bg-white ${
-                              currentUsers >= circleIndex ? "filled" : ""
+                            className={`w-full h-full rounded-full bg-white ${
+                              currentUsers >= circleIndex ? "filledcircle" : ""
                             }`}
                           ></div>
                         </div>
@@ -154,8 +153,8 @@ const Levelx2 = () => {
                         >
                           <div
                             className={`w-full h-full bg-white rounded-full ${
-                              currentUsers >= circleIndex ? "filled" : ""
-                            } `}
+                              currentUsers >= circleIndex ? "filledcircle" : ""
+                            }`}
                           ></div>
                         </div>
                       ))}

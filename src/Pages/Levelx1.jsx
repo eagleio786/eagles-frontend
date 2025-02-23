@@ -81,7 +81,6 @@ const Levelx1 = () => {
 
   const handleActivateNextLevel = async (level, cost) => {
     try {
-      console.log("level coming", level, cost);
       const val = (cost * 1e18).toString();
       const usdtApp = await USDTapprove(val);
       await getTxn(usdtApp);
@@ -125,9 +124,9 @@ const Levelx1 = () => {
                 <div className="circles-x1">
                   <div className="all-circle">
                     {[1, 2, 3, 4].map((circleIndex) => {
-                      const isFilled = currentUsers >= circleIndex;
-                      const isRecycled =
-                        filteredUsersCount % 4 === 0 && filteredUsersCount > 0;
+                      const isRecycled = filteredUsersCount % 4 === 0;
+                      const isFilled =
+                        !isRecycled && circleIndex <= currentUsers;
 
                       return (
                         <div
@@ -139,8 +138,8 @@ const Levelx1 = () => {
                               isRecycled
                                 ? "bg-white"
                                 : isFilled
-                                ? "bg-black"
-                                : "bg-transparent"
+                                ? "filledcircle"
+                                : "bg-white"
                             }`}
                           ></div>
                         </div>
