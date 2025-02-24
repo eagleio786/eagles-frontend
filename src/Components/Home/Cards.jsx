@@ -39,7 +39,6 @@ const Cards = ({ PT, userData }) => {
       ).length;
       setPartner24hCount(partner24hCountss);
 
-      // Recursive function to get total team count (All levels)
       const getTotalTeamCount = (chain) => {
         let count = chain.length;
         for (let user of chain) {
