@@ -14,12 +14,12 @@ const Cards = ({ PT, userData }) => {
   const totalProfit = userData?.[4]?.toString() / 1e18;
   const userId = userData[1]?.toString();
 
-  console.log('User', userId);
+  // console.log('User', userId);
 
   const apiFun = async () => {
     try {
       const response = await axios.get(`${ApiUrl}/refferal/${userId}`);
-      console.log('rrrrrrrrrrrrrrrrrrrr', response.data);
+      // console.log('rrrrrrrrrrrrrrrrrrrr', response.data);
       setPar(response?.data?.TotalPartners);
       setPar24(response?.data?.Last24hrsPartners);
     } catch (error) {

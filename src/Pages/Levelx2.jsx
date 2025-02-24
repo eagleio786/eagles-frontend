@@ -1,23 +1,29 @@
-import { HiOutlineArrowPath } from "react-icons/hi2";
-import Notify from "../Components/Lvl1/Notify";
-import UserTable from "../Components/Lvl1/UserTable";
-import { useEffect, useState } from "react";
-import { GoPeople } from "react-icons/go";
-import { RiLockLine } from "react-icons/ri";
-import { activateLevel, getTxn, users } from "../Config/Contract-Methods";
-import axios from "axios";
-import { useAccount } from "wagmi";
-import { ApiUrl, RandomAdress } from "../Config/config";
-import { USDTapprove } from "../Config/Contract-Methods";
+import { HiOutlineArrowPath } from 'react-icons/hi2';
+import Notify from '../Components/Lvl1/Notify';
+import UserTable from '../Components/Lvl1/UserTable';
+import { useEffect, useState } from 'react';
+import { GoPeople } from 'react-icons/go';
+import { RiLockLine } from 'react-icons/ri';
+import {
+  activateLevel,
+  getSlotFilled,
+  getTxn,
+  users,
+} from '../Config/Contract-Methods';
+import axios from 'axios';
+import { useAccount } from 'wagmi';
+import { ApiUrl, RandomAdress } from '../Config/config';
+import { USDTapprove } from '../Config/Contract-Methods';
 
 const Levelx2 = () => {
   const [apiData, setApiData] = useState(null);
   const [activeLevel, setActiveLevel] = useState(1);
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
   const { isConnected, address } = useAccount();
   const [referredUsersCountByLevel, setReferredUsersCountByLevel] = useState(
     {}
   );
+  const [slotsData, setSlotsData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,8 +52,17 @@ const Levelx2 = () => {
 
           setReferredUsersCountByLevel(userCountByLevel);
         }
+
+        if (address) {
+          let newSlotsData = {};
+          for (let i = 1; i <= 12; i++) {
+            const slotData = await getSlotFilled(address, '2', i.toString());
+            newSlotsData[`level${i}`] = slotData;
+          }
+          setSlotsData(newSlotsData);
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -85,87 +100,99 @@ const Levelx2 = () => {
       const val = cost * (1e18).toString();
       const usdtApp = await USDTapprove(val);
       const usdtapp_recipt = await getTxn(usdtApp);
-      const approvetx = await activateLevel("2", level);
+      const approvetx = await activateLevel('2', level);
       const receipt = await getTxn(approvetx);
       if (!receipt) {
-        console.log("Level activation failed");
+        console.log('Level activation failed');
         return;
       }
       setActiveLevel((prevLevel) => Math.min(prevLevel + 1, 12));
     } catch (err) {
-      console.error("Error activating level:", err);
+      console.error('Error activating level:', err);
     }
   };
 
   return (
     <>
-      <div className="text-white p-2 m-4 hello">
-        <p>ID {data?.[1]?.toString()} / Theeagles.io x2 (1/12)</p>
-        <div className="flex justify-between p-2 m-4 items-center">
-          <p>Theeagles.io x2</p>
-          <p>{updatedLevels[0].cost} USDT</p>
+      <div className='text-white p-2 m-4 hello'>
+        <div className='mb-2 flex justify-between pe-7'>
+          <h1>Theeagles.io user is</h1>
+          ID {data?.[1]?.toString()}
         </div>
+        <p>
+          ID {data?.[1]?.toString()} / Theeagles.io x2 ({activeLevel}/12)
+        </p>
       </div>
-      <div className="x1program">
+      <div className='x1program'>
         {updatedLevels.map((level) => {
           const isActive = level.level <= activeLevel;
           const isNextLevel = level.level === Number(activeLevel) + 1;
-          const currentUsers = level.maxUsers % 4;
-          const filteredUsersCount =
-            referredUsersCountByLevel[level.level] || 0;
+          const slotData = slotsData[`level${level.level}`] || [0, 0];
+
+          // console.log('slotDatahhhhh', slotData);
+
           return (
-            <div className="levels" key={level.level}>
-              <div className="level-value">
-                <p className="flex flex-shrink-0">Level {level.level}</p>
-                <div className="logo-usdt flex flex-shrink-0">
+            <div className='levels' key={level.level}>
+              <div className='level-value'>
+                <p>Level {level.level}</p>
+                <div className='logo-usdt'>
                   <img
-                    src="/assets/LoginImages/tether.png"
-                    alt="Tether Logo"
-                    className="h-[12px] w-auto"
+                    src='/assets/LoginImages/tether.png'
+                    alt='Tether Logo'
+                    className='h-[12px] w-auto'
                   />
                   <p>{level.cost} USDT</p>
                 </div>
               </div>
+
               {isActive ? (
-                <div className="circles-x1">
-                  <div className="all-circle">
-                    <div className="flex-row2">
-                      {[1].map((circleIndex) => (
-                        <div
-                          className="circle circle2x2 bg-transparent p-0.5 flex-shrink-0"
-                          key={circleIndex}
-                        >
+                <div className='circles-x1'>
+                  <div className='all-circle'>
+                    <div className='flex-row2'>
+                      {[1].map((circleIndex) => {
+                        const slotFilled = Number(slotData[0]);
+                        const isFilled = circleIndex <= slotFilled;
+                        return (
                           <div
-                            className={`w-full h-full rounded-full bg-white ${
-                              currentUsers >= circleIndex ? "filledcircle" : ""
-                            }`}
-                          ></div>
-                        </div>
-                      ))}
+                            className='circle circle2x2 bg-transparent p-0.5 flex-shrink-0'
+                            key={circleIndex}
+                          >
+                            <div
+                              className={`w-full h-full rounded-full bg-white ${
+                                isFilled ? 'filledcircle' : ''
+                              }`}
+                            ></div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div className="flex-row2">
-                      {[2, 3, 4].map((circleIndex) => (
-                        <div
-                          className={`circle flex-shrink-0 ${
-                            circleIndex === 4 ? "circle2x2" : ""
-                          } bg-transparent p-0.5`}
-                          key={circleIndex}
-                        >
+                    <div className='flex-row2'>
+                      {[2, 3, 4].map((circleIndex) => {
+                        const slotFilled = Number(slotData[0]);
+                        const isFilled = circleIndex <= slotFilled;
+                        return (
                           <div
-                            className={`w-full h-full bg-white rounded-full ${
-                              currentUsers >= circleIndex ? "filledcircle" : ""
-                            }`}
-                          ></div>
-                        </div>
-                      ))}
+                            className={`circle flex-shrink-0 ${
+                              circleIndex === 4 ? 'circle2x2' : ''
+                            } bg-transparent p-0.5`}
+                            key={circleIndex}
+                          >
+                            <div
+                              className={`w-full h-full bg-white rounded-full ${
+                                isFilled ? 'filledcircle' : ''
+                              }`}
+                            ></div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="locked-level">
+                <div className='locked-level'>
                   {isNextLevel ? (
                     <button
-                      className="active-btn"
+                      className='active-btn'
                       onClick={() =>
                         handleActivateNextLevel(level.level, level.cost)
                       }
@@ -178,14 +205,16 @@ const Levelx2 = () => {
                 </div>
               )}
 
-              <div className="level-value">
-                <div className="logo-usdt">
+              <div className='level-value'>
+                <div className='logo-usdt'>
                   <GoPeople />
-                  {filteredUsersCount}
+                  {slotData[1] >= 1
+                    ? Number(slotData[1]) * 4 + Number(slotData[0])
+                    : slotData[0]}
                 </div>
-                <div className="logo-usdt">
+                <div className='logo-usdt'>
                   <HiOutlineArrowPath />
-                  {level.recycleCount}
+                  {slotData[1] || 0}
                 </div>
               </div>
             </div>

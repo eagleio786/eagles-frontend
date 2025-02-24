@@ -28,6 +28,7 @@ const Home = ({ showBar, setShowBar, user }) => {
   const [userData, setUserData] = useState([]);
   const [referralData, setReferralData] = useState(null);
   const [PT, setPT] = useState('');
+  const [uplineID, setUplineID] = useState('');
 
   const userID = localStorage.getItem('id');
 
@@ -45,15 +46,17 @@ const Home = ({ showBar, setShowBar, user }) => {
     const fetchUserData = async () => {
       try {
         if (!address) return;
+
         const result = await users(address);
         if (result?.[1]) {
-          const userId = result[1];
-          localStorage.setItem('id', result[1].toString());
+          const userId = result[1].toString();
+          localStorage.setItem('id', userId);
           setUserData(result);
+
           const referralResponse = await axios.get(
             `${ApiUrl}/refferal/${userId}`
           );
-          setReferralData(referralResponse.data?.data?.[0] || null);
+          setReferralData(referralResponse?.data || null);
           setPT(referralResponse?.data);
         }
       } catch (error) {
@@ -65,6 +68,28 @@ const Home = ({ showBar, setShowBar, user }) => {
 
     if (isConnected) fetchUserData();
   }, [address, isConnected]);
+
+  // Second effect for fetching upline address after referralData updates
+  useEffect(() => {
+    const fetchUplineData = async () => {
+      if (!referralData?.UplineAdress) return;
+
+      try {
+        const result2 = await users(referralData.UplineAdress);
+        // console.log('Result from users:', result2);
+
+        if (result2?.[1]) {
+          const userId = result2[1]?.toString();
+          // console.log('Upline userId:', userId);
+          setUplineID(userId);
+        }
+      } catch (error) {
+        console.error('Upline fetch error:', error);
+      }
+    };
+
+    if (referralData) fetchUplineData();
+  }, [referralData]);
 
   useEffect(() => {
     if (isConnected && chain?.id !== chainConfig[11155111]?.id) {
@@ -229,34 +254,33 @@ const Home = ({ showBar, setShowBar, user }) => {
               {showDetails && userData?.[1] > 1 && (
                 <div className='mt-1'>
                   <div className='flex gap-x-1 items-center text-sm text-textColor3'>
-                    {referralData?.referrer ? (
+                    {referralData?.UplineAdress ? (
                       <p>
-                        {`${referralData.referrer.slice(
+                        {`${referralData.UplineAdress.slice(
                           0,
                           6
-                        )}...${referralData.referrer.slice(-6)}`}
+                        )}...${referralData.UplineAdress.slice(-6)}`}
                       </p>
                     ) : (
                       <p>No Referrer</p>
                     )}
 
                     <IoCopy
-                      onClick={() => handleCopy(referralData?.referrer)}
+                      onClick={() => handleCopy(referralData?.UplineAdress)}
                       className='cursor-pointer'
                     />
                   </div>
 
-                  <div className='flex gap-2 items-center text-textColor3 text-sm mt-2'>
-                    <p>
-                      Joined{' '}
-                      {referralData?.createdAt
-                        ? new Date(referralData.createdAt).toLocaleDateString()
-                        : ''}
-                    </p>
-                    <p className='px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic'>
-                      ID {referralData?.id}
-                    </p>
-                  </div>
+                  {uplineID ? (
+                    <div className='flex gap-2 items-center text-textColor3 text-sm mt-2'>
+                      <p>Joined by</p>
+                      <p className='px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic'>
+                        ID {uplineID}
+                      </p>
+                    </div>
+                  ) : (
+                    ''
+                  )}
 
                   {referralData?.referrerId && (
                     <div className='mt-2 text-textColor3 text-sm flex items-center gap-2'>

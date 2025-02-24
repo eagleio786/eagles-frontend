@@ -91,7 +91,7 @@ export const getTotalUSDTReceived = async (adress) => {
     abi: ABI,
     address: ContractAdress,
     functionName: 'getTotalUSDTReceived',
-    args: [adress]
+    args: [adress],
   });
   return result;
 };
@@ -101,7 +101,7 @@ export const getCurrentX1Level = async (adress) => {
     abi: ABI,
     address: ContractAdress,
     functionName: 'getCurrentX1Level',
-    args: [adress]
+    args: [adress],
   });
   return result;
 };
@@ -111,7 +111,7 @@ export const getCurrentX2Level = async (adress) => {
     abi: ABI,
     address: ContractAdress,
     functionName: 'getCurrentX2Level',
-    args: [adress]
+    args: [adress],
   });
   return result;
 };
@@ -178,7 +178,6 @@ export const id1 = async () => {
 };
 //9
 export const getIdToAddress = async (id) => {
-
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
@@ -249,6 +248,17 @@ export const users = async (address) => {
     address: ContractAdress,
     functionName: 'users',
     args: [address],
+  });
+  return result;
+};
+
+//16
+export const getSlotFilled = async (address, matrix, level) => {
+  const result = await readContract(config, {
+    abi: ABI,
+    address: ContractAdress,
+    functionName: 'getSlotsFilled',
+    args: [address, matrix, level],
   });
   return result;
 };

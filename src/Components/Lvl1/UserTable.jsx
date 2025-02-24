@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { IoCopy } from 'react-icons/io5';
 import { RiShare2Line } from 'react-icons/ri';
 
-const UserTable = ({apiData}) => {
+const UserTable = ({ apiData }) => {
   const [showToast, setShowToast] = useState(false);
 
-  const allRef = apiData?.referredUsers || []; 
+  const allRef = apiData?.referredUsers || [];
 
   const handleCopy = (textToCopy) => {
     navigator.clipboard
@@ -40,8 +40,8 @@ const UserTable = ({apiData}) => {
                 <th className='py-3 ps-2 w-1/5 text-left'>Type</th>
                 <th className='py-3 text-left w-2/5'>Date</th>
                 <th className='py-3 text-left w-1/5'>ID</th>
-                <th className='py-3 text-left w-1/5'>Level</th>
-                <th className='py-3 text-left '>Wallet</th>
+                <th className='py-3 text-left w-1/5'>Address</th>
+                <th className='py-3 text-left '>Profit</th>
               </tr>
             </thead>
             <tbody className='overflow-x-auto'>
@@ -51,13 +51,14 @@ const UserTable = ({apiData}) => {
                     <div className='h-5 w-5 rounded-full bg-[#d9d9d9]'></div>
                   </td>
                   <td className='w-1/5'>
-                  {user?.createdAt
-                        ? new Date(user.createdAt).toLocaleDateString()
-                        : ""}</td>
+                    {user?.createdAt
+                      ? new Date(user.createdAt).toLocaleDateString()
+                      : ''}
+                  </td>
                   <td className='w-1/5'>{user.id}</td>
-                  <td className='w-1/5'>{user.currentLevel}</td>
+                  <td className='w-1/5'>{user.Personal.slice(0, 8) + '...'}</td>
                   <td className='w-[180px] translate-y-1/2 grid grid-cols-2 gap-4'>
-                    {user.totalUSDTReceived.$numberDecimal/1e18}
+                    {user.totalUSDTReceived.$numberDecimal / 1e18}
                     <span className='flex gap-2'>
                       <IoCopy
                         className='text-textColor3 text-xl'
