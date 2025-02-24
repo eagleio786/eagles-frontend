@@ -49,7 +49,6 @@ const Cards = ({ PT, userData }) => {
         return count;
       };
 
-      // Get full team count including all levels
       const fullTeamCount = getTotalTeamCount(referralChain);
       setTeamCount(fullTeamCount);
 
