@@ -305,7 +305,7 @@ const Register = () => {
                   </svg>
                 </div>
               ) : (
-                'Loading'
+                'Registration'
               )}
             </button>
             <button className='flex items-center justify-center p-2 mt-2 text-gray-500   rounded-lg gap-1'>
