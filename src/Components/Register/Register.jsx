@@ -285,8 +285,7 @@ const Register = () => {
               disabled={!isConnected || loading}
               onClick={handleClick}
             >
-              {/* Nothing changed */}
-              {/* just button text updated */}
+ 
               {loading ? (
                 <div role="status">
                   <svg
