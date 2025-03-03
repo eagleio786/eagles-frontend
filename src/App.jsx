@@ -82,7 +82,7 @@ function App() {
 
   return (
     <>
-      <div className="grid h-screen grid-rows-[auto_1fr_auto]">
+      {/* <div className="grid h-screen grid-rows-[auto_1fr_auto]"> */}
         <ScrollToTop />
         <NumberRedirect />
         {!hideNavbarFooterRoutes.includes(location.pathname) && (
@@ -121,7 +121,7 @@ function App() {
           <Route path="/redirect" element={<Register />} />
         </Routes>
         {!hideNavbarFooterRoutes.includes(location.pathname) && <Footer />}
-      </div>
+      {/* </div> */}
     </>
   );
 }
