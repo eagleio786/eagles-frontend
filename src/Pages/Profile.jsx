@@ -12,7 +12,7 @@ function Profile({ user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
+  const [email, setEmail] = useState(user?.email);
   const [description, setDescription] = useState(user?.description || "");
   const [socialLinks, setSocialLinks] = useState([]);
   const [currentLink, setCurrentLink] = useState("");
@@ -109,7 +109,7 @@ function Profile({ user }) {
       name,
       email,
       description,
-      walletAdress: address,
+      walletAddress: address,
       socialLinks: formattedSocialLinks,
     };
 
