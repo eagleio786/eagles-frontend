@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { BsShare } from "react-icons/bs";
 import { GoArrowUp } from "react-icons/go";
 import { ApiUrl } from "../../Config/config";
@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { useQuery } from "@apollo/client";
 import client from "../../Pages/apolloClient";
 import { GET_FUNDS_DISTRIBUTED } from "../../Pages/queries";
+
 const Cards = ({ PT, userData }) => {
   const [partner24hCount, setPartner24hCount] = useState(0);
   const [team24hCount, setTeam24hCount] = useState(0);
@@ -18,24 +19,22 @@ const Cards = ({ PT, userData }) => {
   const userId = userData[1]?.toString();
   const { address } = useAccount();
 
-  // console.log('User', userId);
-
   const apiFun = async () => {
     try {
       const response = await axios.get(`${ApiUrl}/refferal/${userId}`);
-      // console.log('rrrrrrrrrrrrrrrrrrrr', response.data);
       setPar(response?.data?.TotalPartners);
       setPar24(response?.data?.Last24hrsPartners);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     axios.get(`${ApiUrl}/getCompleteReferralChain/${userId}`).then((res) => {
       const referralChain = res.data.data.referralChain;
       const last24Hours = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
 
-      // 1. Partner 24h Count: Direct referrals within the last 24 hours
+      // Direct referrals within the last 24 hours
       const partner24hCountss = referralChain.filter(
         (user) =>
           user.referrer === PT.Personal &&
@@ -53,10 +52,9 @@ const Cards = ({ PT, userData }) => {
         return count;
       };
 
-      const fullTeamCount = getTotalTeamCount(referralChain);
-      setTeamCount(fullTeamCount);
+      setTeamCount(getTotalTeamCount(referralChain));
 
-      // 2. Team 24h Count: Recursive team calculation in last 24h
+      // Recursive team calculation in last 24h
       const getTeam24hCount = (chain) => {
         let count = 0;
         for (let user of chain) {
@@ -70,10 +68,9 @@ const Cards = ({ PT, userData }) => {
         return count;
       };
 
-      const team24hCountss = getTeam24hCount(referralChain);
-      setTeam24hCount(team24hCountss);
+      setTeam24hCount(getTeam24hCount(referralChain));
 
-      // 3. Total 24h Profit
+      // Total 24h Profit
       const total24hProfitss = referralChain
         .filter((user) => new Date(user.updatedAt) >= last24Hours)
         .reduce(
@@ -86,20 +83,20 @@ const Cards = ({ PT, userData }) => {
     apiFun();
   }, [userId, PT.Personal]);
 
-  // this is the querry to get total earning
-
+  // Query for total earnings using GraphQL
   const getUnixTimestamp24HrsAgo = () => {
     return Math.floor(Date.now() / 1000) - 24 * 60 * 60;
   };
-  let walletAddress = address;
-  let timestamp = getUnixTimestamp24HrsAgo();
+
+  const timestamp = useMemo(() => getUnixTimestamp24HrsAgo(), []);
+  const walletAddress = useMemo(() => address, [address]);
+
   const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
     client,
     variables: { walletAddress, timestamp },
+    fetchPolicy: "cache-first",
+    skip: !walletAddress,
   });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   const calculateTotalEarnings = (transactions) => {
     const uniqueTransactions = new Set();
@@ -114,14 +111,20 @@ const Cards = ({ PT, userData }) => {
 
     return totalEarnings;
   };
+
   const formatEarnings = (totalEarnings) => {
-    const divisor = BigInt(1e18); // Convert 1e18 to BigInt
-    const formattedEarnings = Number(totalEarnings) / Number(divisor); // Convert BigInt to number for division
-    return formattedEarnings.toFixed(2); // Limit to 6 decimal places
+    const divisor = BigInt(1e18);
+    return (Number(totalEarnings) / Number(divisor)).toFixed(2);
   };
-  const totalEarnings = calculateTotalEarnings(data.fundsDistributeds);
-  const formattedEarnings = formatEarnings(totalEarnings);
-  console.log("formated earning for a function is ", formattedEarnings);
+
+  const totalEarnings = useMemo(
+    () => calculateTotalEarnings(data?.fundsDistributeds || []),
+    [data]
+  );
+  const formattedEarnings = useMemo(
+    () => formatEarnings(totalEarnings),
+    [totalEarnings]
+  );
 
   return (
     <div className="space-y-4">
@@ -141,17 +144,12 @@ const Cards = ({ PT, userData }) => {
           </p>
           <p className="flex items-center gap-1 text-green-600">
             <GoArrowUp />
-            {formattedEarnings || 0}
+            {loading ? "Loading..." : formattedEarnings || "0"}
           </p>
         </div>
       </div>
       <div className="flex gap-2">
-        <StatCard
-          title="Partners"
-          count={Par}
-          count24={Par24}
-          bg="bg-person2"
-        />
+        <StatCard title="Partners" count={Par} count24={Par24} bg="bg-person2" />
         <StatCard
           title="Team"
           count={teamCount}
