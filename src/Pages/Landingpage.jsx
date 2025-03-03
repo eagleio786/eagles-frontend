@@ -120,6 +120,7 @@ function Landingpage() {
         console.error("Error fetching users: ", err);
       });
   }, []);
+console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Hours);
 
   return (
     <>
@@ -149,7 +150,7 @@ function Landingpage() {
             <div className="text-textColor3  w-max whitespace-nowrap">
               <p>
                 Profit users result &nbsp;
-                <span className="text-[#2cd9ff]">3 674 764 788</span>
+                <span className="text-[#2cd9ff]">1680</span>
               </p>
             </div>
           </div>

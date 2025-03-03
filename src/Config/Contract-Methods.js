@@ -1,13 +1,14 @@
-import { readContract, writeContract } from '@wagmi/core';
+import { readContract, writeContract } from "@wagmi/core";
+import { useWatchContractEvent } from "wagmi";
 import {
   config,
   ContractAdress,
   ABI,
   USDTTestNetABI,
   USDTContractAdress,
-} from './config';
+} from "./config";
 
-import { waitForTransactionReceipt } from 'wagmi/actions';
+import { waitForTransactionReceipt } from "wagmi/actions";
 
 export const getTxn = async (hash) => {
   try {
@@ -18,9 +19,9 @@ export const getTxn = async (hash) => {
       hash,
     });
 
-    return transactionReceipt.status === 'success' ? true : false;
+    return transactionReceipt.status === "success" ? true : false;
   } catch (error) {
-    console.error('Error getTxn:', error);
+    console.error("Error getTxn:", error);
     return null;
   }
 };
@@ -30,7 +31,7 @@ export const activateLevel = async (matrix, level) => {
   const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'activateLevel',
+    functionName: "activateLevel",
     args: [matrix, level],
   });
   return result;
@@ -40,7 +41,7 @@ export const buyNewLevelFor = async (address, matrix, level) => {
   const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'buyNewLevelFor',
+    functionName: "buyNewLevelFor",
     args: [address, matrix, level],
   });
   return result;
@@ -50,7 +51,7 @@ export const register = async (address) => {
   const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'register',
+    functionName: "register",
     args: [address],
   });
   return result;
@@ -60,7 +61,7 @@ export const registrationFor = async (userAddress, refferAddress) => {
   const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'registrationFor',
+    functionName: "registrationFor",
     args: [userAddress, refferAddress],
   });
   return result;
@@ -70,7 +71,7 @@ export const withdrawLostTokens = async (tokenAddress) => {
   const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'withdrawLostTokens',
+    functionName: "withdrawLostTokens",
     args: [tokenAddress],
   });
   return result;
@@ -80,7 +81,7 @@ export const USDTapprove = async (amount) => {
   const result = await writeContract(config, {
     abi: USDTTestNetABI,
     address: USDTContractAdress,
-    functionName: 'approve',
+    functionName: "approve",
     args: [ContractAdress, amount],
   });
   return result;
@@ -90,7 +91,7 @@ export const getTotalUSDTReceived = async (adress) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'getTotalUSDTReceived',
+    functionName: "getTotalUSDTReceived",
     args: [adress],
   });
   return result;
@@ -100,7 +101,7 @@ export const getCurrentX1Level = async (adress) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'getCurrentX1Level',
+    functionName: "getCurrentX1Level",
     args: [adress],
   });
   return result;
@@ -110,7 +111,7 @@ export const getCurrentX2Level = async (adress) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'getCurrentX2Level',
+    functionName: "getCurrentX2Level",
     args: [adress],
   });
   return result;
@@ -121,7 +122,7 @@ export const BASIC_PRICE = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'BASIC_PRICE',
+    functionName: "BASIC_PRICE",
   });
   // console.log('BASIC_PRICE :', result);
   return result;
@@ -131,7 +132,7 @@ export const LAST_LEVEL = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'LAST_LEVEL',
+    functionName: "LAST_LEVEL",
   });
   // console.log('LAST_LEVEL :', result);
   return result;
@@ -141,8 +142,8 @@ export const balances = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'balances',
-    args: ['0x722f3A7D715ceB9F3BE92643e4C750310c6B1982'],
+    functionName: "balances",
+    args: ["0x722f3A7D715ceB9F3BE92643e4C750310c6B1982"],
   });
   // console.log('balances :', result);
   return result;
@@ -152,7 +153,7 @@ export const contractOwner = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'contractOwner',
+    functionName: "contractOwner",
   });
   // console.log('contractOwner :', result);
   return result;
@@ -162,7 +163,7 @@ export const depositToken = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'depositToken',
+    functionName: "depositToken",
   });
   // console.log('depositToken :', result);
   return result;
@@ -172,7 +173,7 @@ export const id1 = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'id1',
+    functionName: "id1",
   });
   return result;
 };
@@ -181,7 +182,7 @@ export const getIdToAddress = async (id) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'idToAddress',
+    functionName: "idToAddress",
     args: [id],
   });
   return result;
@@ -191,7 +192,7 @@ export const isUserExists = async (address) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'isUserExists',
+    functionName: "isUserExists",
     args: [address],
   });
   return result;
@@ -201,7 +202,7 @@ export const lastUserId = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'lastUserId',
+    functionName: "lastUserId",
   });
   return result;
 };
@@ -210,7 +211,7 @@ export const levelPrice = async (Level) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'levelPrice',
+    functionName: "levelPrice",
     args: [Level],
   });
   // console.log('levelPrice :', result);
@@ -222,7 +223,7 @@ export const locked = async () => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'locked',
+    functionName: "locked",
   });
   // console.log('locked :', result);
   return result;
@@ -234,7 +235,7 @@ export const userIds = async (ID) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'userIds',
+    functionName: "userIds",
     args: [ID],
   });
   // console.log('userIds :', result);
@@ -246,7 +247,7 @@ export const users = async (address) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'users',
+    functionName: "users",
     args: [address],
   });
   return result;
@@ -257,8 +258,21 @@ export const getSlotFilled = async (address, matrix, level) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: 'getSlotsFilled',
+    functionName: "getSlotsFilled",
     args: [address, matrix, level],
   });
+  return result;
+};
+/////////////////////////////////////// events
+export const getEventData =  () => {
+  const result =  useWatchContractEvent({
+    address: ContractAdress,
+    abi:ABI,
+    eventName: "FundsDistributed",
+    onLogs(logs) {
+      console.log("New logs!-----------------------------", logs);
+    },
+  });
+
   return result;
 };

@@ -10,6 +10,7 @@ import { BsFillQuestionCircleFill } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAccountEffect } from "wagmi";
 import React from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import {
   USDTapprove,
   register,
@@ -159,15 +160,15 @@ const Register = () => {
     setLoading(false);
   };
 
-  const handleConnect = (walletName) => {
-    const connector = connectors.find(
-      (c) => c.name.toLowerCase() === walletName.toLowerCase()
-    );
-    if (connector) {
-      connect({ connector });
-      setShowSidebar(false);
-    }
-  };
+  // const handleConnect = (walletName) => {
+  //   const connector = connectors.find(
+  //     (c) => c.name.toLowerCase() === walletName.toLowerCase()
+  //   );
+  //   if (connector) {
+  //     connect({ connector });
+  //     setShowSidebar(false);
+  //   }
+  // };
 
   useEffect(() => {
     const handlClickToAddress = () => {
@@ -214,13 +215,22 @@ const Register = () => {
           <div className="flex-1 p-2 md:p-4 lg:p-2">
             <div className="flex justify-end">
               <p
-                className="text-textColor3 inline-block text-xs px-2 py-4 rounded-full bg-textColor3 bg-opacity-30 w-[200px] overflow-x-scroll cursor-pointer"
+                className="text-textColor3 inline-block text-xs px-2 py-2 rounded-full bg-textColor3 bg-opacity-30 w-[100px] overflow-x-scroll cursor-pointer"
                 style={{
                   scrollbarWidth: "none",
                 }}
-                onClick={handleConnectClick}
+                // onClick={handleConnectClick}
               >
-                {!isConnected ? "Connect Wallet" : address}
+                {/* {!isConnected ? ( */}
+                  <ConnectButton
+                    showBalance={false}
+                    accountStatus="address"
+                    chainStatus="none"
+                    label="Connect wallet"
+                  />
+                {/* ) : (
+                  address
+                )} */}
               </p>
             </div>
             <h1 className="text-2xl font-semibold mb-4">
@@ -285,7 +295,7 @@ const Register = () => {
               disabled={!isConnected || loading}
               onClick={handleClick}
             >
- 
+              {/* button */}
               {loading ? (
                 <div role="status">
                   <svg

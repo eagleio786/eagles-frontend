@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAccount } from "wagmi";
 import { ApiUrl } from "../Config/config";
-
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { isUserExists } from "../Config/Contract-Methods";
 function Profile({ user }) {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState(user?.name || "");
@@ -16,18 +17,37 @@ function Profile({ user }) {
   const [socialLinks, setSocialLinks] = useState([]);
   const [currentLink, setCurrentLink] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
+  const [extUser, setextUser] = useState(false);
   const [profileImage, setProfileImage] = useState(null); // Profile image state
-
+  const CheckForUser = async (address) => {
+    try {
+      let boo = await isUserExists(address);
+      setextUser(boo);
+      if (boo===true){
+        // api call here too check user exsists in db or not?
+      }
+      else{
+        navigate('/register')
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    CheckForUser(address);
+  }, [isConnected]);
   useEffect(() => {
     if (user) {
       setName(user.name || "");
       setEmail(user.email || "");
       setDescription(user.description || "");
       if (user.socialLinks) {
-        const links = Object.entries(user.socialLinks).map(([platform, url]) => ({
-          platform,
-          url,
-        }));
+        const links = Object.entries(user.socialLinks).map(
+          ([platform, url]) => ({
+            platform,
+            url,
+          })
+        );
         setSocialLinks(links);
       }
     }
@@ -43,9 +63,10 @@ function Profile({ user }) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        localStorage.setItem("profilePhoto", reader.result); // Save image to localStorage
-        setProfileImage(reader.result); // Update state with the new image
+      reader.onload = () => {
+        const imageUrl = reader.result;
+        setProfileImage(imageUrl);
+        localStorage.setItem("profilePhoto", imageUrl); // Save to localStorage
       };
       reader.readAsDataURL(file);
     }
@@ -62,7 +83,10 @@ function Profile({ user }) {
 
   const addSocialLink = () => {
     if (currentLink && selectedPlatform) {
-      setSocialLinks([...socialLinks, { platform: selectedPlatform, url: currentLink }]);
+      setSocialLinks([
+        ...socialLinks,
+        { platform: selectedPlatform, url: currentLink },
+      ]);
       setCurrentLink("");
       setSelectedPlatform("");
     }
@@ -92,10 +116,13 @@ function Profile({ user }) {
     try {
       let response;
       if (user?.id) {
-        response = await axios.put(`${ApiUrl}/update/profile/${user.id}`, userData);
+        response = await axios.post(
+          `${ApiUrl}/profile-upgradation`,
+          userData
+        );
       } else {
         response = await axios.post(
-          "http://ec2-51-20-86-109.eu-north-1.compute.amazonaws.com/api/profile",
+          `${ApiUrl}/api/profile`,
           userData
         );
       }
@@ -105,7 +132,10 @@ function Profile({ user }) {
       }, 1000);
       navigate("/home");
     } catch (error) {
-      console.error("Error saving profile:", error.response?.data || error.message);
+      console.error(
+        "Error saving profile:",
+        error.response?.data || error.message
+      );
       alert("Failed to save profile.");
     }
   };
@@ -121,119 +151,137 @@ function Profile({ user }) {
     };
   }, [isModalOpen]);
 
+
+
+
+  
   return (
     <>
-      <div className="w-[95%] mx-auto mb-5">
-        <p className="text-textColor2 my-2">
-          Dashboard / <span className="text-textColor3">Profile</span>
-        </p>
-        <p className="text-textColor3 text-xl font-medium">Profile</p>
-        <div className="h-[70vh] w-full my-2 bg-Background rounded-lg py-5 flex flex-col justify-start items-center">
-          
-          {/* Profile Image Section */}
-          <div className="relative">
-            <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
-              {profileImage ? (
-                <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <GrGallery className="text-xl text-textColor3" />
-              )}
+      {isConnected ? (
+        <div>
+          <div className="w-[95%] mx-auto mb-5">
+            <p className="text-textColor2 my-2">
+              Dashboard / <span className="text-textColor3">Profile</span>
+            </p>
+            <p className="text-textColor3 text-xl font-medium">Profile</p>
+            <div className="h-[70vh] w-full my-2 bg-Background rounded-lg py-5 flex flex-col justify-start items-center">
+              <div className="relative">
+                <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
+                  {profileImage ? (
+                    <img
+                      src={profileImage}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <GrGallery className="text-xl text-textColor3" />
+                  )}
+                </div>
+                <label className="absolute bottom-0 right-0 bg-white p-1 rounded-full cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                  📷
+                </label>
+              </div>
+
+              <p className="text-textColor2 font-medium text-center my-2">
+                Choose your Photo
+              </p>
+
+              <form>
+                <label className="text-textColor2 font-medium block mt-3 mb-1">
+                  Nickname
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none"
+                  placeholder="Your Nickname"
+                />
+                <label className="text-textColor2 font-medium block mt-3 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none"
+                  placeholder="Your Email"
+                />
+                <label className="text-textColor2 font-medium block mt-3 mb-1">
+                  Description
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="h-[15vh] w-[320px] text-white rounded bg-[#5c5c5c] px-3 py-2 outline-none"
+                  placeholder="Your Description"
+                ></textarea>
+              </form>
             </div>
-            <label className="absolute bottom-0 right-0 bg-white p-1 rounded-full cursor-pointer">
-              <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
-              📷
-            </label>
+
+            <div className="w-full h-[20vh] px-5 py-3 bg-Background rounded-lg my-4">
+              <p className="text-gray-300">Social media accounts</p>
+              <button
+                className="bg-white font-medium w-[90%] py-2 rounded-lg my-4 mx-auto block"
+                onClick={openModal}
+              >
+                Add social page
+              </button>
+              {socialLinks.map((link, index) => (
+                <div key={index} className="text-white">
+                  {link.platform}: {link.url}
+                </div>
+              ))}
+            </div>
+
+            {isModalOpen && (
+              <div
+                id="modal-overlay"
+                className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+              >
+                <div className="bg-black w-[90%] max-w-[600px] p-6 rounded-lg relative">
+                  <IoClose
+                    onClick={closeModal}
+                    className="absolute top-2 right-2 text-2xl text-gray-500 cursor-pointer"
+                  />
+                </div>
+              </div>
+            )}
+
+            <button
+              className="text-white bg-gradient-to-r from-[#a67912] to-[#453b23] shadow-md w-[80%] py-2 rounded-lg mx-auto block"
+              onClick={createUser}
+            >
+              Save Changes
+            </button>
           </div>
-
-          <p className="text-textColor2 font-medium text-center my-2">Choose your Photo</p>
-
-          <form>
-            <label className="text-textColor2 font-medium block mt-3 mb-1">Nickname</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none"
-              placeholder="Your Nickname"
-            />
-            <label className="text-textColor2 font-medium block mt-3 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-[#5c5c5c] py-3 px-3 w-[320px] rounded text-textColor3 outline-none"
-              placeholder="Your Email"
-            />
-            <label className="text-textColor2 font-medium block mt-3 mb-1">Description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="h-[15vh] w-[320px] text-white rounded bg-[#5c5c5c] px-3 py-2 outline-none"
-              placeholder="Your Description"
-            ></textarea>
-          </form>
         </div>
-
-        <div className="w-full h-[20vh] px-5 py-3 bg-Background rounded-lg my-4">
-          <p className="text-gray-300">Social media accounts</p>
-          <button className="bg-white font-medium w-[90%] py-2 rounded-lg my-4 mx-auto block" onClick={openModal}>
-            Add social page
-          </button>
-          {socialLinks.map((link, index) => (
-            <div key={index} className="text-white">
-              {link.platform}: {link.url}
-            </div>
-          ))}
-        </div>
-
-        {isModalOpen && (
-          <div id="modal-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-black w-[90%] max-w-[600px] p-6 rounded-lg relative">
-              <IoClose onClick={closeModal} className="absolute top-2 right-2 text-2xl text-gray-500 cursor-pointer" />
+      ) : (
+        <div className="flex flex-column justify-center items-center ">
+          <div className="flex justify-center items-center h-[150px] flex-col gap-5 text-white bg-gradient-to-r rounded-md from-[#a67912] to-[#453b23] shadow-md p-4">
+            <div>Connect your Wallet to access profile</div>
+            <div className="bg-[#c1a15a] hover:bg-[#a6894f] w-auto px-7 py-3 rounded-md cursor-pointer flex justify-center items-center transition-all duration-300">
+              <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect Wallet"
+              />
             </div>
           </div>
-        )}
-
-        <button className="text-white bg-gradient-to-r from-[#a67912] to-[#453b23] shadow-md w-[80%] py-2 rounded-lg mx-auto block" onClick={createUser}>
-          Save Changes
-        </button>
-      </div>
+        </div>
+      )}
     </>
   );
 }
 
 export default Profile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import { GrGallery } from "react-icons/gr";
