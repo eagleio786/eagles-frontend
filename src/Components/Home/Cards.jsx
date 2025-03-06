@@ -144,7 +144,7 @@ const Cards = ({ PT, userData }) => {
           </p>
           <p className="flex items-center gap-1 text-green-600">
             <GoArrowUp />
-            {loading ? "Loading..." : formattedEarnings || "0"}
+            {loading ? "0" : formattedEarnings || "0"}
           </p>
         </div>
       </div>

@@ -2,10 +2,10 @@ import { createConfig, http } from "wagmi";
 import { bsc } from "wagmi/chains";
 import { injected, metaMask, walletConnect } from "wagmi/connectors";
 import {
-  tokenPocketWallet,
+  // tokenPocketWallet,
   walletConnectWallet,
-  metaMaskWallet,
-  trustWallet,
+  // metaMaskWallet,
+  // trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -18,9 +18,9 @@ const connectors = connectorsForWallets(
     {
       groupName: "Recommended",
       wallets: [
-        trustWallet,
-        metaMaskWallet,
-        tokenPocketWallet,
+        // trustWallet,
+        // metaMaskWallet,
+        // tokenPocketWallet,
         walletConnectWallet,
       ],
     },
