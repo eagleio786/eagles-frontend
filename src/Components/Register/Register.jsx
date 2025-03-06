@@ -182,24 +182,24 @@ const Register = () => {
   }, []);
 
   const wallets = [
-    {
-      id: 1,
-      name: "Trust Wallet",
-      description: "DApp in App",
-      image: "/assets/AuthImages/trust.png",
-    },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-    },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-    },
+    // {
+    //   id: 1,
+    //   name: "Trust Wallet",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/trust.png",
+    // },
+    // {
+    //   id: 2,
+    //   name: "TokenPocket",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/pocket.png",
+    // },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    // },
     {
       id: 4,
       name: "WalletConnect",
