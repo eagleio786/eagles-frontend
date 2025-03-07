@@ -89,6 +89,8 @@ const Cards = ({ PT, userData }) => {
   };
 
   const timestamp = useMemo(() => getUnixTimestamp24HrsAgo(), []);
+  // console.log("unix timestamp is ",timestamp);
+  
   const walletAddress = useMemo(() => address, [address]);
 
   const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
@@ -99,18 +101,15 @@ const Cards = ({ PT, userData }) => {
   });
 
   const calculateTotalEarnings = (transactions) => {
-    const uniqueTransactions = new Set();
     let totalEarnings = BigInt(0);
-
-    transactions.forEach(({ amount, trxId }) => {
-      if (!uniqueTransactions.has(trxId)) {
-        uniqueTransactions.add(trxId);
-        totalEarnings += BigInt(amount);
-      }
+  
+    transactions.forEach(({ amount }) => {
+      totalEarnings += BigInt(amount);
     });
-
+  
     return totalEarnings;
   };
+  
 
   const formatEarnings = (totalEarnings) => {
     const divisor = BigInt(1e18);
