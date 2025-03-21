@@ -40,7 +40,7 @@ const AccountSearch = () => {
   // console.log(users);
 
   return (
-    <div className="w-full min-h-screen text-textColor3 bg-gradient-to-r from-[#a67912] to-[#302408]">
+    <div className="w-full min-h-screen text-textColor3 bg-gradient-to-r from-[#9B51E0] to-[#302408]">
       <div className="px-3 flex items-center justify-between">
         <img
           src="/assets/HomeImages/logo.png"

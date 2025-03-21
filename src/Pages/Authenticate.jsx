@@ -139,7 +139,7 @@ const Authenticate = () => {
               Don’t Know any ID?
             </h1>
             <Link to='#'>
-              <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] w-1/2 flex items-center justify-center px-8 py-3 mt-6 text-textColor3 font-medium rounded-lg'>
+              <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] w-1/2 flex items-center justify-center px-8 py-3 mt-6 text-textColor3 font-medium rounded-lg'>
                 <button>Check Demo</button>
               </div>
             </Link>
@@ -163,7 +163,7 @@ const Authenticate = () => {
               Get qualified support from The Eagles.io experts vuia online chat
             </p>
 
-            <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] w-3/4 flex items-center justify-center px-8 py-3 mt-10 text-textColor3 font-medium rounded-lg mb-14'>
+            <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] w-3/4 flex items-center justify-center px-8 py-3 mt-10 text-textColor3 font-medium rounded-lg mb-14'>
               <button>Connect support</button>
             </div>
           </div>
@@ -172,9 +172,8 @@ const Authenticate = () => {
 
         {/* Sidebar */}
         <div
-          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 ${
-            showSidebar ? 'right-0' : '-right-full'
-          }`}
+          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 ${showSidebar ? 'right-0' : '-right-full'
+            }`}
         >
           <div className='flex justify-end'>
             <div className='inline-block bg-Background p-2 rounded-full shadow-2xl'>

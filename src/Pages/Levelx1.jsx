@@ -110,7 +110,7 @@ const Levelx1 = () => {
 
   return (
     <>
-      <div className='text-white p-2 m-4 hello'>
+      <div className='text-white p-2 m-4 bg-gradient-to-r from-[#9B51E0] to-[#01F7FF]'>
         <div className='mb-2 flex justify-between pe-7'>
           <h1>Theeagles.io user is</h1>
           ID {data?.[1]?.toString()}
@@ -128,16 +128,16 @@ const Levelx1 = () => {
           // console.log('slotDatahhhhh', slotData);
 
           return (
-            <div className='levels' key={level.level}>
+            <div className='levels rounded-2xl' key={level.level}>
               <div className='level-value'>
-                <p>Level {level.level}</p>
+                <p>Lv <span className='text-xl' >{level.level}</span></p>
                 <div className='logo-usdt'>
-                  <img
+                  {/* <img
                     src='/assets/LoginImages/tether.png'
                     alt='Tether Logo'
                     className='h-[12px] w-auto'
-                  />
-                  <p>{level.cost} USDT</p>
+                  /> */}
+                  {/* <p>{level.cost} USDT</p> */}
                 </div>
               </div>
 
@@ -154,9 +154,8 @@ const Levelx1 = () => {
                           className='circle bg-transparent p-0.5 flex-shrink-0'
                         >
                           <div
-                            className={`w-full h-full rounded-full ${
-                              isFilled ? 'filledcircle' : 'bg-white'
-                            }`}
+                            className={`w-full h-full rounded-full ${isFilled ? 'filledcircle' : 'bg-white'
+                              }`}
                           ></div>
                         </div>
                       );
@@ -182,14 +181,16 @@ const Levelx1 = () => {
 
               <div className='level-value'>
                 <div className='logo-usdt'>
-                  <GoPeople />
+                  {/* <GoPeople />
                   {slotData[1] >= 1
                     ? Number(slotData[1]) * 4 + Number(slotData[0])
-                    : slotData[0]}
+                    : slotData[0]} */}
                 </div>
                 <div className='logo-usdt'>
-                  <HiOutlineArrowPath />
-                  {slotData[1] || 0}
+                  {/* <HiOutlineArrowPath />
+                  {slotData[1] || 0} */}
+                  <p className='text-xl font-semibold' >{level.cost}</p>
+                  <span className='mb-2 text-xs'>$</span>
                 </div>
               </div>
             </div>

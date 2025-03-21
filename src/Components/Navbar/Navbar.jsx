@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaGripLines, FaRegBell } from "react-icons/fa6";
 import Menu from "../DashboardMenu/Menu";
+import DrawerIcon from '../../assets/icons/drawerIcon.png'
+import AlertIcon from '../../assets/icons/alertIcon.png'
 import { Link } from "react-router-dom";
 import { HiMiniXMark } from "react-icons/hi2";
 import { useAccount } from "wagmi";
@@ -41,38 +43,47 @@ const Navbar = ({ home, setShowBar }) => {
   }, [menu]);
 
   return (
-    <div className="relative bg-[#a67912]">
-      <div className="text-white flex items-center justify-between border-b">
-        <Link to="/home">
+    <div className="relative bg-[#1C1F2E]">
+      <div className="text-white flex items-center pl-2 justify-between">
+        <div
+          className="bg-black bg-opacity-45 flex items-center cursor-pointer text-sm p-3 rounded-full"
+          onClick={handleMenu}
+        >
+
+          <img
+            src={DrawerIcon}
+            alt="drawer"
+            className="h-3 w-3 object-cover"
+          />
+        </div>
+        <Link className="flex justify-center items-center" to="/home">
           <img
             src="/assets/HomeImages/logo.png"
             alt="logo"
-            className="h-12 w-12 ms-2 rounded-full object-cover"
+            className="h-9 w-12 ms-2   object-cover"
           />
+          <p className="ml-4 font-medium" >theeagles.io</p>
         </Link>
         <div className="flex gap-2 p-4">
-          <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
+          {/* <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
             <ConnectButton
               showBalance={false}
               accountStatus="address"
               chainStatus="none"
               label="Connect"
             />
-            {/* Connect Wallet */}
-          </p>
+           
+          </p> */}
 
-          <div className="bg-[#45330c] text-base p-2 rounded-full">
-            <FaRegBell
-              className="cursor-pointer"
-              onClick={hanldeNotification}
+          <div onClick={hanldeNotification} className="bg-black bg-opacity-45 text-base p-3 rounded-full cursor-pointer">
+
+            <img
+              src={AlertIcon}
+              alt="alerts"
+              className="h-3 w-3 object-cover"
             />
           </div>
-          <div
-            className="bg-Background flex items-center cursor-pointer text-sm p-2 rounded-full"
-            onClick={handleMenu}
-          >
-            <FaGripLines />
-          </div>
+
         </div>
       </div>
 

@@ -118,9 +118,8 @@ const Home = ({ showBar, setShowBar }) => {
 
       <div className="relative overflow-hidden">
         <div
-          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${
-            showBar ? "right-0" : "-right-full"
-          }`}
+          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${showBar ? "right-0" : "-right-full"
+            }`}
         >
           <div className="flex justify-end">
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
@@ -169,9 +168,8 @@ const Home = ({ showBar, setShowBar }) => {
 
             <div className="bg-eagles relative inset-0 z-10">
               <div
-                className={`h-auto flex justify-between ${
-                  userData?.[1] > 1 ? "" : "pb-10"
-                }`}
+                className={`h-auto flex justify-between ${userData?.[1] > 1 ? "" : "pb-10"
+                  }`}
               >
                 <div className="flex gap-6">
                   <div className="gradient-border h-20 w-20 rounded-full ms-3">

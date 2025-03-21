@@ -68,7 +68,7 @@ const DocumentationSlider = () => {
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index} className='px-5 py-3 text-center'>
-                <div className='text-textColor3 text-4xl bg-gradient-to-b mt-3 from-[#42371e]  to-[#a67912] inline-block p-3 rounded-full'>
+                <div className='text-textColor3 text-4xl bg-gradient-to-b mt-3 from-[#9B51E0] to-[#00F6FF] inline-block p-3 rounded-full'>
                   {slide.icon}
                 </div>
                 <p className='text-lg font-medium mt-8 text-textColor3'>

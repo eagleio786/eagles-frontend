@@ -18,7 +18,7 @@ const Social = () => {
           to='https://www.instagram.com/theeagles786'
           className='flex flex-col items-center'
         >
-          <div className='p-[2px] bg-gradient-to-r from-[#524527] to-[#cc9411] rounded-full'>
+          <div className='p-[2px] bg-gradient-to-r  from-[#9B51E0] to-[#00F6FF] rounded-full'>
             <div className='bg-black h-20 w-20 flex justify-center items-center rounded-full'>
               <FaInstagram className='text-textColor3 text-4xl' />
             </div>
@@ -29,7 +29,7 @@ const Social = () => {
           to='https://www.tiktok.com/@theeapzlwm4?_t=ZS-8tMNEoaEiv4&_r=1'
           className='flex flex-col items-center'
         >
-          <div className='p-[2px] bg-gradient-to-r from-[#524527] to-[#cc9411] rounded-full'>
+          <div className='p-[2px] bg-gradient-to-r  from-[#9B51E0] to-[#00F6FF] rounded-full'>
             <div className='bg-black h-20 w-20 flex justify-center items-center rounded-full'>
               <FaTiktok className='text-textColor3 text-4xl' />
             </div>
@@ -40,7 +40,7 @@ const Social = () => {
           to='https://x.com/theeagles727493?t=5LOE9H8FwdDMF2wUtfYy7w&s=09'
           className='flex flex-col items-center'
         >
-          <div className='p-[2px] bg-gradient-to-r from-[#524527] to-[#cc9411] rounded-full'>
+          <div className='p-[2px] bg-gradient-to-r  from-[#9B51E0] to-[#00F6FF] rounded-full'>
             <div className='bg-black h-20 w-20 flex justify-center items-center rounded-full'>
               <FaTwitter className='text-textColor3 text-4xl' />
             </div>
@@ -51,7 +51,7 @@ const Social = () => {
           to='https://www.facebook.com/share/18FkUDzNLf/'
           className='flex flex-col items-center'
         >
-          <div className='p-[2px] bg-gradient-to-r from-[#524527] to-[#cc9411] rounded-full'>
+          <div className='p-[2px] bg-gradient-to-r  from-[#9B51E0] to-[#00F6FF] rounded-full'>
             <div className='bg-black h-20 w-20 flex justify-center items-center rounded-full'>
               <FaFacebookF className='text-textColor3 text-4xl' />
             </div>
@@ -62,7 +62,7 @@ const Social = () => {
           to='https://www.youtube.com/@MrAmtazKallu'
           className='flex flex-col items-center'
         >
-          <div className='p-[2px] bg-gradient-to-r from-[#524527] to-[#cc9411] rounded-full'>
+          <div className='p-[2px] bg-gradient-to-r  from-[#9B51E0] to-[#00F6FF] rounded-full'>
             <div className='bg-black h-20 w-20 flex justify-center items-center rounded-full'>
               <FaYoutube className='text-textColor3 text-4xl' />
             </div>

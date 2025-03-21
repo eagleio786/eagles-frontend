@@ -48,20 +48,21 @@ function App() {
   const location = useLocation();
   const { address, isConnected } = useAccount();
   const [user, setUser] = useState("");
-  useEffect(() => {
-    if (isConnected && address && !user) {
-      fetchUser(address);
-    }
-  }, [address, isConnected, user]);
+  // useEffect(() => {
+  //   if (isConnected && address && !user) {
+  //     fetchUser(address);
+  //   }
+  // }, [address, isConnected, user]);
 
-  const fetchUser = async (walletAddress) => {
-    try {
-      const response = await axios.get(`${ApiUrl}/user/${walletAddress}`);
-      setUser(response.data.data);
-    } catch (err) {
-      console.log(err.response?.data?.message || "Error fetching user data");
-    }
-  };
+  // const fetchUser = async (walletAddress) => {
+  //   try {
+  //     const response = await axios.get(`${ApiUrl}/user/${walletAddress}`);
+  //     console.log("User data:", response.data);
+  //     setUser(response.data.data);
+  //   } catch (err) {
+  //     console.log(err.response?.data?.message || "Error fetching user data");
+  //   }
+  // };
 
   const hideNavbarFooterRoutes = [
     "/Upgradexone",
@@ -83,44 +84,44 @@ function App() {
   return (
     <>
       {/* <div className="grid h-screen grid-rows-[auto_1fr_auto]"> */}
-        <ScrollToTop />
-        <NumberRedirect />
-        {!hideNavbarFooterRoutes.includes(location.pathname) && (
-          <Navbar home={setShowHome} setShowBar={setShowBar} />
+      <ScrollToTop />
+      <NumberRedirect />
+      {!hideNavbarFooterRoutes.includes(location.pathname) && (
+        <Navbar home={setShowHome} setShowBar={setShowBar} />
+      )}
+      <Routes>
+        <Route path="/" element={<Landingpage />} />
+        {showHome && (
+          <Route
+            path="/home"
+            element={
+              <Home showBar={showBar} setShowBar={setShowBar} user={user} />
+            }
+          />
         )}
-        <Routes>
-          <Route path="/" element={<Landingpage />} />
-          {showHome && (
-            <Route
-              path="/home"
-              element={
-                <Home showBar={showBar} setShowBar={setShowBar} user={user} />
-              }
-            />
-          )}
-          <Route path="/home/:id" element={<ProfileView user={user} />} />
-          <Route path="/social" element={<Social />} />
-          <Route path="/socialReward" element={<SocialRewards />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile user={user} />} />
-          {showHome && <Route path="/lvlxone" element={<Levelx1 />} />}
-          {showHome && <Route path="/lvlxtwo" element={<Levelx2 />} />}
-          <Route path="/Upgradexone" element={<UpgradeLvl1 />} />
-          <Route path="/Upgradextwo" element={<UpgradeLvl2 />} />
-          <Route path="/auth" element={<Authenticate />} />
-          <Route path="/passId" element={<Passid />} />
-          <Route path="/register" element={<Register />} />
-          {showHome && <Route path="/partner" element={<Partner />} />}
-          {showHome && (
-            <Route path="/accountSearch" element={<AccountSearch />} />
-          )}
-          {showHome && <Route path="/links" element={<Links />} />}
-          {showHome && <Route path="/stats" element={<Stats />} />}
-          {showHome && <Route path="/calculator" element={<Calculator />} />}
-          <Route path="/support" element={<Support />} />
-          <Route path="/redirect" element={<Register />} />
-        </Routes>
-        {!hideNavbarFooterRoutes.includes(location.pathname) && <Footer />}
+        <Route path="/home/:id" element={<ProfileView user={user} />} />
+        <Route path="/social" element={<Social />} />
+        <Route path="/socialReward" element={<SocialRewards />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile user={user} />} />
+        {showHome && <Route path="/lvlxone" element={<Levelx1 />} />}
+        {showHome && <Route path="/lvlxtwo" element={<Levelx2 />} />}
+        <Route path="/Upgradexone" element={<UpgradeLvl1 />} />
+        <Route path="/Upgradextwo" element={<UpgradeLvl2 />} />
+        <Route path="/auth" element={<Authenticate />} />
+        <Route path="/passId" element={<Passid />} />
+        <Route path="/register" element={<Register />} />
+        {showHome && <Route path="/partner" element={<Partner />} />}
+        {showHome && (
+          <Route path="/accountSearch" element={<AccountSearch />} />
+        )}
+        {showHome && <Route path="/links" element={<Links />} />}
+        {showHome && <Route path="/stats" element={<Stats />} />}
+        {showHome && <Route path="/calculator" element={<Calculator />} />}
+        <Route path="/support" element={<Support />} />
+        <Route path="/redirect" element={<Register />} />
+      </Routes>
+      {!hideNavbarFooterRoutes.includes(location.pathname) && <Footer />}
       {/* </div> */}
     </>
   );

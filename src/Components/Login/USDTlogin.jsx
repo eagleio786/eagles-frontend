@@ -30,7 +30,7 @@ const USDTlogin = () => {
           </p>
         </div>
         <Link to={type === 'register' ? '/register' : '/auth'}>
-          <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-full'>
+          <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-full'>
             <button>
               {type === 'register' ? 'Registeration USDT' : 'Login USDT'}
             </button>

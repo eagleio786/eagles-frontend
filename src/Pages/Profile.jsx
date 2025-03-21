@@ -23,10 +23,10 @@ function Profile({ user }) {
     try {
       let boo = await isUserExists(address);
       setextUser(boo);
-      if (boo===true){
+      if (boo === true) {
         // api call here too check user exsists in db or not?
       }
-      else{
+      else {
         navigate('/register')
       }
     } catch (error) {
@@ -154,7 +154,7 @@ function Profile({ user }) {
 
 
 
-  
+
   return (
     <>
       {isConnected ? (
@@ -255,7 +255,7 @@ function Profile({ user }) {
             )}
 
             <button
-              className="text-white bg-gradient-to-r from-[#a67912] to-[#453b23] shadow-md w-[80%] py-2 rounded-lg mx-auto block"
+              className="text-white bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] shadow-md w-[80%] py-2 rounded-lg mx-auto block"
               onClick={createUser}
             >
               Save Changes

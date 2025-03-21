@@ -52,7 +52,7 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: conic-gradient(rgb(166, 121, 18), rgb(34, 25, 4) 95%);
+  background: conic-gradient(#08EDFD, #9853E0 95%);
   box-sizing: border-box;
 }
 

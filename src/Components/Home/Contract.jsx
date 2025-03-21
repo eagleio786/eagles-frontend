@@ -68,7 +68,7 @@ const Contract = ({ ApiUrl }) => {
 
   return (
     <>
-      <div className='bg-Background shadow-xl shadow-[#00000079] w-full h-full rounded-lg mt-1 pb-4'>
+      <div className='bg-[#171B26] shadow-xl shadow-[#00000079] w-full h-full rounded-lg mt-1 pb-4'>
         {showToast && (
           <div className='fixed top-5 right-5 z-50 bg-gray-800 text-gray-200 py-2 px-4 rounded-lg shadow-2xl animate-quickAlert'>
             🔗 Link copied!
@@ -77,13 +77,12 @@ const Contract = ({ ApiUrl }) => {
         <h1 className='text-textColor2 border-b border-textColor2 flex justify-between items-center px-3 py-4'>
           The Eagles USDT contract
           <span
-            className='bg-[#a67912] h-8 w-8 flex justify-center items-center rounded-full cursor-pointer'
+            className='bg-[#08EDFD] h-8 w-8 flex justify-center items-center rounded-full cursor-pointer'
             onClick={toggleVisibility}
           >
             <BsTriangleFill
-              className={`text-textColor3 transform transition-transform duration-300 ${
-                isVisible ? 'rotate-180' : 'rotate-0'
-              }`}
+              className={`text-textColor3 transform transition-transform duration-300 ${isVisible ? 'rotate-180' : 'rotate-0'
+                }`}
             />
           </span>
         </h1>
@@ -108,7 +107,7 @@ const Contract = ({ ApiUrl }) => {
             <div className='py-4 px-3 border-b border-textColor2'>
               <label className='text-textColor2'>Filter: </label>
               <select
-                className='bg-[#a67912] text-white rounded px-2 py-1'
+                className='bg-[#08EDFD] text-white rounded px-2 py-1'
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
               >
@@ -118,18 +117,18 @@ const Contract = ({ ApiUrl }) => {
             </div>
             <div className='space-y-1 py-4 px-3 border-b border-textColor2'>
               <h1 className='text-textColor2'>Total Users</h1>
-              <p className='text-[#a67912]'>{totalUsers.toLocaleString()}</p>
+              <p className='text-[#08EDFD]'>{totalUsers.toLocaleString()}</p>
             </div>
             <div className='space-y-1 py-4 px-3 border-b border-textColor2'>
               <h1 className='text-textColor2'>Transactions Made</h1>
-              <p className='text-[#a67912]'>
+              <p className='text-[#08EDFD]'>
                 {totalTransactions.toLocaleString()}
               </p>
               <p className='text-white flex'></p>
             </div>
             <div className='space-y-1 pt-4 px-3'>
               <h1 className='text-textColor2'>Turnover, USDT</h1>
-              <p className='text-[#a67912]'>{totalTurnover}</p>
+              <p className='text-[#08EDFD]'>{totalTurnover}</p>
               <p className='text-white flex'>
                 {filter === '24h' ? last24HoursTurnover : totalTurnover}
               </p>

@@ -29,7 +29,7 @@ const Members = () => {
   return (
     <div className="w-full h-full mt-4 pb-3 flex justify-between gap-2">
       {/* Total Members Section */}
-      <div className="bg-Background shadow-xl shadow-[#00000079] px-2 py-3 w-1/2 rounded-lg h-1/2">
+      <div className="bg-[#171B26] shadow-xl shadow-[#00000079] px-2 py-3 w-1/2 rounded-lg h-1/2">
         <h5 className="text-textColor2 flex items-center text-sm gap-1 ">
           Total Members
           <span className="relative group">
@@ -43,14 +43,14 @@ const Members = () => {
             </div>
           </span>
         </h5>
-        <p className="text-[#a67912] text-lg mt-2">{totalUsers}</p>
+        <p className="text-[#08EDFD] text-lg mt-2">{totalUsers}</p>
         <p className="flex text-green-600">
           <GoArrowUp className="text-xl" />
           <span>{totalUsers}</span>
         </p>
       </div>
 
-      <div className="bg-Background w-1/2 rounded-lg shadow-xl shadow-[#00000079]">
+      <div className="bg-[#171B26] w-1/2 rounded-lg shadow-xl shadow-[#00000079]">
         <div className="px-2 py-3">
           <h5 className="text-textColor2 flex items-center text-sm gap-1">
             Members Received USDT
@@ -65,7 +65,7 @@ const Members = () => {
               </div>
             </span>
           </h5>
-          <p className="text-[#a67912] text-lg mt-2">
+          <p className="text-[#08EDFD] text-lg mt-2">
             {(totalUSDTReceived / 1e18).toFixed(2)} USDT
           </p>
           <p className="flex text-green-600">

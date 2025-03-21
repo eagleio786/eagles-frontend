@@ -169,9 +169,8 @@ const Home = ({ showBar, setShowBar, user }) => {
       <ToastContainer />
       <div className="relative overflow-hidden">
         <div
-          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${
-            showBar ? "right-0" : "-right-full"
-          }`}
+          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${showBar ? "right-0" : "-right-full"
+            }`}
         >
           <div className="flex justify-end">
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
@@ -208,7 +207,7 @@ const Home = ({ showBar, setShowBar, user }) => {
           </p>
         </div>
 
-        <div className="w-full px-4 pt-6 pb-5 homebg bg-[#a67a1240]">
+        <div className="w-full px-4 pt-6 pb-5 homebg bg-black">
           <div className="relative">
             {/* <div className="absolute inset-0 h-full opacity-10 left-20 -top-3">
               <img
@@ -220,12 +219,13 @@ const Home = ({ showBar, setShowBar, user }) => {
 
             <div className="bg-eagles relative inset-0 z-10">
               <div
-                className={`h-auto flex justify-between ${
-                  userData?.[1] > 1 ? "" : "pb-10"
-                }`}
+                className={`h-auto flex justify-between ${userData?.[1] > 1 ? "" : "pb-10"
+                  }`}
               >
                 <div className="flex gap-6">
-                  <div className="gradient-border h-20 w-20 rounded-full ms-3">
+                  <div
+                    className="relative inline-block rounded-full p-[3px] bg-gradient-to-r from-[#0EE6FC]  to-[#9B51E0]"
+                  >
                     <div className="relative flex items-center justify-center text-white h-full w-full rounded-full bg-Background">
                       {profileImage ? (
                         <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
@@ -237,15 +237,15 @@ const Home = ({ showBar, setShowBar, user }) => {
                         </div>
                       ) : (
                         <div>
-                          <IoPersonCircleSharp className="text-7xl text-textColor3" />
-                          <img
+                          <IoPersonCircleSharp className="text-8xl text-textColor3" />
+                          {/* <img
                             src="/assets/HomeImages/logo.png"
                             alt="logo"
                             className="h-7 w-7 ms-2 object-cover absolute bottom-2 -right-6 rounded-full"
-                          />
+                          /> */}
                         </div>
                       )}
-                      <Link to="/social" className="absolute -bottom-7">
+                      {/* <Link to="/social" className="absolute -bottom-7">
                         <div className="w-28 rounded-full p-[2px] bg-gradient-to-r from-[#a67912] via-white to-white">
                           <div className="bg-[#433108] rounded-full text-xs px-2 flex items-center justify-between py-1">
                             <p className="text-slate-400">Social</p>
@@ -255,16 +255,17 @@ const Home = ({ showBar, setShowBar, user }) => {
                             </span>
                           </div>
                         </div>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
+
                   <div className="text-textColor3 ml-10">
-                    <h1 className="text-2xl font-semibold font-sans capitalize">
+                    <h1 className="text-3xl font-bold font-sans capitalize">
                       {user?.name || "Username"}
                       {/* username kaa lia profile must bani honi chahiya  haa or wallet connect hons chahiya haa  */}
                     </h1>
                     {!loading && userData ? (
-                      <p className="text-lg text-yellow-300 italic font-medium w-fit shadow-xl shadow-[#00000079]">
+                      <p className="font-bold bg-[#1C1F2E] rounded-full px-2 py-1 mt-2 text-white italic underline w-fit shadow-xl shadow-[#00000079]">
                         ID {userData?.[1]?.toString() || "Display Soon"}
                       </p>
                     ) : null}
@@ -331,24 +332,24 @@ const Home = ({ showBar, setShowBar, user }) => {
               )}
             </div>
           </div>
-          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
+          <div className="bg-[#1C1F2E] shadow-xl shadow-[#00000079] w-full px-3 py-3 rounded-lg mt-3 mb-5">
             <div className="flex items-center justify-between text-base mb-5">
-              <h5 className="text-textColor3">My Personal link</h5>
-              <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">
+              <h5 className="text-textColor3 font-bold">My Personal link</h5>
+              <p className="text-textColor3 text-base font-sans font-semibold italic flex gap-2 items-center">
                 theeagles.io/{userData?.[1]?.toString()}
                 <GoArrowUpRight className="text-lg" />
               </p>
             </div>
             <div className="text-lg flex gap-3">
               <button
-                className="bg-[#a67912] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
+                className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-sm"
                 onClick={() =>
                   handleCopy(`theeagles.io/${userData?.[1]?.toString()}`)
                 }
               >
                 Copy
               </button>
-              <button className="w-full bg-textColor3 shadow-lg shadow-[#00000079] font-medium px-6 rounded-full">
+              <button className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-sm">
                 Share
               </button>
             </div>

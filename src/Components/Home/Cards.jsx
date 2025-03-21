@@ -7,6 +7,9 @@ import { useAccount } from "wagmi";
 import { useQuery } from "@apollo/client";
 import client from "../../Pages/apolloClient";
 import { GET_FUNDS_DISTRIBUTED } from "../../Pages/queries";
+import ProfitIcon from '../../assets/icons/profitIcon.png'
+import PartnersIcon from '../../assets/icons/partnersIcon.png'
+import teamIcon from '../../assets/icons/teamIcon.png'
 
 const Cards = ({ PT, userData }) => {
   const [partner24hCount, setPartner24hCount] = useState(0);
@@ -90,7 +93,7 @@ const Cards = ({ PT, userData }) => {
 
   const timestamp = useMemo(() => getUnixTimestamp24HrsAgo(), []);
   // console.log("unix timestamp is ",timestamp);
-  
+
   const walletAddress = useMemo(() => address, [address]);
 
   const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
@@ -102,14 +105,14 @@ const Cards = ({ PT, userData }) => {
 
   const calculateTotalEarnings = (transactions) => {
     let totalEarnings = BigInt(0);
-  
+
     transactions.forEach(({ amount }) => {
       totalEarnings += BigInt(amount);
     });
-  
+
     return totalEarnings;
   };
-  
+
 
   const formatEarnings = (totalEarnings) => {
     const divisor = BigInt(1e18);
@@ -127,30 +130,68 @@ const Cards = ({ PT, userData }) => {
 
   return (
     <div className="space-y-4">
-      <div className="bg-Background w-full rounded-lg shadow-xl bg-image shadow-[#00000079] px-2 py-3">
-        <div className="flex justify-between items-center">
-          <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
-            Profits
-            <span className="bg-[#5c5c5c] rounded-full p-1">
-              <BsShare className="text-textColor3" />
-            </span>
-          </p>
+      <div className="flex" >
+
+        <div className="bg-[#1C1F2E] w-full rounded-lg shadow-xl bg-image shadow-[#00000079] px-2 py-3">
+          <div className="flex justify-between items-center">
+            <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
+              Daily Profit
+              <span className="bg-[#5c5c5c] rounded-full p-1">
+
+                <img
+                  src={ProfitIcon}
+                  alt="profit"
+                  className="h-3 w-3 object-cover"
+                />
+              </span>
+            </p>
+          </div>
+          <div className="flex justify-between font-semibold text-textColor3 mt-2">
+
+            <p className="flex items-center gap-1 text-green-500">
+              <div className="bg-green-500 p-1 rounded-full mr-1" >
+                <GoArrowUp className="text-white" />
+              </div>
+              {loading ? "0" : formattedEarnings || "0"}
+            </p>
+
+          </div>
         </div>
-        <div className="flex justify-between font-semibold text-textColor3 mt-2">
-          <p>
-            {totalProfit ? totalProfit.toFixed(2) : "0"}
-            USDT
-          </p>
-          <p className="flex items-center gap-1 text-green-600">
-            <GoArrowUp />
+
+        <div className="ml-4 bg-[#1C1F2E] w-full rounded-lg shadow-xl bg-image shadow-[#00000079] px-2 py-3">
+          <div className="flex justify-between items-center">
+            <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
+              Total Profit
+              <span className="bg-[#5c5c5c] rounded-full p-1">
+
+                <img
+                  src={ProfitIcon}
+                  alt="profit"
+                  className="h-3 w-3 object-cover"
+                />
+              </span>
+            </p>
+          </div>
+          <div className="flex justify-between font-semibold text-textColor3 mt-2">
+
+            {/* <p className="flex items-center gap-1 text-green-500">
+            <div className="bg-green-500 p-1 rounded-full mr-1" >
+              <GoArrowUp className="text-white" />
+            </div>
             {loading ? "0" : formattedEarnings || "0"}
-          </p>
+          </p> */}
+            <p className="font-medium text-2xl" >
+              {totalProfit ? totalProfit.toFixed(2) : "0"}
+              USDT
+            </p>
+          </div>
         </div>
       </div>
       <div className="flex gap-2">
-        <StatCard title="Partners" count={Par} count24={Par24} bg="bg-person2" />
+        <StatCard icon={PartnersIcon} title="Partners" count={Par} count24={Par24} bg="bg-person2" />
         <StatCard
           title="Team"
+          icon={teamIcon}
           count={teamCount}
           count24={team24hCount}
           bg="bg-person3"
@@ -160,23 +201,29 @@ const Cards = ({ PT, userData }) => {
   );
 };
 
-const StatCard = ({ title, count, count24, bg }) => {
+const StatCard = ({ title, count, count24, bg, icon }) => {
   return (
     <div
-      className={`bg-Background px-2 shadow-xl shadow-[#00000079] py-3 w-1/2 rounded-lg ${bg}`}
+      className={`bg-[#171B26] px-2 shadow-xl shadow-[#00000079] py-3 w-1/2 rounded-lg ${bg}`}
     >
-      <p className="text-textColor3 text-base flex items-center gap-2">
+      <p className="text-textColor3 text-base flex items-center font-bold gap-2">
         {title}
-        <span className="bg-[#5c5c5c] rounded-full p-1">
-          <BsShare className="text-textColor3" />
+        <span className="bg-[#5c5c5c] rounded-full p-1 h-6 ">
+          <img
+            src={icon}
+            alt="profit"
+            className="h-3 mt-0.5 w-4 object-cover items-center"
+          />
         </span>
       </p>
       <p className="text-3xl text-textColor3 font-semibold mt-1">
         {count || 0}
       </p>
       <div className="w-[85%] mx-auto mt-7 flex justify-between p-1 rounded-full bg-[#a67912] bg-opacity-20">
-        <div className="flex items-center font-medium text-xl text-green-600">
-          <GoArrowUp />
+        <div className="flex items-center font-medium text-xl text-green-500">
+          <div className="bg-green-500 p-1 rounded-full mr-2" >
+            <GoArrowUp className="text-white" />
+          </div>
           {count24 || 0}
         </div>
         <div className="gradient-circle"></div>

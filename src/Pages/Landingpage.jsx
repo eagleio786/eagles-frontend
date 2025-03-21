@@ -120,7 +120,7 @@ function Landingpage() {
         console.error("Error fetching users: ", err);
       });
   }, []);
-console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Hours);
+  console.log("All Participants =", allParticipants, "Joined in 24 hrs", joinedIn24Hours);
 
   return (
     <>
@@ -131,7 +131,7 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
       )}
 
       <div className="overflow-hidden">
-        <marquee behavior="scroll" direction="Left" scrollamount="7">
+        {/* <marquee behavior="scroll" direction="Left" scrollamount="7">
           <div className="flex justify-between items-center py-2 gap-4 max-w-full">
             <div className="text-textColor3 w-max whitespace-nowrap">
               <p>
@@ -154,17 +154,17 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
               </p>
             </div>
           </div>
-        </marquee>
-        <div className="h-[42vh] w-full bg-[#3939396c] relative text-white flex flex-col justify-center items-center overflow-hidden">
+        </marquee> */}
+        <div className="h-[42vh] w-full bg-gradient-to-r from-[#0D0D28] to-[#1A1A40] relative text-white flex flex-col justify-center items-center overflow-hidden">
           {/* Background Video */}
-          <video
+          {/* <video
             src="/intro.mp4"
             autoPlay
             loop
             muted
             playsInline
             className="absolute top-0 left-0 opacity-80 w-full h-full object-cover"
-          ></video>
+          ></video> */}
 
           {/* Overlay to Darken the Video */}
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30"></div>
@@ -179,7 +179,7 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
           </div>
 
           {/* Title */}
-          <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r uppercase font-sans italic from-[#ffa14c] via-[#ffa14e] to-[#6a2cfa] z-10">
+          <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r uppercase font-sans italic from-[#00D4FF]  to-[#8D2BE2] z-10">
             the eagles.io
           </p>
 
@@ -188,7 +188,7 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
             <div className="w-[45%]">
               <Link to="/login" state={{ type: "login" }}>
                 <button
-                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer`}
+                  className={`w-[80%] py-2 rounded-sm text-white bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] h-[40px] cursor-pointer`}
                 >
                   Sign in
                 </button>
@@ -197,7 +197,7 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
             <div className="w-[50%]">
               <Link to="/login" state={{ type: "register" }}>
                 <button
-                  className={`w-[80%] py-2 rounded-full text-white bg-gradient-to-r from-[#1a1303] to-[#a67912] h-[40px] cursor-pointer`}
+                  className={`w-[80%] py-2 rounded-sm text-white bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] h-[40px] cursor-pointer`}
                 >
                   <div className="flex items-center justify-center gap-2">
                     Register
@@ -210,16 +210,17 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
         <div className="w-[80%] mx-auto mt-2">
           <p className="text-white font-medium text-center my-3">
             A decentralized networking platform based on smart contracts, which{" "}
-            <span className="text-[#a67912]">brings people together</span> from
+            <span className="text-[#00D4FF]">brings people together</span> from
             all over the world and{" "}
-            <span className="text-[#a67912]">
+            <span className="text-[#8A2BE2]">
               opens up endless possibilities
             </span>{" "}
             new economic financial systems
           </p>
         </div>
+
         <div className="mt-[20px] flex justify-center items-end">
-          <div className="h-auto w-[85%] bg-Background rounded-lg px-5 pt-4">
+          <div className="h-auto w-[85%] bg-[#181828] border-2 border-[#01F7FF] shadow-[0_0_60px_8px_#00D4FF40] drop-shadow-2xl rounded-lg px-5 pt-4">
             <Swiper
               pagination={{ clickable: true }}
               modules={[Pagination]}
@@ -244,12 +245,12 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
         </div>
         <div className="relative mt-20 h-44 ">
           <p className="text-textColor3 text-xs w-4/5 text-center mx-auto font-medium">
-            <span className="text-[#a67912] font-bold">The Eagles School</span>{" "}
+            <span className="text-[#00D4FF] font-bold">The Eagles School</span>{" "}
             is an exclusive training course designed specifically for the who
             want to unlock thier full potential with The Eagles.io!
           </p>
           <div className="w-4/5 mx-auto">
-            <button className="bg-Background bg-opacity-75 text-[#a67912] font-medium mt-3 py-2 rounded-full w-full">
+            <button className="bg-[#181828] bg-opacity-75 text-[#00D4FF] font-medium mt-3 py-2 rounded-full w-full">
               Go to School
             </button>
           </div>
@@ -263,7 +264,7 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
           </p>
         </div>
         <History />
-        <div className="bg-[#292929] border border-slate-500 rounded shadow-md h-auto px-2 py-5">
+        <div className="bg-[#181828] border border-slate-500 rounded shadow-md h-auto px-2 py-5">
           <h1 className="text-textColor3 font-semibold text-3xl">
             Partner result
           </h1>
@@ -286,11 +287,10 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
           <div className="mt-8 flex flex-col items-center">
             <div className="inline-block bg-textColor2 bg-opacity-30 rounded-full px-2 py-2">
               <div
-                className={`cursor-pointer px-4 py-2  font-bold ${
-                  activeTab === "USDT"
-                    ? "bg-textColor3 rounded-full text-black"
-                    : "text-gray-300"
-                }`}
+                className={`cursor-pointer px-4 py-2  font-bold ${activeTab === "USDT"
+                  ? "bg-textColor3 rounded-full text-black"
+                  : "text-gray-300"
+                  }`}
               >
                 USDT
               </div>
@@ -298,11 +298,11 @@ console.log("All Participants =",allParticipants,"Joined in 24 hrs",joinedIn24Ho
             <div className="mt-5 text-center">
               <div className="text-4xl font-bold text-white">
                 {last24HoursRevenue}{" "}
-                <sup className="text-[#a67912] text-base">+422</sup>
+                <sup className="text-[#00D4FF] text-base">+422</sup>
               </div>
               <div className="text-2xl font-bold text-white mt-2">
                 {totalRevenue}{" "}
-                <sup className="text-[#a67912] text-base">+8 284</sup>
+                <sup className="text-[#00D4FF] text-base">+8 284</sup>
               </div>
               <div className="mt-2 text-sm text-textColor2">
                 Total result, USDT

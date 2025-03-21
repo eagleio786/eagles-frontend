@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Program = ({ userData, preview }) => {
   const lvlx1 = Number(userData?.[2]) || 0;
-  const lvlx2 = Number(userData?.[3]) || 0;  
+  const lvlx2 = Number(userData?.[3]) || 0;
   const numberOfCircles = 12;
   const circles = Array.from({ length: numberOfCircles }, (_, index) => index);
 
@@ -27,7 +27,7 @@ const Program = ({ userData, preview }) => {
       {!preview ? (
         <>
           <Link to="/lvlxone" className="w-1/2">
-            <div className="bg-Background shadow-xl shadow-[#00000079] px-2 py-2 rounded-lg">
+            <div className="bg-[#171B26] shadow-xl shadow-[#00000079] px-2 py-2 rounded-lg">
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x1</h1>
                 <p className="flex items-center gap-1">
@@ -41,17 +41,15 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${
-                      index < lvlx1 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
-                    }`}
+                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
+                      }`}
                   ></div>
                 ))}
               </div>
-              <div className="bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
+              <div className="bg-gradient-to-r from-[#08EDFD] to-[#9853E0] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
                 <button
-                  className={`text-xs text-white ${
-                    lvlx1 >= 12 ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`text-xs text-white ${lvlx1 >= 12 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   disabled={lvlx1 >= 12}
                 >
                   {lvlx1 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx1 + 1]?.cost} USDT`}
@@ -62,7 +60,7 @@ const Program = ({ userData, preview }) => {
 
           {/* X2 Program */}
           <Link to="/lvlxtwo" className="w-1/2">
-            <div className="bg-Background shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg">
+            <div className="bg-[#171B26] shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg">
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x2</h1>
                 <p className="flex items-center gap-1">
@@ -76,20 +74,18 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${
-                      index < lvlx2 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
-                    }`}
+                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
+                      }`}
                   ></div>
                 ))}
               </div>
-              <div className="bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
+              <div className="bg-gradient-to-r from-[#08EDFD] to-[#9853E0] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
                 <button
-                  className={`text-xs text-white ${
-                    lvlx2 >= 12 ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`text-xs text-white ${lvlx2 >= 12 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   disabled={lvlx2 >= 12}
                 >
-                {lvlx2 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx2 + 1]?.cost} USDT`}
+                  {lvlx2 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx2 + 1]?.cost} USDT`}
                 </button>
               </div>
             </div>
@@ -98,7 +94,7 @@ const Program = ({ userData, preview }) => {
       ) : (
         <>
           <div className="w-1/2">
-            <div className="bg-Background shadow-xl shadow-[#00000079] px-2 py-2 rounded-lg">
+            <div className="bg-[#171B26] shadow-xl shadow-[#00000079] px-2 py-2 rounded-lg">
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x1</h1>
                 <p className="flex items-center gap-1">
@@ -112,17 +108,15 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${
-                      index < lvlx1 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
-                    }`}
+                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-[#9B51E0]" : "bg-[#5c5c5c]"
+                      }`}
                   ></div>
                 ))}
               </div>
-              <div className="bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
+              <div className="bg-gradient-to-r from-[#08EDFD] to-[#9853E0] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
                 <button
-                  className={`text-xs text-white ${
-                    lvlx1 >= 12 ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`text-xs text-white ${lvlx1 >= 12 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   disabled={lvlx1 >= 12}
                 >
                   {lvlx1 >= 12
@@ -149,17 +143,15 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${
-                      index < lvlx2 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
-                    }`}
+                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-[#9853E0]" : "bg-[#5c5c5c]"
+                      }`}
                   ></div>
                 ))}
               </div>
-              <div className="bg-gradient-to-r from-[#a67912] to-[#1a1303] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
+              <div className="bg-gradient-to-r from-[#08EDFD] to-[#9853E0] rounded-md flex justify-center items-center px-3 py-2 mt-6 font-medium">
                 <button
-                  className={`text-xs text-white ${
-                    lvlx2 >= 12 ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`text-xs text-white ${lvlx2 >= 12 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   disabled={lvlx2 >= 12}
                 >
                   {lvlx2 >= 12

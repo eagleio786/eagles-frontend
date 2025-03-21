@@ -101,7 +101,7 @@ const UpgradeLvl4 = () => {
           </div>
         </div>
 
-        <div className='bg-gradient-to-r from-[#a67912] to-[#1a1303] shadow-md shadow-[#53532479]  w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-lg'>
+        <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] shadow-md shadow-[#53532479]  w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-lg'>
           <button>Check Again</button>
         </div>
       </div>

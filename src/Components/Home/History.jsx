@@ -42,7 +42,7 @@ const History = ({ id }) => {
 
   return (
     <>
-      <div className="mt-7 mb-3 pb-6 bg-Background shadow-xl shadow-[#00000079] rounded-xl ">
+      <div className="mt-7 mb-3 pb-6 bg-[#181828] shadow-xl shadow-[#00000079] rounded-xl ">
         <div className="overflow-scroll h-[470px]">
           {history.length > 0 ? (
             history
@@ -100,7 +100,7 @@ const History = ({ id }) => {
           <div className="flex justify-center mt-6">
             <button
               onClick={handleSeeMore}
-              className="text-textColor3 w-3/4 bg-gradient-to-r from-[#a67912] to-[#1a1303] shadow-xl shadow-[#00000079] rounded-lg py-3 font-medium"
+              className="text-textColor3 w-3/4 bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] shadow-xl shadow-[#00000079] rounded-lg py-3 font-medium"
             >
               See More
             </button>
