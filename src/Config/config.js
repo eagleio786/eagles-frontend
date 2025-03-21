@@ -51,7 +51,7 @@ injected(),
   
   transports: {
     // [sepolia.id]: http(),
-    [bsc.id]: http(),
+    [bsc.id]: http("https://bsc-mainnet.infura.io/v3/f5778e9c8b764c2eb60678ad73f25586"),
   },
 });
 
