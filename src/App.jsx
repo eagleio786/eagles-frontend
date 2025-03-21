@@ -48,21 +48,21 @@ function App() {
   const location = useLocation();
   const { address, isConnected } = useAccount();
   const [user, setUser] = useState("");
-  // useEffect(() => {
-  //   if (isConnected && address && !user) {
-  //     fetchUser(address);
-  //   }
-  // }, [address, isConnected, user]);
+  useEffect(() => {
+    if (isConnected && address && !user) {
+      fetchUser(address);
+    }
+  }, [address, isConnected, user]);
 
-  // const fetchUser = async (walletAddress) => {
-  //   try {
-  //     const response = await axios.get(`${ApiUrl}/user/${walletAddress}`);
-  //     console.log("User data:", response.data);
-  //     setUser(response.data.data);
-  //   } catch (err) {
-  //     console.log(err.response?.data?.message || "Error fetching user data");
-  //   }
-  // };
+  const fetchUser = async (walletAddress) => {
+    try {
+      const response = await axios.get(`${ApiUrl}/user/${walletAddress}`);
+      console.log("User data:", response.data);
+      setUser(response.data.data);
+    } catch (err) {
+      console.log(err.response?.data?.message || "Error fetching user data");
+    }
+  };
 
   const hideNavbarFooterRoutes = [
     "/Upgradexone",
