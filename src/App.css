@@ -1,17 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
 
+/* Reset default styles */
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-body* {
-  font-family: 'Montserrat';
+/* Apply the ADLaM Display font to the body */
+body {
+  font-family: 'ADLaM Display', sans-serif;
   background-color: black;
 }
 
+/* Example styles for gradient borders and backgrounds */
 .gradient-border {
   background: linear-gradient(to right, #aba9bf, #a67912, #aba9bf, #dc0cc8);
   padding: 4px;
@@ -99,10 +101,4 @@ body* {
 
 .animate-quickAlert {
   animation: quickAlert 2s ease-in-out forwards;
-}
-
-@font-face {
-  font-family: 'roboto';
-  src: url("./assets/fonts/Roboto-VariableFont_wdth\,wght.ttf");
-  font-weight: 300;
 }

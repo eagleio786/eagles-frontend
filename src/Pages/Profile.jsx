@@ -264,9 +264,9 @@ function Profile({ user }) {
         </div>
       ) : (
         <div className="flex flex-column justify-center items-center ">
-          <div className="flex justify-center items-center h-[150px] flex-col gap-5 text-white bg-gradient-to-r rounded-md from-[#a67912] to-[#453b23] shadow-md p-4">
+          <div className="flex justify-center items-center h-[150px] flex-col gap-5 text-white bg-[#1C1F2E] rounded-md  shadow-md p-4">
             <div>Connect your Wallet to access profile</div>
-            <div className="bg-[#c1a15a] hover:bg-[#a6894f] w-auto px-7 py-3 rounded-md cursor-pointer flex justify-center items-center transition-all duration-300">
+            <div className="bg-[#9B51E0] hover:bg-[#00F6FF] w-auto px-7 py-3 rounded-md cursor-pointer flex justify-center items-center transition-all duration-300">
               <ConnectButton
                 showBalance={false}
                 accountStatus="address"

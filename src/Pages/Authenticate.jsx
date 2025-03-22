@@ -99,7 +99,7 @@ const Authenticate = () => {
               >
                 <button className='font-bold'>Connect wallet</button>
               </div>
-              <div className='bg-gradient-to-r  from-[#13110e] to-[#747674] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6  font-medium rounded-lg'>
+              <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6  font-medium rounded-lg'>
                 <button>Connect tutorial</button>
               </div>
             </div>
@@ -127,7 +127,7 @@ const Authenticate = () => {
                 </div>
               </Link>
               <Link to='#'>
-                <div className='bg-gradient-to-r  from-[#13110e] to-[#747674] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6 text-balck font-medium rounded-lg'>
+                <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6 text-balck font-medium rounded-lg'>
                   <button>Preview</button>
                 </div>
               </Link>

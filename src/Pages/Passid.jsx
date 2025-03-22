@@ -48,7 +48,7 @@ const Passid = () => {
           </div>
         </div>
 
-        <div className='bg-gradient-to-r from-[#a67912] to-[#2a261e] mx-3 px-3 py-6 mt-5 rounded-lg'>
+        <div className='bg-[#1C1F2E] mx-3 px-3 py-6 mt-5 rounded-lg'>
           <div className='flex gap-5 items-center'>
             <div className='bg-textColor2 h-20 w-20 flex justify-center items-center rounded-full'>
               <IoPersonCircleSharp className='text-7xl text-textColor3' />
@@ -59,7 +59,7 @@ const Passid = () => {
             {WalletAddress} is a number of The Eagles.io USDT
           </p>
           <Link to='/home'>
-            <div className='bg-gradient-to-r from-[#000000] to-[#747474] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-lg'>
+            <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-textColor3 font-medium rounded-lg'>
               <button>Return to your account</button>
             </div>
           </Link>
@@ -75,13 +75,13 @@ const Passid = () => {
           </p>
         </div>
 
-        <div className='bg-gradient-to-r from-[#a67912] to-[#2a261e] px-3 mx-3 py-6 mt-5 rounded-lg'>
+        <div className='bg-[#1C1F2E] px-3 mx-3 py-6 mt-5 rounded-lg'>
           <h1 className='text-textColor3 text-xl font-medium'>
             Ender ID or USDT wallet
           </h1>
           <div>
             <Link to='#'>
-              <div className='bg-gradient-to-r from-[#000000] to-[#747474] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-9 text-textColor3 font-medium rounded-lg'>
+              <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-9 text-textColor3 font-medium rounded-lg'>
                 <button>Example: 87381</button>
               </div>
             </Link>
