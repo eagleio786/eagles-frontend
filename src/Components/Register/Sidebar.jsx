@@ -9,27 +9,27 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const { address, isConnected, connector } = useAccount();
 
   const wallets = [
-    {
-      id: 1,
-      name: "Trust Wallet",
-      description: "DApp in App",
-      image: "/assets/AuthImages/trust.png",
-      type: "trustwallet",
-    },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-      type: "injected",
-    },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "Desktop/DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-      type: "metamask",
-    },
+    // {
+    //   id: 1,
+    //   name: "Trust Wallet",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/trust.png",
+    //   type: "trustwallet",
+    // },
+    // {
+    //   id: 2,
+    //   name: "TokenPocket",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/pocket.png",
+    //   type: "injected",
+    // },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "Desktop/DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    //   type: "metamask",
+    // },
     {
       id: 4,
       name: "WalletConnect",
