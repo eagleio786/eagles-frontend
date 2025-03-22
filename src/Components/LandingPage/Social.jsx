@@ -23,7 +23,7 @@ const Social = () => {
               <FaInstagram className='text-textColor3 text-4xl' />
             </div>
           </div>
-          <p className='text-sm mt-2'>Instagram</p>
+          <p className='text-sm mt-2 text-textColor2'>Instagram</p>
         </Link>
         <Link
           to='https://www.tiktok.com/@theeapzlwm4?_t=ZS-8tMNEoaEiv4&_r=1'
@@ -34,7 +34,7 @@ const Social = () => {
               <FaTiktok className='text-textColor3 text-4xl' />
             </div>
           </div>
-          <p className='text-sm mt-2'>Tiktok</p>
+          <p className='text-sm mt-2 text-textColor2'>Tiktok</p>
         </Link>
         <Link
           to='https://x.com/theeagles727493?t=5LOE9H8FwdDMF2wUtfYy7w&s=09'
@@ -45,7 +45,7 @@ const Social = () => {
               <FaTwitter className='text-textColor3 text-4xl' />
             </div>
           </div>
-          <p className='text-sm mt-2'>Twitter</p>
+          <p className='text-sm mt-2 text-textColor2'>Twitter</p>
         </Link>
         <Link
           to='https://www.facebook.com/share/18FkUDzNLf/'
@@ -56,7 +56,7 @@ const Social = () => {
               <FaFacebookF className='text-textColor3 text-4xl' />
             </div>
           </div>
-          <p className='text-sm mt-2'>Facebook</p>
+          <p className='text-sm mt-2 text-textColor2'>Facebook</p>
         </Link>
         <Link
           to='https://www.youtube.com/@MrAmtazKallu'
@@ -67,7 +67,7 @@ const Social = () => {
               <FaYoutube className='text-textColor3 text-4xl' />
             </div>
           </div>
-          <p className='text-sm mt-2'>Youtube</p>
+          <p className='text-sm mt-2 text-textColor2'>Youtube</p>
         </Link>
       </div>
       <div className='flex flex-wrap items-center w-full px-2 text-textColor3 font-medium'>

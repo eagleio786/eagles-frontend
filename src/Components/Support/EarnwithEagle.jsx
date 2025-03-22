@@ -22,7 +22,7 @@ const EarnwithEagle = () => {
         </span>{' '}
         <span>
           More than 50 Eagles members, using the most basic tools like{' '}
-          <span className='font-semibold'>Youtube</span>,{' '}
+          <span className='font-semibold '>Youtube</span>,{' '}
           <span className='font-semibold'>Instagram</span>, or{' '}
           <span className='font-semibold'>personal blogs</span>, managed to earn
           a million dollars.

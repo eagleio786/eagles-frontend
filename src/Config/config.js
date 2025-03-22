@@ -4,10 +4,10 @@ import { injected, metaMask, walletConnect } from "wagmi/connectors";
 import { ethers } from "ethers";
 
 import {
-   tokenPocketWallet,
+  tokenPocketWallet,
   walletConnectWallet,
-    metaMaskWallet,
-    trustWallet,
+  metaMaskWallet,
+  trustWallet,
 
 } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -31,24 +31,24 @@ export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
 //           tokenPocketWallet,
 //         walletConnectWallet,
 //       ],
-  
+
 //     },
 //   ],
 //   {
 //     appName: "eagles",
 //     projectId: "45a029651f37ec8e01c2e486810e6f3e",
-  
+
 //   }
 // );
 export const config = createConfig({
   chains: [bsc],
   autoConnect: true,
   connectors: [
-injected(),
+    injected(),
     metaMask({ shimDisconnect: true }),
     walletConnect({ projectId: "45a029651f37ec8e01c2e486810e6f3e" }), // WalletConnect
   ],
-  
+
   transports: {
     // [sepolia.id]: http(),
     [bsc.id]: http("https://bsc-mainnet.infura.io/v3/f5778e9c8b764c2eb60678ad73f25586"),

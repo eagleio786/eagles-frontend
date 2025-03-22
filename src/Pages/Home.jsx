@@ -342,14 +342,14 @@ const Home = ({ showBar, setShowBar, user }) => {
             </div>
             <div className="text-lg flex gap-3">
               <button
-                className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-sm"
+                className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
                 onClick={() =>
                   handleCopy(`theeagles.io/${userData?.[1]?.toString()}`)
                 }
               >
                 Copy
               </button>
-              <button className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-sm">
+              <button className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full">
                 Share
               </button>
             </div>

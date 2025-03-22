@@ -132,12 +132,14 @@ const Levelx1 = () => {
               <div className='level-value'>
                 <p>Lv <span className='text-xl' >{level.level}</span></p>
                 <div className='logo-usdt'>
+                  <p className='text-xl font-semibold' >{level.cost}</p>
+                  <span className='mb-2 text-xs'>$</span>
                   {/* <img
                     src='/assets/LoginImages/tether.png'
                     alt='Tether Logo'
                     className='h-[12px] w-auto'
-                  /> */}
-                  {/* <p>{level.cost} USDT</p> */}
+                  />
+                  <p>{level.cost} USDT</p> */}
                 </div>
               </div>
 
@@ -181,16 +183,15 @@ const Levelx1 = () => {
 
               <div className='level-value'>
                 <div className='logo-usdt'>
-                  {/* <GoPeople />
+                  <GoPeople />
                   {slotData[1] >= 1
                     ? Number(slotData[1]) * 4 + Number(slotData[0])
-                    : slotData[0]} */}
+                    : slotData[0]}
                 </div>
                 <div className='logo-usdt'>
-                  {/* <HiOutlineArrowPath />
-                  {slotData[1] || 0} */}
-                  <p className='text-xl font-semibold' >{level.cost}</p>
-                  <span className='mb-2 text-xs'>$</span>
+                  <HiOutlineArrowPath />
+                  {slotData[1] || 0}
+
                 </div>
               </div>
             </div>

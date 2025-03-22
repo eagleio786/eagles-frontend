@@ -39,7 +39,7 @@ const FAQ = () => {
 
   return (
     <div className='relative h-auto mt-14 flex flex-col pb-8'>
-      <h1 className='text-white text-2xl ms-6 font-semibold mb-6'>
+      <h1 className='text-textColor2 text-2xl ms-6 font-semibold mb-6'>
         Frequently Asked Questions
       </h1>
       <div className='relative w-full px-4'>
@@ -50,12 +50,12 @@ const FAQ = () => {
           {faqData.map((faq, index) => (
             <div key={index} className='border-b-2 border-textColor2'>
               <div
-                className='flex justify-between items-center cursor-pointer text-white text-lg py-4 pb-2 px-3'
+                className='flex justify-between items-center cursor-pointer text-textColor2 text-lg py-4 pb-2 px-3'
                 onClick={() => toggleFAQ(index)}
               >
                 <span className='w-[85%] text-sm'>{faq.question}</span>
                 <span
-                  className={`text-textColor3 text-base p-2 border-2 rounded-full border-[#00F6FF]  transition-transform duration-300 ${activeIndex === index ? 'rotate-180' : ''
+                  className={`text-textColor2 text-base p-2 border-2 rounded-full border-[#00F6FF]  transition-transform duration-300 ${activeIndex === index ? 'rotate-180' : ''
                     }`}
                 >
                   <IoIosArrowDown />

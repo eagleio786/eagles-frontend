@@ -50,8 +50,8 @@ const DocumentationSlider = () => {
   ];
   return (
     <>
-      <div className='mt-8'>
-        <h1 className='text-textColor3 text-xl font-semibold w-4/5 mx-auto'>
+      <div className=' mt-8'>
+        <h1 className='text-textColor2 text-xl font-semibold w-4/5 mx-auto'>
           Technology of smart contracts and non-fungible token
         </h1>
         <p className='text-textColor2 text-xs mt-4 w-4/5 mx-auto'>
@@ -68,7 +68,7 @@ const DocumentationSlider = () => {
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index} className='px-5 py-3 text-center'>
-                <div className='text-textColor3 text-4xl bg-gradient-to-b mt-3 from-[#9B51E0] to-[#00F6FF] inline-block p-3 rounded-full'>
+                <div className='text-textColor2 text-4xl bg-gradient-to-b mt-3 from-[#9B51E0] to-[#00F6FF] inline-block p-3 rounded-full'>
                   {slide.icon}
                 </div>
                 <p className='text-lg font-medium mt-8 text-textColor3'>

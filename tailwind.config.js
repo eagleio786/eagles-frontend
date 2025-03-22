@@ -11,7 +11,7 @@ export default {
         landingtext: "#da4922",
       },
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif", "Montserrat"],
       },
     },
   },
