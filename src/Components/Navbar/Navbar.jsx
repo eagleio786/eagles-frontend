@@ -105,7 +105,12 @@ const Navbar = ({ home, setShowBar }) => {
         </Link>
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
-            <div
+            {isConnected ? <ConnectButton
+              showBalance={false}
+              accountStatus="address"
+              chainStatus="none"
+              label="Connect"
+            /> : <div
               showBalance={false}
               accountStatus="address"
               chainStatus="none"
@@ -114,7 +119,7 @@ const Navbar = ({ home, setShowBar }) => {
               onClick={() => setShowSidebar(!showSidebar)}
             >
               <p>Connect</p>
-            </div>
+            </div>}
 
           </p>
 
