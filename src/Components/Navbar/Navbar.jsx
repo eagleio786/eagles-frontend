@@ -5,12 +5,43 @@ import DrawerIcon from '../../assets/icons/drawerIcon.png'
 import AlertIcon from '../../assets/icons/alertIcon.png'
 import { Link } from "react-router-dom";
 import { HiMiniXMark } from "react-icons/hi2";
-import { useAccount } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
   const { isConnected } = useAccount();
   const [notification, setNotification] = useState(false);
+
+  const wallets = [
+    // {
+    //   id: 1,
+    //   name: "Trust Wallet",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/trust.png",
+    //   type: "trustwallet",
+    // },
+    // {
+    //   id: 2,
+    //   name: "TokenPocket",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/pocket.png",
+    //   type: "injected",
+    // },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "Desktop/DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    //   type: "metamask",
+    // },
+    {
+      id: 4,
+      name: "WalletConnect",
+      description: "Any Wallet and browser",
+      image: "/assets/AuthImages/connect.png",
+      type: "walletconnect",
+    },
+  ];
 
   const handleMenu = () => {
     setMenu(!menu);
@@ -26,10 +57,6 @@ const Navbar = ({ home, setShowBar }) => {
     home(true);
   };
 
-  const handleConnectClick = () => {
-    setShowBar(true);
-  };
-
   useEffect(() => {
     if (menu) {
       document.body.style.overflowX = "hidden";
@@ -41,6 +68,18 @@ const Navbar = ({ home, setShowBar }) => {
       document.body.style.overflowX = "auto";
     };
   }, [menu]);
+  const [showSidebar, setShowSidebar] = useState(false)
+
+  const { connectors, connect } = useConnect();
+  const handleConnect = (walletName) => {
+    const connector = connectors.find(
+      (c) => c.name.toLowerCase() === walletName.toLowerCase()
+    );
+    if (connector) {
+      connect({ connector });
+      setShowSidebar(false);
+    }
+  };
 
   return (
     <div className="relative bg-[#1C1F2E]">
@@ -66,12 +105,16 @@ const Navbar = ({ home, setShowBar }) => {
         </Link>
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
-            <ConnectButton
+            <div
               showBalance={false}
               accountStatus="address"
               chainStatus="none"
               label="Connect"
-            />
+              style={{ cursor: 'pointer' }}
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
+              <p>Connect</p>
+            </div>
 
           </p>
 
@@ -134,6 +177,47 @@ const Navbar = ({ home, setShowBar }) => {
           <Menu menu={setMenu} home={home} />
         </div>
       )}
+      {showSidebar && <div
+        style={{ zIndex: 10000 }}
+        className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 ${showSidebar ? 'right-0' : '-right-full'
+          }`}
+      >
+        <div className='flex justify-end'>
+          <div className='inline-block bg-Background p-2 rounded-full shadow-2xl'>
+            <HiMiniXMark
+              className='text-white text-3xl'
+              onClick={() => setShowSidebar(false)}
+            />
+          </div>
+        </div>
+
+        {wallets.map((wallet) => (
+          <div
+            key={wallet.id}
+            onClick={() => handleConnect(wallet.name)}
+            className='cursor-pointer mt-3 bg-zinc-900 text-textColor2 rounded-lg flex items-center gap-6 py-5 px-3'
+          >
+            <div className='h-16 w-16 bg-textColor3 rounded-full flex justify-center items-center'>
+              <img
+                src={wallet.image}
+                alt={wallet.name}
+                className='h-[48px] w-[48px]'
+              />
+            </div>
+            <div>
+              <h1 className='text-2xl font-medium text-textColor3'>
+                {wallet.name}
+              </h1>
+              <p className='text-xs'>{wallet.description}</p>
+            </div>
+          </div>
+        ))}
+
+        <p className='text-textColor2 text-center mt-16 text-sm'>
+          Got a Question?{' '}
+          <span className='text-textColor3 font-medium'>Contact Support</span>
+        </p>
+      </div>}
     </div>
   );
 };
