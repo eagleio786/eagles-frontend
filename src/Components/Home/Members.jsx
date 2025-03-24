@@ -66,10 +66,10 @@ const Members = () => {
             </span>
           </h5>
           <p className="text-[#08EDFD] text-lg mt-2">
-            {(totalUSDTReceived / 1e18).toFixed(2)} USDT
+            {(totalUSDTReceived / 1e18).toFixed(2)}$
           </p>
           <p className="flex text-green-600">
-            <span>+{(totalUSDTReceived / 1e18).toFixed(2)} USDT</span>
+            <span>+{(totalUSDTReceived / 1e18).toFixed(2)}$</span>
           </p>
         </div>
       </div>

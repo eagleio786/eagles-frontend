@@ -31,7 +31,7 @@ const Program = ({ userData, preview }) => {
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x1</h1>
                 <p className="flex items-center gap-1">
-                  {Price[lvlx1]?.cost || 0} USDT
+                  {Price[lvlx1]?.cost || 0}$
                   <span>
                     <GoArrowUpRight className="mb-4" />
                   </span>
@@ -41,7 +41,7 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
+                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-img" : "bg-[#5c5c5c]"
                       }`}
                   ></div>
                 ))}
@@ -52,7 +52,7 @@ const Program = ({ userData, preview }) => {
                     }`}
                   disabled={lvlx1 >= 12}
                 >
-                  {lvlx1 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx1 + 1]?.cost} USDT`}
+                  {lvlx1 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx1 + 1]?.cost}$`}
                 </button>
               </div>
             </div>
@@ -64,7 +64,7 @@ const Program = ({ userData, preview }) => {
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x2</h1>
                 <p className="flex items-center gap-1">
-                  {Price[lvlx2]?.cost || 0} USDT
+                  {Price[lvlx2]?.cost || 0}$
                   <span>
                     <GoArrowUpRight className="mb-4" />
                   </span>
@@ -74,7 +74,7 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-[#a67912]" : "bg-[#5c5c5c]"
+                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-img" : "bg-[#5c5c5c]"
                       }`}
                   ></div>
                 ))}
@@ -85,7 +85,7 @@ const Program = ({ userData, preview }) => {
                     }`}
                   disabled={lvlx2 >= 12}
                 >
-                  {lvlx2 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx2 + 1]?.cost} USDT`}
+                  {lvlx2 >= 11 ? "Max Level Reached" : `Upgrade for ${Price[lvlx2 + 1]?.cost}$`}
                 </button>
               </div>
             </div>
@@ -98,7 +98,7 @@ const Program = ({ userData, preview }) => {
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x1</h1>
                 <p className="flex items-center gap-1">
-                  {Price[lvlx1]?.cost || 0} USDT
+                  {Price[lvlx1]?.cost || 0}$
                   <span>
                     <GoArrowUpRight className="mb-4" />
                   </span>
@@ -108,7 +108,7 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-[#9B51E0]" : "bg-[#5c5c5c]"
+                    className={`w-7 h-7 rounded-full ${index < lvlx1 ? "bg-img" : "bg-[#5c5c5c]"
                       }`}
                   ></div>
                 ))}
@@ -121,7 +121,7 @@ const Program = ({ userData, preview }) => {
                 >
                   {lvlx1 >= 12
                     ? "Max Level Reached"
-                    : `Upgrade for ${Price[lvlx1 + 1]?.cost || 5} USDT`}
+                    : `Upgrade for ${Price[lvlx1 + 1]?.cost || 5}$`}
                 </button>
               </div>
             </div>
@@ -133,7 +133,7 @@ const Program = ({ userData, preview }) => {
               <div className="flex justify-between text-textColor3">
                 <h1 className="text-2xl capitalize">x2</h1>
                 <p className="flex items-center gap-1">
-                  {Price[lvlx2]?.cost || 0} USDT
+                  {Price[lvlx2]?.cost || 0}$
                   <span>
                     <GoArrowUpRight className="mb-4" />
                   </span>
@@ -143,7 +143,7 @@ const Program = ({ userData, preview }) => {
                 {circles.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-[#9853E0]" : "bg-[#5c5c5c]"
+                    className={`w-7 h-7 rounded-full ${index < lvlx2 ? "bg-img" : "bg-[#5c5c5c]"
                       }`}
                   ></div>
                 ))}
@@ -156,7 +156,7 @@ const Program = ({ userData, preview }) => {
                 >
                   {lvlx2 >= 12
                     ? "Max Level Reached"
-                    : `Upgrade for ${Price[lvlx2 + 1]?.cost || 5} USDT`}
+                    : `Upgrade for ${Price[lvlx2 + 1]?.cost || 5}$`}
                 </button>
               </div>
             </div>

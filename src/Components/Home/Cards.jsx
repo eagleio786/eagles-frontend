@@ -157,8 +157,7 @@ const Cards = ({ PT, userData }) => {
             {loading ? "0" : formattedEarnings || "0"}
           </p> */}
             <p className="font-medium text-2xl" >
-              {totalProfit ? totalProfit.toFixed(2) : "0"}
-              USDT
+              {totalProfit ? totalProfit.toFixed(2) : "0"}$
             </p>
           </div>
         </div>
