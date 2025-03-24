@@ -88,6 +88,15 @@ const Home = ({ showBar, setShowBar, user }) => {
     if (isConnected) fetchUserData();
   }, [address, isConnected]);
 
+
+  const { disconnect } = useDisconnect()
+  useEffect(() => {
+    if(window.location.href.includes('/connect')) {
+      disconnect()
+      localStorage.clear()
+    }
+  }, [])
+
   // Second effect for fetching upline address after referralData updates
   useEffect(() => {
     const fetchUplineData = async () => {

@@ -5,7 +5,7 @@ import Contract from '../Components/Home/Contract';
 import History from '../Components/Home/History';
 import Footer from '../Components/Footer/Footer';
 import { useEffect, useState } from 'react';
-import { useConnect, useAccount, useSwitchChain } from 'wagmi';
+import { useConnect, useAccount, useSwitchChain, useDisconnect } from 'wagmi';
 import chainConfig from '../Config/chainConfig';
 
 const Authenticate = () => {
@@ -70,6 +70,11 @@ const Authenticate = () => {
       image: '/assets/AuthImages/connect.png',
     },
   ];
+
+  const { disconnect } = useDisconnect()
+  useEffect(() => {
+    disconnect()
+  }, [])
 
   return (
     <>

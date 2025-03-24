@@ -5,7 +5,7 @@ import { MdInfo } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { useConnect, useAccount, useSwitchChain } from "wagmi";
+import { useConnect, useAccount, useSwitchChain, useDisconnect } from "wagmi";
 import chainConfig from "../../Config/chainConfig";
 import { HiMiniXMark } from "react-icons/hi2";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
@@ -184,6 +184,11 @@ const Register = () => {
     };
     handlClickToAddress();
   }, []);
+
+    const { disconnect } = useDisconnect()
+    useEffect(() => {
+      disconnect()
+    }, [])
 
   return (
     <>

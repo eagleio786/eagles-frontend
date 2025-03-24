@@ -91,14 +91,20 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<Landingpage />} />
-        {showHome && (
+        {showHome && <>
+          <Route
+            path="/connect"
+            element={
+              <Home showBar={showBar} setShowBar={setShowBar} user={user} />
+            }
+          />
           <Route
             path="/home"
             element={
               <Home showBar={showBar} setShowBar={setShowBar} user={user} />
             }
           />
-        )}
+        </>}
         <Route path="/home/:id" element={<ProfileView user={user} />} />
         <Route path="/social" element={<Social />} />
         <Route path="/socialReward" element={<SocialRewards />} />
