@@ -1,5 +1,5 @@
 import { readContract, writeContract } from "@wagmi/core";
-import { useWatchContractEvent } from "wagmi";
+// import { useWatchContractEvent } from "wagmi";
 import {
   config,
   ContractAdress,
@@ -264,15 +264,15 @@ export const getSlotFilled = async (address, matrix, level) => {
   return result;
 };
 /////////////////////////////////////// events
-export const getEventData =  () => {
-  const result =  useWatchContractEvent({
-    address: ContractAdress,
-    abi:ABI,
-    eventName: "FundsDistributed",
-    onLogs(logs) {
-      console.log("New logs!-----------------------------", logs);
-    },
-  });
+// export const getEventData =  () => {
+//   const result =  useWatchContractEvent({
+//     address: ContractAdress,
+//     abi:ABI,
+//     eventName: "FundsDistributed",
+//     onLogs(logs) {
+//       console.log("New logs!-----------------------------", logs);
+//     },
+//   });
 
-  return result;
-};
+//   return result;
+// };

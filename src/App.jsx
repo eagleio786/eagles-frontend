@@ -33,6 +33,8 @@ import { useAccount } from "wagmi";
 import { ApiUrl } from "./Config/config";
 import ProfileView from "./Pages/ProfileView";
 import FundsList from "./Pages/FundList";
+import Notifications from "./Pages/Notifications";
+import { useNotificationListener } from "./useNotificationListener";
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -45,6 +47,7 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  useNotificationListener();
   const location = useLocation();
   const { address, isConnected } = useAccount();
   const [user, setUser] = useState("");
@@ -91,20 +94,22 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<Landingpage />} />
-        {showHome && <>
-          <Route
-            path="/connect"
-            element={
-              <Home showBar={showBar} setShowBar={setShowBar} user={user} />
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <Home showBar={showBar} setShowBar={setShowBar} user={user} />
-            }
-          />
-        </>}
+        {showHome && (
+          <>
+            <Route
+              path="/connect"
+              element={
+                <Home showBar={showBar} setShowBar={setShowBar} user={user} />
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <Home showBar={showBar} setShowBar={setShowBar} user={user} />
+              }
+            />
+          </>
+        )}
         <Route path="/home/:id" element={<ProfileView user={user} />} />
         <Route path="/social" element={<Social />} />
         <Route path="/socialReward" element={<SocialRewards />} />
@@ -123,6 +128,9 @@ function App() {
         )}
         {showHome && <Route path="/links" element={<Links />} />}
         {showHome && <Route path="/stats" element={<Stats />} />}
+        {showHome && (
+          <Route path="/notifications" element={<Notifications />} />
+        )}
         {showHome && <Route path="/calculator" element={<Calculator />} />}
         <Route path="/support" element={<Support />} />
         <Route path="/redirect" element={<Register />} />

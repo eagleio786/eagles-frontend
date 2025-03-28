@@ -1,16 +1,73 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FaGripLines, FaRegBell } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
+import { resetNewNotifications } from "../../redux/notificationSlice";
 import Menu from "../DashboardMenu/Menu";
-import DrawerIcon from '../../assets/icons/drawerIcon.png'
-import AlertIcon from '../../assets/icons/alertIcon.png'
+import DrawerIcon from "../../assets/icons/drawerIcon.png";
+import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { HiMiniXMark } from "react-icons/hi2";
 import { useAccount, useConnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { snapshot } from "viem/actions";
+
+const MAX_NOTIFICATIONS = 100;
+
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
   const { isConnected } = useAccount();
   const [notification, setNotification] = useState(false);
+  // const unreadCount = useSelector((state) => state.notifications.unreadCount);
+  // const newNotifications = useSelector(
+  //   (state) => state.notifications.newNotifications
+  // );
+  const [newNotifications, setNewNotifications] = useState([])
+
+  const fetchExistingNotifications = useCallback(async () => {
+    try {
+      const oldNotifications = localStorage.getItem('newNotifications')
+      const q = query(
+        collection(db, "alerts"),
+        where("toAddress", "==", TARGET_ADDRESS),
+        orderBy("time", "desc"),
+        limit(MAX_NOTIFICATIONS)
+      );
+      onSnapshot(q, async snapshot => {
+        const docs = []
+        snapshot.forEach(d => docs.push(d.data()))
+
+        const existingNotifications = docs.map((doc) => {
+          return {
+            id: doc.id,
+            title: data.heading || "Notification",
+            description: data.message || "",
+            time:
+              data.time?.toDate()?.toLocaleString() ||
+              new Date().toLocaleString(),
+            fromAddress: data.fromAddress,
+            toAddress: data.toAddress,
+            amount: data.amount,
+            level: data.level,
+            matrix: data.matrix,
+          };
+        });
+  
+        if(oldNotifications != JSON.stringify(existingNotifications)) {
+          setNewNotifications(existingNotifications);
+        }
+      })
+    } catch (error) {
+      logError("Fetch Existing Notifications", error);
+      return [];
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchExistingNotifications()
+  }, [])
+
+  const dispatch = useDispatch();
 
   const wallets = [
     // {
@@ -49,7 +106,9 @@ const Navbar = ({ home, setShowBar }) => {
   };
 
   const hanldeNotification = () => {
-    setNotification(!notification);
+    // setNotification(!notification);
+    localStorage.setItem('newNotifications', JSON.stringify(newNotifications))
+    dispatch(resetNewNotifications());
   };
 
   const handleRendering = () => {
@@ -68,7 +127,7 @@ const Navbar = ({ home, setShowBar }) => {
       document.body.style.overflowX = "auto";
     };
   }, [menu]);
-  const [showSidebar, setShowSidebar] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const { connectors, connect } = useConnect();
   const handleConnect = (walletName) => {
@@ -88,12 +147,7 @@ const Navbar = ({ home, setShowBar }) => {
           className="bg-black bg-opacity-45 flex items-center cursor-pointer text-sm p-3 rounded-full"
           onClick={handleMenu}
         >
-
-          <img
-            src={DrawerIcon}
-            alt="drawer"
-            className="h-3 w-3 object-cover"
-          />
+          <img src={DrawerIcon} alt="drawer" className="h-3 w-3 object-cover" />
         </div>
         <Link className="flex justify-center items-center" to="/home">
           <img
@@ -101,41 +155,51 @@ const Navbar = ({ home, setShowBar }) => {
             alt="logo"
             className="h-9 w-12 ms-2   object-cover"
           />
-          <p className="ml-4 font-medium" >theeagles.io</p>
+          <p className="ml-4 font-medium">theeagles.io</p>
         </Link>
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
-            {isConnected ? <ConnectButton
-              showBalance={false}
-              accountStatus="address"
-              chainStatus="none"
-              label="Connect"
-            /> : <div
-              showBalance={false}
-              accountStatus="address"
-              chainStatus="none"
-              label="Connect"
-              style={{ cursor: 'pointer' }}
-              onClick={() => setShowSidebar(!showSidebar)}
-            >
-              <p>Connect</p>
-            </div>}
-
+            {isConnected ? (
+              <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+              />
+            ) : (
+              <div
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowSidebar(!showSidebar)}
+              >
+                <p>Connect</p>
+              </div>
+            )}
           </p>
 
-          <div onClick={hanldeNotification} className="bg-black bg-opacity-45 text-base p-3 rounded-full cursor-pointer">
-
+          <Link
+            onClick={hanldeNotification}
+            to="/notifications"
+            className="bg-black bg-opacity-45 text-base p-3 rounded-full cursor-pointer"
+          >
             <img
               src={AlertIcon}
               alt="alerts"
               className="h-3 w-3 object-cover"
             />
-          </div>
-
+            {newNotifications.length > 0 && (
+              <span style={{ borderRadius: 100, height: 10 }} className="absolute top-2 right-5 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                
+              </span>
+            )}
+          </Link>
         </div>
       </div>
 
-      {notification && (
+      {/* {notification && (
         <div className="bg-white shadow-lg rounded-lg p-3 absolute w-[90%] sm:w-[60%] md:w-[40%] lg:w-[25%] h-auto z-50 top-14 right-4 animate-fadeIn">
           <div className="flex justify-between items-center border-b pb-2">
             <h1 className="font-semibold text-sm text-black">
@@ -157,7 +221,7 @@ const Navbar = ({ home, setShowBar }) => {
             alerts.
           </p>
         </div>
-      )}
+      )} */}
 
       {menu && (
         <div className="absolute top-0 h-[135vh] w-full text-textColor3 bg-black transition-all duration-500">
@@ -182,47 +246,49 @@ const Navbar = ({ home, setShowBar }) => {
           <Menu menu={setMenu} home={home} />
         </div>
       )}
-      {showSidebar && <div
-        style={{ zIndex: 10000 }}
-        className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 ${showSidebar ? 'right-0' : '-right-full'
-          }`}
-      >
-        <div className='flex justify-end'>
-          <div className='inline-block bg-Background p-2 rounded-full shadow-2xl'>
-            <HiMiniXMark
-              className='text-white text-3xl'
-              onClick={() => setShowSidebar(false)}
-            />
-          </div>
-        </div>
-
-        {wallets.map((wallet) => (
-          <div
-            key={wallet.id}
-            onClick={() => handleConnect(wallet.name)}
-            className='cursor-pointer mt-3 bg-zinc-900 text-textColor2 rounded-lg flex items-center gap-6 py-5 px-3'
-          >
-            <div className='h-16 w-16 bg-textColor3 rounded-full flex justify-center items-center'>
-              <img
-                src={wallet.image}
-                alt={wallet.name}
-                className='h-[48px] w-[48px]'
+      {showSidebar && (
+        <div
+          style={{ zIndex: 10000 }}
+          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 ${showSidebar ? "right-0" : "-right-full"
+            }`}
+        >
+          <div className="flex justify-end">
+            <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
+              <HiMiniXMark
+                className="text-white text-3xl"
+                onClick={() => setShowSidebar(false)}
               />
             </div>
-            <div>
-              <h1 className='text-2xl font-medium text-textColor3'>
-                {wallet.name}
-              </h1>
-              <p className='text-xs'>{wallet.description}</p>
-            </div>
           </div>
-        ))}
 
-        <p className='text-textColor2 text-center mt-16 text-sm'>
-          Got a Question?{' '}
-          <span className='text-textColor3 font-medium'>Contact Support</span>
-        </p>
-      </div>}
+          {wallets.map((wallet) => (
+            <div
+              key={wallet.id}
+              onClick={() => handleConnect(wallet.name)}
+              className="cursor-pointer mt-3 bg-zinc-900 text-textColor2 rounded-lg flex items-center gap-6 py-5 px-3"
+            >
+              <div className="h-16 w-16 bg-textColor3 rounded-full flex justify-center items-center">
+                <img
+                  src={wallet.image}
+                  alt={wallet.name}
+                  className="h-[48px] w-[48px]"
+                />
+              </div>
+              <div>
+                <h1 className="text-2xl font-medium text-textColor3">
+                  {wallet.name}
+                </h1>
+                <p className="text-xs">{wallet.description}</p>
+              </div>
+            </div>
+          ))}
+
+          <p className="text-textColor2 text-center mt-16 text-sm">
+            Got a Question?{" "}
+            <span className="text-textColor3 font-medium">Contact Support</span>
+          </p>
+        </div>
+      )}
     </div>
   );
 };
