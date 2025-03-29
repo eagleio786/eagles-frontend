@@ -2164,9 +2164,10 @@ import { MdNotifications } from "react-icons/md";
 import { formatUnits } from "viem";
 import { users } from "../Config/Contract-Methods";
 import { config, ContractAdress } from "../Config/config";
+import { useNavigate } from "react-router-dom";
 
 const CONTRACT_ADDRESS = ContractAdress;
-// const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
+const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
 const MAX_NOTIFICATIONS = 10;
 
 const logError = console.error
@@ -2193,9 +2194,10 @@ function Notifications() {
   const [processedTransactions, setProcessedTransactions] = useState(new Set());
 
   // const config = useConfig();
+  const navigate = useNavigate()
   const publicClient = usePublicClient(config);
   const { address } = useAccount()
-  const TARGET_ADDRESS = address
+  // const TARGET_ADDRESS = address
   // console.log("TARGET_ADDRESS", TARGET_ADDRESS)
 
   const logError = (context, error) => {
@@ -2306,13 +2308,13 @@ function Notifications() {
           <div className="flex-grow relative">
             <div className="flex items-center">
               <p className="text-white font-medium flex-grow">
-                +{item?.amount} USDT received!
+                +{Number(item?.amount)/10} USDT received!
               </p>
             </div>
             <p
               className="text-gray-400 text-sm"
             >
-              Program <span style={{ color: 'purple' }}>x{item?.matrix}</span>, level {item?.level} from <span style={{ borderRadius: 15, padding: 5, background: '#39394e' }}>ID {item?.userId}</span>
+              Program <span style={{ color: 'purple' }}>x{item?.matrix}</span>, level {item?.level} from <span style={{ borderRadius: 15, padding: 5, background: '#39394e', cursor: 'pointer' }} onClick={() => navigate(`/home/${item?.userId}`)}>ID {item?.userId}</span>
             </p>
             {item.time && <p className="text-gray-500 text-xs">{item.time}</p>}
           </div>
