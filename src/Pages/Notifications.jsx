@@ -2167,7 +2167,7 @@ import { config, ContractAdress } from "../Config/config";
 import { useNavigate } from "react-router-dom";
 
 const CONTRACT_ADDRESS = ContractAdress;
-const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
+// const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
 const MAX_NOTIFICATIONS = 10;
 
 const logError = console.error
@@ -2197,7 +2197,7 @@ function Notifications() {
   const navigate = useNavigate()
   const publicClient = usePublicClient(config);
   const { address } = useAccount()
-  // const TARGET_ADDRESS = address
+  const TARGET_ADDRESS = address
   // console.log("TARGET_ADDRESS", TARGET_ADDRESS)
 
   const logError = (context, error) => {
