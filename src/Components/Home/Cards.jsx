@@ -138,7 +138,7 @@ const Cards = ({ PT, userData }) => {
           <div className="flex justify-between items-center">
             <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
               Total Profit
-              <span className="bg-green-500 rounded-full p-1">
+              <span className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] rounded-full p-1">
 
                 <img
                   src={ProfitIcon}
@@ -208,7 +208,7 @@ const StatCard = ({ title, count, count24, bg, icon }) => {
     >
       <p className="text-textColor3 text-base flex items-center font-bold gap-2">
         {title}
-        <span className="bg-green-500 rounded-full p-1 h-6 ">
+        <span className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] rounded-full p-1 h-6 ">
           <img
             src={icon}
             alt="profit"

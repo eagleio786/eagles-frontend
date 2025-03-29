@@ -321,7 +321,7 @@ const Home = ({ showBar, setShowBar, user }) => {
                   {uplineID ? (
                     <div className="flex gap-2 items-center text-textColor3 text-sm mt-2">
                       <p>Joined by</p>
-                      <p className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
+                      <p onClick={() => navigate(`/home/${uplineID}`)} className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
                         ID {uplineID}
                       </p>
                     </div>
