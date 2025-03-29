@@ -26,7 +26,7 @@ const Navbar = ({ home, setShowBar }) => {
   // );
   const [newNotifications, setNewNotifications] = useState([])
   const { address } = useAccount()
-  // const TARGET_ADDRESS = address
+  const TARGET_ADDRESS = address
 
   useWatchContractEvent({
     address: ContractAdress,
