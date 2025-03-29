@@ -2163,10 +2163,13 @@ import { db } from "../Config/firebaseConfig";
 import { MdNotifications } from "react-icons/md";
 import { formatUnits } from "viem";
 import { users } from "../Config/Contract-Methods";
+import { config, ContractAdress } from "../Config/config";
 
-const CONTRACT_ADDRESS = "0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe";
+const CONTRACT_ADDRESS = ContractAdress;
 // const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
-const MAX_NOTIFICATIONS = 100;
+const MAX_NOTIFICATIONS = 10;
+
+const logError = console.error
 
 const validateFirestoreData = (data) => {
   const validData = {};
@@ -2189,8 +2192,8 @@ function Notifications() {
   const [lastProcessedBlock, setLastProcessedBlock] = useState(null);
   const [processedTransactions, setProcessedTransactions] = useState(new Set());
 
-  const config = useConfig();
-  const publicClient = usePublicClient();
+  // const config = useConfig();
+  const publicClient = usePublicClient(config);
   const { address } = useAccount()
   const TARGET_ADDRESS = address
   // console.log("TARGET_ADDRESS", TARGET_ADDRESS)
@@ -2217,7 +2220,7 @@ function Notifications() {
     try {
       const userIdPromises = notifications.map(async (notification) => {
         try {
-          const userDetails = await users(notification.fromAddress);
+          const userDetails = await users(notification.from);
           const userId = userDetails[1]?.toString() || "Unknown User";
 
           return {
@@ -2226,7 +2229,7 @@ function Notifications() {
           };
         } catch (error) {
           console.error(
-            `Error fetching user ID for ${notification.fromAddress}:`,
+            `Error fetching user ID for ${notification.from}:`,
             error
           );
           return {
@@ -2257,250 +2260,43 @@ function Notifications() {
     }
   };
 
-  const fetchLastProcessedBlock = useCallback(async () => {
-    try {
-      const q = query(
-        collection(db, "alerts"),
-        where("toAddress", "==", TARGET_ADDRESS),
-        orderBy("blockNumber", "desc"),
-        limit(1)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const lastDoc = querySnapshot.docs[0];
-        return lastDoc.data().blockNumber;
-      }
-      return null;
-    } catch (error) {
-      logError("Fetch Last Processed Block", error);
-      return null;
-    }
-  }, []);
-
-  const fetchExistingNotifications = useCallback(async () => {
-    try {
-      const q = query(
-        collection(db, "alerts"),
-        where("toAddress", "==", TARGET_ADDRESS),
-        orderBy("time", "desc"),
-        limit(MAX_NOTIFICATIONS)
-      );
-      const querySnapshot = await getDocs(q);
-
-      const existingNotifications = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          title: data.heading || "Notification",
-          description: data.message || "",
-          time:
-            data.time?.toDate()?.toLocaleString() ||
-            new Date().toLocaleString(),
-          fromAddress: data.fromAddress,
-          toAddress: data.toAddress,
-          amount: data.amount,
-          level: data.level,
-          matrix: data.matrix,
-        };
-      });
-
-      setNotifications(existingNotifications);
-      return existingNotifications;
-    } catch (error) {
-      logError("Fetch Existing Notifications", error);
-      return [];
-    }
-  }, []);
-
   useEffect(() => {
-    const fetchContractEvents = async () => {
-      try {
-        const fundsDistributedEvent = parseAbiItem(
-          "event FundsDistributed(address indexed from, address indexed to, uint8 matrix, uint256 level, uint256 amount)"
-        );
-
-        const latestBlock = await publicClient.getBlockNumber();
-        const startBlock = lastProcessedBlock
-          ? BigInt(lastProcessedBlock) + 1n
-          : latestBlock - 1000n;
-        const safeStartBlock =
-          startBlock > latestBlock ? latestBlock : startBlock;
-
-        const logs = await publicClient.getLogs({
-          address: CONTRACT_ADDRESS,
-          event: fundsDistributedEvent,
-          fromBlock: safeStartBlock,
-          toBlock: latestBlock,
-        });
-
-        const newNotifications = [];
-        const newProcessedTransactions = new Set(processedTransactions);
-
-        for (const log of logs) {
-          try {
-            if (newProcessedTransactions.has(log.transactionHash)) {
-              continue;
-            }
-
-            const decodedLog = decodeEventLog({
-              abi: [fundsDistributedEvent],
-              ...log,
-            });
-
-            if (!decodedLog?.args) {
-              console.error("Invalid decoded log:", log);
-              continue;
-            }
-
-            if (
-              !log.transactionHash ||
-              !decodedLog.args.from ||
-              !decodedLog.args.to
-            ) {
-              console.error("Missing required fields in log:", log);
-              continue;
-            }
-
-            // Skip if not for our target address
-            if (
-              decodedLog.args.to.toLowerCase() !== TARGET_ADDRESS.toLowerCase()
-            ) {
-              continue;
-            }
-
-            const transactionAlreadyExists = await checkTransactionExists(
-              log.transactionHash
-            );
-            if (transactionAlreadyExists) {
-              console.log(
-                `Transaction ${log.transactionHash} already exists in Firestore`
-              );
-              newProcessedTransactions.add(log.transactionHash);
-              continue;
-            }
-
-            const { from, to, matrix, level, amount } = decodedLog.args;
-            const amountStr = formatAmount(amount);
-            const levelStr = level?.toString() || "0";
-            const matrixStr = matrix?.toString() || "0";
-
-            newNotifications.push({
-              id: `${log.transactionHash}-${log.logIndex}`,
-              title: `+ ${amountStr} USDT received`,
-              description: `Loading user details...`,
-              time: new Date().toLocaleString(),
-              hasAction: false,
-              fromAddress: from,
-              toAddress: to,
-              amount: amountStr,
-              level: levelStr,
-              matrix: matrixStr,
-            });
-
-            newProcessedTransactions.add(log.transactionHash);
-          } catch (error) {
-            logError("Log processing error", error);
-          }
+    const f = async () => {
+      const fundsDistributedEvent = parseAbiItem(
+        "event FundsDistributed(address indexed from, address indexed to, uint8 matrix, uint256 level, uint256 amount)"
+      );
+  
+      const block = await publicClient.getBlockNumber();
+      const logs = await publicClient.getLogs({
+        address: CONTRACT_ADDRESS,
+        event: fundsDistributedEvent,
+        fromBlock: 0,
+        toBlock: block - 500n,
+        args: {
+          to: TARGET_ADDRESS
         }
+        // fromBlock: BigInt(block)- 999n,
+        // toBlock: block,
+      });
+      const notificationWithSenderIds = await fetchUserIds(
+        logs
+        .map(log => log.args)
+        .map(log => ({
+          ...log,
+          amount: log.amount/100000000000000000n
+        }))
+      )
+      console.log("notificationWithSenderIds", notificationWithSenderIds)
+      setNotifications(notificationWithSenderIds)
+      setLoading(false)
+    }
+    f()
+  }, [])
 
-        if (newNotifications.length > 0) {
-          const notificationsWithUserIds = await fetchUserIds(newNotifications);
-
-          for (const notification of notificationsWithUserIds) {
-            const firestoreData = validateFirestoreData({
-              heading: `+ ${notification.amount} USDT received`,
-              message: `<strong>Program</strong> x${notification.matrix}, <strong>level ${notification.level}</strong> From user ${notification.userId} Congratulations!`,
-              time: new Date(),
-              action: null,
-              blockNumber: Number(log.blockNumber),
-              transactionHash: log.transactionHash,
-              fromAddress: notification.fromAddress,
-              toAddress: notification.toAddress,
-              amount: notification.amount,
-              matrix: notification.matrix,
-              level: notification.level,
-            });
-
-            try {
-              await addDoc(collection(db, "alerts"), firestoreData);
-            } catch (firestoreError) {
-              logError("Firestore Save Operation", firestoreError);
-              continue;
-            }
-          }
-
-          const updatedNotifications = notificationsWithUserIds.map(
-            (notification) => ({
-              ...notification,
-              description: `<strong>Program</strong> x${notification.matrix}, <strong>level ${notification.level}</strong> From user ${notification.userId} Congratulations!`,
-            })
-          );
-
-          const combinedNotifications = [
-            ...updatedNotifications,
-            ...notifications,
-          ].slice(0, MAX_NOTIFICATIONS);
-
-          setNotifications(combinedNotifications);
-          setLastProcessedBlock(Number(latestBlock));
-          setProcessedTransactions(newProcessedTransactions);
-        }
-
-        setLoading(false);
-      } catch (error) {
-        logError("Fetch Contract Events", error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    let isMounted = true;
-    let intervalId;
-
-    const initialize = async () => {
-      try {
-        await fetchExistingNotifications();
-
-        const lastBlock = await fetchLastProcessedBlock();
-        if (isMounted && lastBlock) {
-          setLastProcessedBlock(lastBlock);
-        }
-        await fetchContractEvents();
-
-        intervalId = setInterval(async () => {
-          if (isMounted) {
-            try {
-              await fetchContractEvents();
-            } catch (error) {
-              logError("Interval Fetch Error", error);
-            }
-          }
-        }, 30000);
-      } catch (error) {
-        logError("Initialization Error", error);
-      }
-    };
-
-    initialize();
-
-    return () => {
-      isMounted = false;
-      clearInterval(intervalId);
-    };
-  }, [
-    publicClient,
-    fetchLastProcessedBlock,
-    fetchExistingNotifications,
-    lastProcessedBlock,
-    processedTransactions,
-    notifications,
-  ]);
-
-  const renderNotificationItem = (item) => {
+  const renderNotificationItem = (item, index) => {
     return (
       <div
-        key={item.id}
+        key={index}
         className="bg-[#2C2C2C] rounded-lg p-4 flex items-center justify-between mb-3"
       >
         <div className="flex items-center space-x-3 w-full">
@@ -2509,12 +2305,15 @@ function Notifications() {
           </div>
           <div className="flex-grow relative">
             <div className="flex items-center">
-              <p className="text-white font-medium flex-grow">{item.title}</p>
+              <p className="text-white font-medium flex-grow">
+                +{item?.amount} USDT received!
+              </p>
             </div>
             <p
               className="text-gray-400 text-sm"
-              dangerouslySetInnerHTML={{ __html: item.description }}
-            />
+            >
+              Program <span style={{ color: 'purple' }}>x{item?.matrix}</span>, level {item?.level} from <span style={{ borderRadius: 15, padding: 5, background: '#39394e' }}>ID {item?.userId}</span>
+            </p>
             {item.time && <p className="text-gray-500 text-xs">{item.time}</p>}
           </div>
         </div>
