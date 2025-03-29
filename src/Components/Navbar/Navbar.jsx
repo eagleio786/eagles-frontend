@@ -11,7 +11,7 @@ import { useAccount, useConnect, usePublicClient, useWatchContractEvent } from "
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { snapshot } from "viem/actions";
-import { ABI, ContractAdress } from "../../Config/config";
+import { ABI, config, ContractAdress } from "../../Config/config";
 
 const MAX_NOTIFICATIONS = 100;
 const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227"
