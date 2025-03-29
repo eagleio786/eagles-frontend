@@ -2272,22 +2272,22 @@ function Notifications() {
       const logs = await publicClient.getLogs({
         address: CONTRACT_ADDRESS,
         event: fundsDistributedEvent,
-        fromBlock: 0,
-        toBlock: block - 500n,
+        fromBlock: block - 500n,
+        toBlock: 'latest',
         args: {
           to: TARGET_ADDRESS
         }
         // fromBlock: BigInt(block)- 999n,
         // toBlock: block,
       });
-      const notificationWithSenderIds = await fetchUserIds(
+      const notificationWithSenderIds = (await fetchUserIds(
         logs
         .map(log => log.args)
         .map(log => ({
           ...log,
           amount: log.amount/100000000000000000n
         }))
-      )
+      )).reverse()
       console.log("notificationWithSenderIds", notificationWithSenderIds)
       setNotifications(notificationWithSenderIds)
       setLoading(false)
