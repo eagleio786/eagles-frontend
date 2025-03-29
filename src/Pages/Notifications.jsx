@@ -2269,17 +2269,17 @@ function Notifications() {
       );
   
       const block = await publicClient.getBlockNumber();
-      const logs = await publicClient.getLogs({
+      const logs = (await publicClient.getLogs({
         address: CONTRACT_ADDRESS,
         event: fundsDistributedEvent,
-        fromBlock: block - 500n,
+        fromBlock: 'earliest',
         toBlock: 'latest',
         args: {
           to: TARGET_ADDRESS
         }
         // fromBlock: BigInt(block)- 999n,
         // toBlock: block,
-      });
+      })).slice(-30);
       const notificationWithSenderIds = (await fetchUserIds(
         logs
         .map(log => log.args)

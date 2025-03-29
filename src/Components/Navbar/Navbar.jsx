@@ -13,6 +13,7 @@ import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where }
 import { snapshot } from "viem/actions";
 import { ABI, config, ContractAdress } from "../../Config/config";
 import { parseAbiItem } from "viem";
+import { users } from "../../Config/Contract-Methods";
 
 const MAX_NOTIFICATIONS = 100;
 const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227"
@@ -80,23 +81,24 @@ const Navbar = ({ home, setShowBar }) => {
       );
 
       const block = await publicClient.getBlockNumber();
-      const logs = await publicClient.getLogs({
+      const logs = (await publicClient.getLogs({
         address: ContractAdress,
         event: fundsDistributedEvent,
-        fromBlock: block - 500n,
+        fromBlock: 'earliest',
         toBlock: 'latest',
         args: {
           to: TARGET_ADDRESS
         }
         // fromBlock: BigInt(block)- 999n,
         // toBlock: block,
-      });
+      })).slice(-30);
       const notificationWithSenderIds = (await fetchUserIds(
         logs
           .map(log => log.args)
           .map(log => ({
             ...log,
-            amount: log.amount / 100000000000000000n
+            amount: Number(log.amount / 100000000000000000n),
+            level: Number(log?.level)
           }))
       )).reverse()
       return notificationWithSenderIds
