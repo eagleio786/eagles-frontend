@@ -7,7 +7,7 @@ import DrawerIcon from "../../assets/icons/drawerIcon.png";
 import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { HiMiniXMark } from "react-icons/hi2";
-import { useAccount, useConnect, usePublicClient, useWatchContractEvent } from "wagmi";
+import { useAccount, useConnect, useWatchContractEvent } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { snapshot } from "viem/actions";
@@ -70,7 +70,7 @@ const Navbar = ({ home, setShowBar }) => {
     }
   };
 
-  const publicClient = usePublicClient(config);
+
   useEffect(() => {
 
     const getNotifications = async () => {
@@ -80,7 +80,7 @@ const Navbar = ({ home, setShowBar }) => {
 
       const block = await publicClient.getBlockNumber();
       const logs = await publicClient.getLogs({
-        address: ContractAdress,
+        address: CONTRACT_ADDRESS,
         event: fundsDistributedEvent,
         fromBlock: 0,
         toBlock: block - 500n,
