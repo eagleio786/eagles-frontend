@@ -2163,14 +2163,10 @@ import { db } from "../Config/firebaseConfig";
 import { MdNotifications } from "react-icons/md";
 import { formatUnits } from "viem";
 import { users } from "../Config/Contract-Methods";
-import { config, ContractAdress } from "../Config/config";
-import { useNavigate } from "react-router-dom";
 
-const CONTRACT_ADDRESS = ContractAdress;
+const CONTRACT_ADDRESS = "0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe";
 // const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227";
-const MAX_NOTIFICATIONS = 10;
-
-const logError = console.error
+const MAX_NOTIFICATIONS = 100;
 
 const validateFirestoreData = (data) => {
   const validData = {};
@@ -2192,113 +2188,13 @@ function Notifications() {
   const [error, setError] = useState(null);
   const [lastProcessedBlock, setLastProcessedBlock] = useState(null);
   const [processedTransactions, setProcessedTransactions] = useState(new Set());
-
-  // const config = useConfig();
-  const navigate = useNavigate()
-  const publicClient = usePublicClient(config);
   const { address } = useAccount()
   const TARGET_ADDRESS = address
-  // console.log("TARGET_ADDRESS", TARGET_ADDRESS)
 
-  const logError = (context, error) => {
-    console.error(`[Notifications Error - ${context}]`, {
-      message: error.message,
-      name: error.name,
-      stack: error.stack,
-      details: error.details || "No additional details",
-    });
-  };
-
-  const formatAmount = (amount, decimals = 18) => {
-    try {
-      return formatUnits(amount, decimals);
-    } catch (error) {
-      console.error("Error formatting amount:", error);
-      return amount.toString();
-    }
-  };
-
-  const fetchUserIds = async (notifications) => {
-    try {
-      const userIdPromises = notifications.map(async (notification) => {
-        try {
-          const userDetails = await users(notification.from);
-          const userId = userDetails[1]?.toString() || "Unknown User";
-
-          return {
-            ...notification,
-            userId: userId,
-          };
-        } catch (error) {
-          console.error(
-            `Error fetching user ID for ${notification.from}:`,
-            error
-          );
-          return {
-            ...notification,
-            userId: "Unknown User",
-          };
-        }
-      });
-
-      return await Promise.all(userIdPromises);
-    } catch (error) {
-      console.error("Error in fetchUserIds:", error);
-      return notifications;
-    }
-  };
-
-  const checkTransactionExists = async (transactionHash) => {
-    try {
-      const q = query(
-        collection(db, "alerts"),
-        where("transactionHash", "==", transactionHash)
-      );
-      const querySnapshot = await getDocs(q);
-      return !querySnapshot.empty;
-    } catch (error) {
-      logError("Check Transaction Exists", error);
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    const f = async () => {
-      const fundsDistributedEvent = parseAbiItem(
-        "event FundsDistributed(address indexed from, address indexed to, uint8 matrix, uint256 level, uint256 amount)"
-      );
-  
-      const block = await publicClient.getBlockNumber();
-      const logs = await publicClient.getLogs({
-        address: CONTRACT_ADDRESS,
-        event: fundsDistributedEvent,
-        fromBlock: 0,
-        toBlock: block - 500n,
-        args: {
-          to: TARGET_ADDRESS
-        }
-        // fromBlock: BigInt(block)- 999n,
-        // toBlock: block,
-      });
-      const notificationWithSenderIds = await fetchUserIds(
-        logs
-        .map(log => log.args)
-        .map(log => ({
-          ...log,
-          amount: log.amount/100000000000000000n
-        }))
-      )
-      console.log("notificationWithSenderIds", notificationWithSenderIds)
-      setNotifications(notificationWithSenderIds)
-      setLoading(false)
-    }
-    f()
-  }, [])
-
-  const renderNotificationItem = (item, index) => {
+  const renderNotificationItem = (item) => {
     return (
       <div
-        key={index}
+        key={item.id}
         className="bg-[#2C2C2C] rounded-lg p-4 flex items-center justify-between mb-3"
       >
         <div className="flex items-center space-x-3 w-full">
@@ -2307,15 +2203,12 @@ function Notifications() {
           </div>
           <div className="flex-grow relative">
             <div className="flex items-center">
-              <p className="text-white font-medium flex-grow">
-                +{Number(item?.amount)/10} USDT received!
-              </p>
+              <p className="text-white font-medium flex-grow">{item.title}</p>
             </div>
             <p
               className="text-gray-400 text-sm"
-            >
-              Program <span style={{ color: 'purple' }}>x{item?.matrix}</span>, level {item?.level} from <span style={{ borderRadius: 15, padding: 5, background: '#39394e', cursor: 'pointer' }} onClick={() => navigate(`/home/${item?.userId}`)}>ID {item?.userId}</span>
-            </p>
+              dangerouslySetInnerHTML={{ __html: item.description }}
+            />
             {item.time && <p className="text-gray-500 text-xs">{item.time}</p>}
           </div>
         </div>

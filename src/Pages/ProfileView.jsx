@@ -272,24 +272,24 @@ const Home = ({ showBar, setShowBar }) => {
           </div>
 
           {/* Referral Link Section */}
-          <div className="bg-[#1C1F2E] shadow-xl shadow-[#00000079] w-full px-3 py-3 rounded-lg mt-3 mb-5">
+          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
             <div className="flex items-center justify-between text-base mb-5">
-              <h5 className="text-textColor3 font-bold">My Personal link</h5>
-              <p className="text-textColor3 text-base font-sans font-semibold italic flex gap-2 items-center">
-                theeagles.io/{userData?.[1]?.toString()}
+              <h5 className="text-textColor3">My Personal link</h5>
+              <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">
+                theeagles.io/{referralData?.id}
                 <GoArrowUpRight className="text-lg" />
               </p>
             </div>
             <div className="text-lg flex gap-3">
               <button
-                className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
+                className="bg-[#a67912] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
                 onClick={() =>
                   handleCopy(`theeagles.io/${userData?.[1]?.toString()}`)
                 }
               >
                 Copy
               </button>
-              <button className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full">
+              <button className="w-full bg-textColor3 shadow-lg shadow-[#00000079] font-medium px-6 rounded-full">
                 Share
               </button>
             </div>

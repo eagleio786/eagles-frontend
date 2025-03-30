@@ -7,14 +7,12 @@ import DrawerIcon from "../../assets/icons/drawerIcon.png";
 import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { HiMiniXMark } from "react-icons/hi2";
-import { useAccount, useConnect, useWatchContractEvent } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { snapshot } from "viem/actions";
-import { ABI, ContractAdress } from "../../Config/config";
 
 const MAX_NOTIFICATIONS = 100;
-const TARGET_ADDRESS = "0xB853412126499360Cb12b3118AefEee135D27227"
 
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
@@ -25,20 +23,7 @@ const Navbar = ({ home, setShowBar }) => {
   //   (state) => state.notifications.newNotifications
   // );
   const [newNotifications, setNewNotifications] = useState([])
-  const { address } = useAccount()
-  const TARGET_ADDRESS = address
 
-  useWatchContractEvent({
-    address: ContractAdress,
-    abi: ABI,
-    eventName: "FundsDistributed",
-    args: {
-      to: TARGET_ADDRESS,
-    },
-    onLogs(logs) {
-      setNewNotifications(logs)
-    },
-  });
   const dispatch = useDispatch();
 
   const wallets = [
@@ -79,6 +64,7 @@ const Navbar = ({ home, setShowBar }) => {
 
   const hanldeNotification = () => {
     // setNotification(!notification);
+    // localStorage.setItem('newNotifications', JSON.stringify(newNotifications))
     dispatch(resetNewNotifications());
   };
 
