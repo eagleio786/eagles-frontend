@@ -39,81 +39,6 @@ const Navbar = ({ home, setShowBar }) => {
       setNewNotifications(logs)
     },
   });
-
-  const fetchUserIds = async (notifications) => {
-    try {
-      const userIdPromises = notifications.map(async (notification) => {
-        try {
-          const userDetails = await users(notification.from);
-          const userId = userDetails[1]?.toString() || "Unknown User";
-
-          return {
-            ...notification,
-            userId: userId,
-          };
-        } catch (error) {
-          console.error(
-            `Error fetching user ID for ${notification.from}:`,
-            error
-          );
-          return {
-            ...notification,
-            userId: "Unknown User",
-          };
-        }
-      });
-
-      return await Promise.all(userIdPromises);
-    } catch (error) {
-      console.error("Error in fetchUserIds:", error);
-      return notifications;
-    }
-  };
-
-
-  useEffect(() => {
-
-    const getNotifications = async () => {
-      const fundsDistributedEvent = parseAbiItem(
-        "event FundsDistributed(address indexed from, address indexed to, uint8 matrix, uint256 level, uint256 amount)"
-      );
-
-      const block = await publicClient.getBlockNumber();
-      const logs = await publicClient.getLogs({
-        address: CONTRACT_ADDRESS,
-        event: fundsDistributedEvent,
-        fromBlock: 0,
-        toBlock: block - 500n,
-        args: {
-          to: TARGET_ADDRESS
-        }
-        // fromBlock: BigInt(block)- 999n,
-        // toBlock: block,
-      });
-      const notificationWithSenderIds = await fetchUserIds(
-        logs
-          .map(log => log.args)
-          .map(log => ({
-            ...log,
-            amount: log.amount / 100000000000000000n
-          }))
-      )
-      return notificationWithSenderIds
-    }
-
-    const f = async () => {
-      const currentNotifications = localStorage.getItem('currentNotifications')
-      if(!currentNotifications) localStorage.setItem('currentNotifications', JSON.stringify(await getNotifications()))
-
-      setInterval(async () => {
-        const newNotifications = JSON.stringify(await getNotifications())
-        const currentNotifications = localStorage.getItem('currentNotifications')
-        if(newNotifications != currentNotifications) setNewNotifications(JSON.parse(newNotifications))
-      }, 1000);
-    }
-    f()
-  }, [])
-
   const dispatch = useDispatch();
 
   const wallets = [
@@ -154,8 +79,6 @@ const Navbar = ({ home, setShowBar }) => {
 
   const hanldeNotification = () => {
     // setNotification(!notification);
-    localStorage.setItem('currentNotifications', JSON.stringify(newNotifications))
-    setNewNotifications([])
     dispatch(resetNewNotifications());
   };
 
@@ -240,7 +163,7 @@ const Navbar = ({ home, setShowBar }) => {
             />
             {newNotifications.length > 0 && (
               <span style={{ borderRadius: 100, height: 10 }} className="absolute top-2 right-5 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-
+                
               </span>
             )}
           </Link>
