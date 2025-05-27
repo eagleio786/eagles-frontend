@@ -17,6 +17,7 @@
     "@web3modal/react": "^2.7.1",
     "axios": "^1.7.9",
     "blockchain": "file:",
+    "browser-image-compression": "^2.0.2",
     "buffer": "^6.0.3",
     "ethers": "^6.13.5",
     "firebase": "^11.5.0",

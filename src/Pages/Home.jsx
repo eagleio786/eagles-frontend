@@ -88,14 +88,13 @@ const Home = ({ showBar, setShowBar, user }) => {
     if (isConnected) fetchUserData();
   }, [address, isConnected]);
 
-
-  const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect();
   useEffect(() => {
-    if(window.location.href.includes('/connect')) {
-      disconnect()
-      localStorage.clear()
+    if (window.location.href.includes("/connect")) {
+      disconnect();
+      localStorage.clear();
     }
-  }, [])
+  }, []);
 
   // Second effect for fetching upline address after referralData updates
   useEffect(() => {
@@ -134,6 +133,7 @@ const Home = ({ showBar, setShowBar, user }) => {
       setShowBar(false);
     }
   };
+  console.log("user", user);
 
   const wallets = [
     // {
@@ -161,13 +161,13 @@ const Home = ({ showBar, setShowBar, user }) => {
       image: "/assets/AuthImages/connect.png",
     },
   ];
-  useEffect(() => {
-    // Load profile image from localStorage
-    const storedImage = localStorage.getItem("profilePhoto");
-    if (storedImage) {
-      setProfileImage(storedImage);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Load profile image from localStorage
+  //   const storedImage = localStorage.getItem("profilePhoto");
+  //   if (storedImage) {
+  //     // setProfileImage(storedImage);
+  //   }
+  // }, []);
   return (
     <>
       {showToast && (
@@ -178,8 +178,9 @@ const Home = ({ showBar, setShowBar, user }) => {
       <ToastContainer />
       <div className="relative overflow-hidden">
         <div
-          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${showBar ? "right-0" : "-right-full"
-            }`}
+          className={`absolute top-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500 z-50 ${
+            showBar ? "right-0" : "-right-full"
+          }`}
         >
           <div className="flex justify-end">
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
@@ -228,18 +229,17 @@ const Home = ({ showBar, setShowBar, user }) => {
 
             <div className="bg-eagles relative inset-0 z-10">
               <div
-                className={`h-auto flex justify-between ${userData?.[1] > 1 ? "" : "pb-10"
-                  }`}
+                className={`h-auto flex justify-between ${
+                  userData?.[1] > 1 ? "" : "pb-10"
+                }`}
               >
                 <div className="flex gap-6">
-                  <div
-                    className="relative inline-block rounded-full p-[3px] bg-gradient-to-r from-[#0EE6FC]  to-[#9B51E0]"
-                  >
+                  <div className="relative inline-block rounded-full p-[3px] bg-gradient-to-r from-[#0EE6FC]  to-[#9B51E0]">
                     <div className="relative flex items-center justify-center text-white h-full w-full rounded-full bg-Background">
-                      {profileImage ? (
+                      {user?.profileImage ? (
                         <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
                           <img
-                            src={profileImage}
+                            src={user?.profileImage}
                             alt="Profile"
                             className="w-full h-full object-cover"
                           />

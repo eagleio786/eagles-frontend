@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GrGallery } from "react-icons/gr";
 import { IoClose } from "react-icons/io5";
+import imageCompression from "browser-image-compression";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAccount } from "wagmi";
@@ -17,6 +19,7 @@ function Profile({ user }) {
   const [socialLinks, setSocialLinks] = useState([]);
   const [currentLink, setCurrentLink] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
+  // const [Img, setImg] = useState("")
   const [extUser, setextUser] = useState(false);
   const [profileImage, setProfileImage] = useState(null); // Profile image state
   const CheckForUser = async (address) => {
@@ -50,28 +53,53 @@ function Profile({ user }) {
         );
         setSocialLinks(links);
       }
+      setProfileImage(user.profileImage)
     }
 
     // Load profile image from localStorage
-    const storedImage = localStorage.getItem("profilePhoto");
-    if (storedImage) {
-      setProfileImage(storedImage);
-    }
+    // const storedImage = localStorage.getItem("profilePhoto");
+    // if (storedImage) {
+    //   setProfileImage(storedImage);
+    // }
   }, [user]);
 
-  const handleImageChange = (event) => {
+
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const imageUrl = reader.result;
-        setProfileImage(imageUrl);
-        localStorage.setItem("profilePhoto", imageUrl); // Save to localStorage
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    try {
+      // Step 1: Check file size (optional)
+      if (file.size > 1024 * 1024 * 1) {
+        alert("Image too large. Please select a file under 1MB.");
+        return;
+      }
+      // Step 2: Compress the image
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 1,             // Compress to under 1MB
+        maxWidthOrHeight: 1024,   // Optional: resize
+        useWebWorker: true,
+      });
+  
+      // Step 3: Convert compressed image to Base64
+      const base64 = await convertToBase64(compressedFile);
+      setProfileImage(base64);
+          // setImg(base64)
+     
+  
+    } catch (error) {
+      console.error("Image processing failed:", error);
     }
   };
-
+  
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); // This includes the "data:image/..." prefix
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (err) => reject(err);
+    });
+  };
+  
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -107,6 +135,7 @@ function Profile({ user }) {
 
     const userData = {
       name,
+      profileImage,
       email,
       description,
       walletAddress: address,
@@ -136,7 +165,7 @@ function Profile({ user }) {
         "Error saving profile:",
         error.response?.data || error.message
       );
-      alert("Failed to save profile.");
+      alert("img size is too large ");
     }
   };
 
@@ -153,6 +182,7 @@ function Profile({ user }) {
 
 
 
+console.log("kashif",profileImage);
 
 
   return (

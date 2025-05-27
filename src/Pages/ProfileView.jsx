@@ -24,12 +24,30 @@ const Home = ({ showBar, setShowBar }) => {
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [userData, setUserData] = useState([]);
-  const [referralData, setReferralData] = useState(null);
+  const [referralData, setReferralData] = useState("");
   const [user, setUser] = useState({});
   const [PT, setPT] = useState("");
-
+  const [uplinerid, setuplinerid] = useState(0);
+  const [adress, setadress] = useState("");
   const { id } = useParams();
 
+  const fetchUserAdress = async () => {
+    console.log("kashif is wrokng");
+
+    try {
+      const add = await getIdToAddress(id);
+      setadress(add);
+      const response = await axios.get(`${ApiUrl}/user/${add}`);
+      console.log("User data:", response.data);
+      setUser(response.data.data);
+      console.log("kashif is", add);
+
+      if (!add) return;
+      return add;
+    } catch (error) {
+      console.log("error whiel getting user id", error);
+    }
+  };
   const handleCopy = (textToCopy) => {
     navigator.clipboard
       .writeText(textToCopy)
@@ -39,37 +57,44 @@ const Home = ({ showBar, setShowBar }) => {
       })
       .catch(console.error);
   };
-
   useEffect(() => {
-    console.log("--------------------------");
+    console.log("kashif is a boy");
+    fetchUserAdress();
+    fetchUserData();
+  }, [id]);
+  useEffect(() => {
     // users("0x92a0220ADDCC3C07Bedee23844ce65649A2C5961").then(console.log);
     console.log("--------------------------");
   }, []);
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const add = await getIdToAddress(id);
-        if (!add) return;
-        const result = await users(add);
-        if (result?.[1]) {
-          const userId = result[1];
-          localStorage.setItem("id", result[1].toString());
-          setUserData(result);
-          const referralResponse = await axios.get(
-            `${ApiUrl}/refferal/${userId}`
-          );
-          setReferralData(referralResponse.data?.data?.[0] || null);
-          setPT(referralResponse?.data);
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false);
+  console.log("-------------------------- kashif", user);
+  // useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const add = await getIdToAddress(id);
+      if (!add) return;
+      const result = await users(add);
+      if (result?.[1]) {
+        const userId = result[1];
+        localStorage.setItem("id", result[1].toString());
+        setUserData(result);
+        const referralResponse = await axios.get(
+          `${ApiUrl}/refferal/${userId}`
+        );
+        const result2 = await users(referralResponse.data.UplineAdress);
+        console.log("kashif testing ", referralResponse.data, result2);
+        setuplinerid(Number(result2[1]));
+        setReferralData(referralResponse.data.UplineAdress);
+        setPT(referralResponse?.data);
       }
-    };
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    if (isConnected) fetchUserData();
-  }, [address, isConnected]);
+  //   if (isConnected) fetchUserData();
+  // }, [address, isConnected,id]);
 
   useEffect(() => {
     if (isConnected && chain?.id !== chainConfig[11155111]?.id) {
@@ -162,7 +187,7 @@ const Home = ({ showBar, setShowBar }) => {
           </p>
         </div>
 
-        <div className="w-full px-4 pt-6 pb-5 homebg bg-[#a67a1240]">
+        <div className="w-full px-4 pt-6 pb-5 ">
           <div className="relative">
             {/* <div className="absolute inset-0 h-full opacity-10 left-20 -top-3">
               <img
@@ -179,14 +204,31 @@ const Home = ({ showBar, setShowBar }) => {
                 }`}
               >
                 <div className="flex gap-6">
-                  <div className="gradient-border h-20 w-20 rounded-full ms-3">
-                    <div className="relative flex items-center justify-center text-white h-full w-full rounded-full bg-Background">
-                      <IoPersonCircleSharp className="text-7xl text-textColor3" />
+                  <div className="h-20 w-20 rounded-full ms-3">
+                    <div className="relative flex items-center justify-center text-white h-full w-full rounded-full bg-gradient-to-r from-[#0EE6FC]  to-[#9B51E0]">
+                      {user ? (
+                        <>
+                          <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
+                            <img
+                              src={user?.profileImage}
+                              alt="Profile"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <IoPersonCircleSharp className="text-8xl text-textColor3" />
+                          </div>
+                        </>
+                      )}
                       <img
                         src="/assets/HomeImages/logo.png"
                         alt="logo"
                         className="h-7 w-7 ms-2 object-cover absolute bottom-2 -right-6 rounded-full"
                       />
+
                       <Link to="/social" className="absolute -bottom-7">
                         <div className="w-28 rounded-full p-[2px] bg-gradient-to-r from-[#a67912] via-white to-white">
                           <div className="bg-[#433108] rounded-full text-xs px-2 flex items-center justify-between py-1">
@@ -229,12 +271,11 @@ const Home = ({ showBar, setShowBar }) => {
               {showDetails && userData?.[1] > 1 && (
                 <div className="mt-1">
                   <div className="flex gap-x-1 items-center text-sm text-textColor3">
-                    {referralData?.referrer ? (
+                    {referralData ? (
                       <p>
-                        {`${referralData.referrer.slice(
-                          0,
-                          6
-                        )}...${referralData.referrer.slice(-6)}`}
+                        {`${referralData.slice(0, 6)}...${referralData.slice(
+                          -6
+                        )}`}
                       </p>
                     ) : (
                       <p>No Referrer</p>
@@ -247,14 +288,14 @@ const Home = ({ showBar, setShowBar }) => {
                   </div>
 
                   <div className="flex gap-2 items-center text-textColor3 text-sm mt-2">
-                    <p>
+                    {/* <p>
                       Joined{" "}
                       {referralData?.createdAt
                         ? new Date(referralData.createdAt).toLocaleDateString()
                         : ""}
-                    </p>
+                    </p> */}
                     <p className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
-                      ID {referralData?.id}
+                      Refferral ID {uplinerid}
                     </p>
                   </div>
 
@@ -272,7 +313,7 @@ const Home = ({ showBar, setShowBar }) => {
           </div>
 
           {/* Referral Link Section */}
-          <div className="bg-[#a67912] shadow-xl shadow-[#00000079] bg-opacity-20 w-full px-3 py-3 rounded-lg mt-3 mb-3">
+          <div className="bg-[#1C1F2E] shadow-xl shadow-[#00000079] w-full px-3 py-3 rounded-lg mt-3 mb-5">
             <div className="flex items-center justify-between text-base mb-5">
               <h5 className="text-textColor3">My Personal link</h5>
               <p className="text-textColor3 text-base font-sans font-medium flex gap-2 items-center">
@@ -282,14 +323,14 @@ const Home = ({ showBar, setShowBar }) => {
             </div>
             <div className="text-lg flex gap-3">
               <button
-                className="bg-[#a67912] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
+                className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full"
                 onClick={() =>
                   handleCopy(`theeagles.io/${userData?.[1]?.toString()}`)
                 }
               >
                 Copy
               </button>
-              <button className="w-full bg-textColor3 shadow-lg shadow-[#00000079] font-medium px-6 rounded-full">
+              <button className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] w-full text-textColor3 shadow-xl shadow-[#00000079] font-medium px-6 py-1 rounded-full">
                 Share
               </button>
             </div>

@@ -8,18 +8,13 @@ import {
   walletConnectWallet,
   metaMaskWallet,
   trustWallet,
-
 } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 
-
-
 const projectId = "45a029651f37ec8e01c2e486810e6f3e";
 export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
-
-
 
 // const connectors = connectorsForWallets(
 //   [
@@ -55,12 +50,10 @@ export const config = createConfig({
   },
 });
 
-
-
 // export const config = getDefaultConfig({
 //   appName: "Eagles",
 //   projectId: "45a029651f37ec8e01c2e486810e6f3e",
-//   chains: [bsc],
+//   chains: [],
 // });
 
 export const ABI = [
@@ -927,6 +920,8 @@ export const USDTTestNetABI = [
 export const ContractAdress = "0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe";
 
 export const ApiUrl = "https://reffaralmoney.com";
+// export const ApiUrl = "http://localhost:5000";
+
 // "http://localhost:5000"
 
 export const RandomAdress = "";
