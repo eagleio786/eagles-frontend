@@ -165,7 +165,7 @@ const Cards = ({ PT, userData }) => {
           <div className="flex justify-between items-center">
             <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
               Daily Profit
-              <span className="bg-green-500 rounded-full p-1">
+              <span className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] rounded-full p-1">
 
                 <img
                   src={ProfitIcon}

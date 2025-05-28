@@ -125,12 +125,12 @@ const Home = ({ showBar, setShowBar }) => {
     //   description: "DApp in App",
     //   image: "/assets/AuthImages/pocket.png",
     // },
-    // {
-    //   id: 3,
-    //   name: "MetaMask",
-    //   description: "DApp in App",
-    //   image: "/assets/AuthImages/Mask.png",
-    // },
+    {
+      id: 3,
+      name: "MetaMask",
+      description: "DApp in App",
+      image: "/assets/AuthImages/Mask.png",
+    },
     {
       id: 4,
       name: "WalletConnect",
@@ -226,10 +226,10 @@ const Home = ({ showBar, setShowBar }) => {
                       <img
                         src="/assets/HomeImages/logo.png"
                         alt="logo"
-                        className="h-7 w-7 ms-2 object-cover absolute bottom-2 -right-6 rounded-full"
+                        className="h-7 w-7 ms-2 object-cover absolute bottom-2 -right-4 rounded-full"
                       />
 
-                      <Link to="/social" className="absolute -bottom-7">
+                      {/* <Link to="/social" className="absolute -bottom-7">
                         <div className="w-28 rounded-full p-[2px] bg-gradient-to-r from-[#a67912] via-white to-white">
                           <div className="bg-[#433108] rounded-full text-xs px-2 flex items-center justify-between py-1">
                             <p className="text-slate-400">Social</p>
@@ -239,7 +239,7 @@ const Home = ({ showBar, setShowBar }) => {
                             </span>
                           </div>
                         </div>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                   <div className="text-textColor3 ml-10">
@@ -248,7 +248,7 @@ const Home = ({ showBar, setShowBar }) => {
                       {/* username kaa lia profile must bani honi chahiya  haa or wallet connect hons chahiya haa  */}
                     </h1>
                     {!loading && referralData ? (
-                      <p className="text-lg text-yellow-300 italic font-medium shadow-xl shadow-[#00000079] w-fit">
+                      <p className="text-lg text-textColor3 italic font-medium shadow-xl shadow-[#00000079] w-fit">
                         ID {id || "Display Soon"}
                       </p>
                     ) : null}
@@ -294,7 +294,7 @@ const Home = ({ showBar, setShowBar }) => {
                         ? new Date(referralData.createdAt).toLocaleDateString()
                         : ""}
                     </p> */}
-                    <p className="px-1 flex justify-center text-yellow-300 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
+                    <p className="px-1 flex justify-center text-textColor3 shadow-lg shadow-[#00000079] font-medium text-base bg-[#333333] bg-opacity-35 rounded-full italic">
                       Refferral ID {uplinerid}
                     </p>
                   </div>
