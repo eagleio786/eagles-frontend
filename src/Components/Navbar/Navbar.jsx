@@ -20,6 +20,20 @@ const Navbar = ({ home, setShowBar }) => {
   const { connectors, connect } = useConnect();
 
   const wallets = [
+      {
+      id: 1,
+      name: "Trust Wallet",
+      description: "DApp in App",
+      image: "/assets/AuthImages/trust.png",
+      type: "trustwallet",
+    },
+    {
+      id: 2,
+      name: "TokenPocket",
+      description: "DApp in App",
+      image: "/assets/AuthImages/pocket.png",
+      type: "injected",
+    },
     {
       id: 3,
       name: "MetaMask",
