@@ -1,6 +1,11 @@
 import { createConfig, http } from "wagmi";
 import { bsc } from "wagmi/chains";
-import { injected, metaMask, walletConnect } from "wagmi/connectors";
+import {
+  injected,
+  metaMask,
+  walletConnect,
+  trustWallet,
+} from "wagmi/connectors";
 import { ethers } from "ethers";
 
 import {
@@ -41,12 +46,18 @@ export const config = createConfig({
   connectors: [
     injected(),
     metaMask({ shimDisconnect: true }),
+    trustWallet({
+      projectId: "45a029651f37ec8e01c2e486810e6f3e",
+      shimDisconnect: true,
+    }),
     walletConnect({ projectId: "45a029651f37ec8e01c2e486810e6f3e" }), // WalletConnect
   ],
 
   transports: {
     // [sepolia.id]: http(),
-    [bsc.id]: http("https://bsc-mainnet.infura.io/v3/f5778e9c8b764c2eb60678ad73f25586"),
+    [bsc.id]: http(
+      "https://bsc-mainnet.infura.io/v3/f5778e9c8b764c2eb60678ad73f25586"
+    ),
   },
 });
 
