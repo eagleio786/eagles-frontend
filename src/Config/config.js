@@ -46,10 +46,10 @@ export const config = createConfig({
   connectors: [
     injected(),
     metaMask({ shimDisconnect: true }),
-    trustWallet({
-      projectId: "45a029651f37ec8e01c2e486810e6f3e",
-      shimDisconnect: true,
-    }),
+    // trustWallet({
+    //   projectId: "45a029651f37ec8e01c2e486810e6f3e",
+    //   shimDisconnect: true,
+    // }),
     walletConnect({ projectId: "45a029651f37ec8e01c2e486810e6f3e" }), // WalletConnect
   ],
 
