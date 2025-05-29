@@ -136,12 +136,12 @@ const Home = ({ showBar, setShowBar, user }) => {
   console.log("user", user);
 
   const wallets = [
-    {
-      id: 1,
-      name: "Trust Wallet",
-      description: "DApp in App",
-      image: "/assets/AuthImages/trust.png",
-    },
+    // {
+    //   id: 1,
+    //   name: "Trust Wallet",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/trust.png",
+    // },
     {
       id: 2,
       name: "TokenPocket",
