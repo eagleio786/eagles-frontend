@@ -70,7 +70,7 @@ const Navbar = ({ home, setShowBar }) => {
     );
     if (connector) {
       connect({ connector });
-      setShowSidebar(false);
+      // setShowSidebar(false);
     }
   };
 
@@ -112,9 +112,14 @@ const Navbar = ({ home, setShowBar }) => {
             ) : (
               <div
                 style={{ cursor: "pointer" }}
-                onClick={() => setShowSidebar(!showSidebar)}
+                // onClick={() => setShowSidebar(!showSidebar)}
               >
-                <p>Connect</p>
+                <p> <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+              /></p>
               </div>
             )}
           </p>
@@ -172,7 +177,7 @@ const Navbar = ({ home, setShowBar }) => {
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
               <HiMiniXMark
                 className="text-white text-3xl"
-                onClick={() => setShowSidebar(false)}
+                // onClick={() => setShowSidebar(false)}
               />
             </div>
           </div>

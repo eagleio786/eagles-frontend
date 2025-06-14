@@ -31,7 +31,8 @@
     "redux-persist": "^6.0.0",
     "swiper": "^11.2.1",
     "viem": "^2.23.12",
-    "wagmi": "^2.14.15"
+    "wagmi": "^2.14.15",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",

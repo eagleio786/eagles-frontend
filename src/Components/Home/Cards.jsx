@@ -7,10 +7,11 @@ import { useAccount } from "wagmi";
 import { useQuery } from "@apollo/client";
 import client from "../../Pages/apolloClient";
 import { GET_FUNDS_DISTRIBUTED } from "../../Pages/queries";
-import ProfitIcon from '../../assets/icons/profitIcon.png'
-import PartnersIcon from '../../assets/icons/partnersIcon.png'
-import teamIcon from '../../assets/icons/teamIcon.png'
-
+import ProfitIcon from "../../assets/icons/profitIcon.png";
+import PartnersIcon from "../../assets/icons/partnersIcon.png";
+import teamIcon from "../../assets/icons/teamIcon.png";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getIdToAddress } from "../../Config/Contract-Methods";
 const Cards = ({ PT, userData }) => {
   const [partner24hCount, setPartner24hCount] = useState(0);
   const [team24hCount, setTeam24hCount] = useState(0);
@@ -21,6 +22,8 @@ const Cards = ({ PT, userData }) => {
   const totalProfit = userData?.[4]?.toString() / 1e18;
   const userId = userData[1]?.toString();
   const { address } = useAccount();
+  const [searchAdress, setsearchAdress] = useState("");
+  const { id } = useParams();
 
   const apiFun = async () => {
     try {
@@ -31,7 +34,19 @@ const Cards = ({ PT, userData }) => {
       console.log(error);
     }
   };
-
+  const fetchUserData = async () => {
+    try {
+      const add = await getIdToAddress(id);
+      setsearchAdress(add);
+      console.log(" 24 , add: ", add, "id", id);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+  useEffect(() => {
+    console.log(" 24 useeffect wprls");
+    fetchUserData();
+  }, [id]);
   useEffect(() => {
     axios.get(`${ApiUrl}/getCompleteReferralChain/${userId}`).then((res) => {
       const referralChain = res.data.data.referralChain;
@@ -87,21 +102,24 @@ const Cards = ({ PT, userData }) => {
   }, [userId, PT.Personal]);
 
   // Query for total earnings using GraphQL
+  const grapFunction=()=>{
+    
+  }
   const getUnixTimestamp24HrsAgo = () => {
     return Math.floor(Date.now() / 1000) - 24 * 60 * 60;
   };
-
   const timestamp = useMemo(() => getUnixTimestamp24HrsAgo(), []);
-  // console.log("unix timestamp is ",timestamp);
+const effectiveWalletAddress = useMemo(() => {
+  return searchAdress || address;
+}, [searchAdress, address]);
 
-  const walletAddress = useMemo(() => address, [address]);
+ const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
+  client,
+  variables: { walletAddress: effectiveWalletAddress, timestamp },
+  fetchPolicy: "cache-first",
+  skip: !effectiveWalletAddress,
+});
 
-  const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
-    client,
-    variables: { walletAddress, timestamp },
-    fetchPolicy: "cache-first",
-    skip: !walletAddress,
-  });
 
   const calculateTotalEarnings = (transactions) => {
     let totalEarnings = BigInt(0);
@@ -112,7 +130,6 @@ const Cards = ({ PT, userData }) => {
 
     return totalEarnings;
   };
-
 
   const formatEarnings = (totalEarnings) => {
     const divisor = BigInt(1e18);
@@ -128,18 +145,15 @@ const Cards = ({ PT, userData }) => {
     [totalEarnings]
   );
 
+  console.log("<-24->", formattedEarnings,effectiveWalletAddress);
   return (
     <div className="space-y-4">
-      <div className="flex" >
-
-
-
+      <div className="flex">
         <div className="mr-4 bg-[#1C1F2E] w-full rounded-lg shadow-xl bg-image shadow-[#00000079] px-2 py-3">
           <div className="flex justify-between items-center">
             <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
               Total Profit
               <span className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] rounded-full p-1">
-
                 <img
                   src={ProfitIcon}
                   alt="profit"
@@ -149,14 +163,13 @@ const Cards = ({ PT, userData }) => {
             </p>
           </div>
           <div className="flex justify-between font-semibold text-textColor3 mt-2">
-
             {/* <p className="flex items-center gap-1 text-green-500">
             <div className="bg-green-500 p-1 rounded-full mr-1" >
               <GoArrowUp className="text-white" />
             </div>
             {loading ? "0" : formattedEarnings || "0"}
           </p> */}
-            <p className="font-medium text-2xl" >
+            <p className="font-medium text-2xl">
               {totalProfit ? totalProfit.toFixed(2) : "0"}$
             </p>
           </div>
@@ -166,7 +179,6 @@ const Cards = ({ PT, userData }) => {
             <p className="text-textColor3 font-semibold text-base flex items-center gap-2">
               Daily Profit
               <span className="bg-gradient-to-r from-[#9B51E0] to-[#00F6FF] rounded-full p-1">
-
                 <img
                   src={ProfitIcon}
                   alt="profit"
@@ -176,19 +188,23 @@ const Cards = ({ PT, userData }) => {
             </p>
           </div>
           <div className="flex justify-between font-semibold text-textColor3 mt-2">
-
             <p className="flex items-center gap-1 text-green-500">
-              <div className="bg-green-500 p-1 rounded-full mr-1" >
+              <div className="bg-green-500 p-1 rounded-full mr-1">
                 <GoArrowUp className="text-white" />
               </div>
               {loading ? "0" : formattedEarnings || "0"}
             </p>
-
           </div>
         </div>
       </div>
       <div className="flex gap-2">
-        <StatCard icon={PartnersIcon} title="Partners" count={Par} count24={Par24} bg="bg-person2" />
+        <StatCard
+          icon={PartnersIcon}
+          title="Partners"
+          count={Par}
+          count24={Par24}
+          bg="bg-person2"
+        />
         <StatCard
           title="Team"
           icon={teamIcon}
@@ -221,7 +237,7 @@ const StatCard = ({ title, count, count24, bg, icon }) => {
       </p>
       <div className="w-[85%] mx-auto mt-7 flex justify-between p-1 rounded-full bg-[#a67912] bg-opacity-20">
         <div className="flex items-center font-medium text-xl text-green-500">
-          <div className="bg-green-500 p-1 rounded-full mr-2" >
+          <div className="bg-green-500 p-1 rounded-full mr-2">
             <GoArrowUp className="text-white" />
           </div>
           {count24 || 0}

@@ -186,11 +186,11 @@ const Home = ({ showBar, setShowBar, user }) => {
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
               <HiMiniXMark
                 className="text-white text-3xl"
-                onClick={() => setShowBar(false)}
+                // onClick={() => setShowBar(false)}
               />
             </div>
           </div>
-          {wallets.map((wallet) => (
+          {/* {wallets.map((wallet) => (
             <div
               key={wallet.id}
               onClick={() => handleConnect(wallet.name)}
@@ -210,7 +210,7 @@ const Home = ({ showBar, setShowBar, user }) => {
                 <p className="text-xs">{wallet.description}</p>
               </div>
             </div>
-          ))}
+          ))} */}
           <p className="text-textColor2 text-center mt-16 text-sm">
             Got a Question?{" "}
             <span className="text-textColor3 font-medium">Contact Support</span>

@@ -20,34 +20,29 @@ import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 const projectId = "45a029651f37ec8e01c2e486810e6f3e";
 export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
 
-// const connectors = connectorsForWallets(
-//   [
-//     {
-//       groupName: "Recommended",
-//       wallets: [
-//           trustWallet,
-//           metaMaskWallet,
-//           tokenPocketWallet,
-//         walletConnectWallet,
-//       ],
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: "Recommended",
+      wallets: [
+          trustWallet,
+          metaMaskWallet,
+          tokenPocketWallet,
+        walletConnectWallet,
+      ],
 
-//     },
-//   ],
-//   {
-//     appName: "eagles",
-//     projectId: "45a029651f37ec8e01c2e486810e6f3e",
+    },
+  ],
+  {
+    appName: "eagles",
+    projectId: "45a029651f37ec8e01c2e486810e6f3e",
 
-//   }
-// );
+  }
+);
 export const config = createConfig({
   chains: [bsc],
   autoConnect: true,
-  connectors: [
-    injected(),
-    metaMask({ shimDisconnect: true }),
-    walletConnect({ projectId: "45a029651f37ec8e01c2e486810e6f3e" }), // WalletConnect
-  ],
-
+  connectors,
   transports: {
     // [sepolia.id]: http(),
     [bsc.id]: http(

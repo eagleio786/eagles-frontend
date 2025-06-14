@@ -68,7 +68,7 @@ const Register = () => {
   }, [chain, isConnected]);
 
   const handleConnectClick = () => {
-    setShowSidebar(true);
+    // setShowSidebar(true);
   };
 
   const handleClick = async () => {
@@ -170,7 +170,7 @@ const Register = () => {
     );
     if (connector) {
       connect({ connector });
-      setShowSidebar(false);
+      // setShowSidebar(false);
     }
   };
 
@@ -197,12 +197,20 @@ const Register = () => {
 
           <div className="flex-1 p-2 md:p-4 lg:p-2">
             <div className="flex justify-end">
-              <div
+              {/* <div
                 onClick={handleConnectClick}
                 className="text-textColor3 font-bold inline-flex items-center text-xs px-2 py-2 rounded-sm bg-[#7289DA] w-[130px] overflow-x-scroll cursor-pointer"
-              >
-                Connect Wallet
-                <img src={walletIcon} alt="Wallet Icon" className="ml-2 h-4 w-5" /> {/* Local Image */}
+              > */}
+                {/* Connect Wallet
+                <img src={walletIcon} alt="Wallet Icon" className="ml-2 h-4 w-5" /> {/* Local Image 
+              </div> */}
+              <div>
+                  <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+              />
               </div>
 
             </div>

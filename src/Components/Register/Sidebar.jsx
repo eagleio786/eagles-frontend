@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useConnect, useDisconnect, useAccount } from "wagmi";
 import { HiMiniXMark } from "react-icons/hi2";
-
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
@@ -97,7 +97,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       <div
         className={`fixed top-0 left-0 h-screen w-full bg-gray-900 bg-opacity-50 transition-opacity duration-500 ${showSidebar ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
-        onClick={() => setShowSidebar(false)}
+        // onClick={() => setShowSidebar(false)}
       />
 
       <div
@@ -108,15 +108,21 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
             <HiMiniXMark
               className="text-white text-3xl cursor-pointer"
-              onClick={() => setShowSidebar(false)}
+              // onClick={() => setShowSidebar(false)}
             />
           </div>
         </div>
         <h2 className="font-bold text-[20px] mt-10 md:m-0 md:mx-6 mb-6 mx-6">
-          Connect Wallet
+          {/* Connect Wallet */}
+            <ConnectButton
+                          showBalance={false}
+                          accountStatus="address"
+                          chainStatus="none"
+                          label="Connect"
+                        />
         </h2>
 
-        {wallets.map((wallet) => (
+        {/* {wallets.map((wallet) => (
           <div
             key={wallet.id}
             onClick={() => handleConnect(wallet.type)}
@@ -134,7 +140,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
               <p className="text-xs text-gray-400">{wallet.description}</p>
             </div>
           </div>
-        ))}
+        ))} */}
 
         <p className="text-textColor2 text-center mt-6 text-sm">
           Got Questions?{" "}

@@ -7,7 +7,7 @@ import Footer from '../Components/Footer/Footer';
 import { useEffect, useState } from 'react';
 import { useConnect, useAccount, useSwitchChain, useDisconnect } from 'wagmi';
 import chainConfig from '../Config/chainConfig';
-
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 const Authenticate = () => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
@@ -31,7 +31,7 @@ const Authenticate = () => {
   }, [address, isConnected]);
 
   const handleConnectClick = () => {
-    setShowSidebar(true);
+    // setShowSidebar(true);
   };
 
   const handleConnect = (walletName) => {
@@ -40,7 +40,7 @@ const Authenticate = () => {
     );
     if (connector) {
       connect({ connector });
-      setShowSidebar(false);
+      // setShowSidebar(false);
     }
   };
 
@@ -102,7 +102,15 @@ const Authenticate = () => {
                 onClick={handleConnectClick}
                 className='bg-gradient-to-r from-[#9B51E0] to-[#01F7FF] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-white font-medium rounded-lg'
               >
-                <button className='font-bold'>Connect wallet</button>
+                <button className='font-bold'>
+                  {/* Connect wallet */}
+                    <ConnectButton
+                                  showBalance={false}
+                                  accountStatus="address"
+                                  chainStatus="none"
+                                  label="Connect"
+                                />
+                  </button>
               </div>
               <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6  font-medium rounded-lg'>
                 <button>Connect tutorial</button>
@@ -184,12 +192,12 @@ const Authenticate = () => {
             <div className='inline-block bg-Background p-2 rounded-full shadow-2xl'>
               <HiMiniXMark
                 className='text-white text-3xl'
-                onClick={() => setShowSidebar(false)}
+                // onClick={() => setShowSidebar(false)}
               />
             </div>
           </div>
 
-          {wallets.map((wallet) => (
+          {/* {wallets.map((wallet) => (
             <div
               key={wallet.id}
               onClick={() => handleConnect(wallet.name)}
@@ -209,7 +217,7 @@ const Authenticate = () => {
                 <p className='text-xs'>{wallet.description}</p>
               </div>
             </div>
-          ))}
+          ))} */}
 
           <p className='text-textColor2 text-center mt-16 text-sm'>
             Got a Question?{' '}
