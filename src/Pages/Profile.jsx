@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAccount } from "wagmi";
 import { ApiUrl } from "../Config/config";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { isUserExists } from "../Config/Contract-Methods";
 function Profile({ user }) {
   const { address, isConnected } = useAccount();
@@ -297,12 +297,9 @@ console.log("kashif",profileImage);
           <div className="flex justify-center items-center h-[150px] flex-col gap-5 text-white bg-[#1C1F2E] rounded-md  shadow-md p-4">
             <div>Connect your Wallet to access profile</div>
             <div className="bg-[#9B51E0] hover:bg-[#00F6FF] w-auto px-7 py-3 rounded-md cursor-pointer flex justify-center items-center transition-all duration-300">
-              <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect Wallet"
-              />
+                <appkit-button
+               balance={"hide"}
+               />
             </div>
           </div>
         </div>

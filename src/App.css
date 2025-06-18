@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
 
+.local-no-balance wui-flex  wui-avatar {
+  display: none !important;
+}
 /* Reset default styles */
 * {
   margin: 0;

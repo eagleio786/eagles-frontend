@@ -12,7 +12,8 @@ import { BsFillQuestionCircleFill } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAccountEffect } from "wagmi";
 import React from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAppKit } from "@reown/appkit/react";
+
 import {
   USDTapprove,
   register,
@@ -205,12 +206,9 @@ const Register = () => {
                 <img src={walletIcon} alt="Wallet Icon" className="ml-2 h-4 w-5" /> {/* Local Image 
               </div> */}
               <div>
-                  <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect"
-              />
+               <appkit-button
+               balance={"hide"}
+               />
               </div>
 
             </div>
