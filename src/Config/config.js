@@ -1,60 +1,54 @@
-// AppKitProvider.jsx
-import { createAppKit } from "@reown/appkit/react";
-import { WagmiProvider } from "wagmi";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { bsc } from "@reown/appkit/networks";
+import { createConfig, http } from "wagmi";
+import { bsc } from "wagmi/chains";
+import {
+  injected,
+  metaMask,
+  walletConnect,
+} from "wagmi/connectors";
+import { ethers } from "ethers";
 
-// Setup query client for React Query
-export const queryClient = new QueryClient();
+import {
+  tokenPocketWallet,
+  walletConnectWallet,
+  metaMaskWallet,
+  trustWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 
-// Replace with your actual Project ID from https://cloud.reown.com
-export const projectId = "45a029651f37ec8e01c2e486810e6f3e";
+const projectId = "45a029651f37ec8e01c2e486810e6f3e";
+export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
 
-// Optional metadata
-const metadata = {
-  name: "Eagles DApp",
-  description: "Activate Levels and Earn",
-  url: "https://eagles.example.com",
-  icons: ["/assets/HomeImages/logo.png"],
-};
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: "Recommended",
+      wallets: [
+          trustWallet,
+          metaMaskWallet,
+          tokenPocketWallet,
+        walletConnectWallet,
+      ],
 
-// Supported networks (can include bsc, mainnet, etc.)
-const networks = [bsc];
-
-// Initialize Wagmi Adapter
-export const wagmiAdapter = new WagmiAdapter({
-  networks,
-  projectId,
-  ssr: true,
-  autoautoConnect: false,
-  metadata,
-});
-
-// Create AppKit modal
-createAppKit({
-
-   metadata: {
-    name: "The Eagles",
-    description: "Upgrade Level to Earn",
-    url: "theeagles.io",
-    icons: ["/assets/HomeImages/logo.png"],  
-  },
-  featuredWalletIds: [
-    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0",
-    "c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96",
-    "20459438007b75f4f4acb98bf29aa3b800550309646d375da5fd4aac6c2a2c66",
+    },
   ],
-  projectId,
-  adapters: [wagmiAdapter],
-  networks: [bsc],
-  themeMode: "dark",
-  features: {
-    email: false,
-    socials: false,
+  {
+    appName: "eagles",
+    projectId: "45a029651f37ec8e01c2e486810e6f3e",
+
+  }
+);
+export const config = createConfig({
+  chains: [bsc],
+  autoConnect: true,
+  connectors,
+  transports: {
+    // [sepolia.id]: http(),
+    [bsc.id]: http(
+      "https://bsc-mainnet.infura.io/v3/f5778e9c8b764c2eb60678ad73f25586"
+    ),
   },
-  allWallets: "HIDE",
-  defaultAccountTypes: { eip155: "eoa" },
 });
 
 // export const config = getDefaultConfig({
@@ -63,9 +57,6 @@ createAppKit({
 //   chains: [],
 // });
 
-// const projectId = "45a029651f37ec8e01c2e486810e6f3e";
-export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
-export const config = "";
 export const ABI = [
   {
     inputs: [],

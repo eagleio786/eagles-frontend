@@ -1,7 +1,7 @@
 import { readContract, writeContract } from "@wagmi/core";
 // import { useWatchContractEvent } from "wagmi";
 import {
-  wagmiAdapter,
+  config,
   ContractAdress,
   ABI,
   USDTTestNetABI,
@@ -15,7 +15,7 @@ export const getTxn = async (hash) => {
     if (!hash) {
       return null;
     }
-    const transactionReceipt = await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, {
+    const transactionReceipt = await waitForTransactionReceipt(config, {
       hash,
     });
 
@@ -28,7 +28,7 @@ export const getTxn = async (hash) => {
 ///////////////////////////////////////////////////////////Write MEthods///////////////////////////////////
 // 1:
 export const activateLevel = async (matrix, level) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "activateLevel",
@@ -38,7 +38,7 @@ export const activateLevel = async (matrix, level) => {
 };
 //2
 export const buyNewLevelFor = async (address, matrix, level) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "buyNewLevelFor",
@@ -48,7 +48,7 @@ export const buyNewLevelFor = async (address, matrix, level) => {
 };
 //4
 export const register = async (address) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "register",
@@ -58,7 +58,7 @@ export const register = async (address) => {
 };
 //5
 export const registrationFor = async (userAddress, refferAddress) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "registrationFor",
@@ -68,7 +68,7 @@ export const registrationFor = async (userAddress, refferAddress) => {
 };
 //6
 export const withdrawLostTokens = async (tokenAddress) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "withdrawLostTokens",
@@ -78,7 +78,7 @@ export const withdrawLostTokens = async (tokenAddress) => {
 };
 
 export const USDTapprove = async (amount) => {
-  const result = await writeContract(wagmiAdapter.wagmiConfig, {
+  const result = await writeContract(config, {
     abi: USDTTestNetABI,
     address: USDTContractAdress,
     functionName: "approve",
@@ -88,7 +88,7 @@ export const USDTapprove = async (amount) => {
 };
 
 export const getTotalUSDTReceived = async (adress) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "getTotalUSDTReceived",
@@ -98,7 +98,7 @@ export const getTotalUSDTReceived = async (adress) => {
 };
 
 export const getCurrentX1Level = async (adress) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "getCurrentX1Level",
@@ -108,7 +108,7 @@ export const getCurrentX1Level = async (adress) => {
 };
 
 export const getCurrentX2Level = async (adress) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "getCurrentX2Level",
@@ -119,7 +119,7 @@ export const getCurrentX2Level = async (adress) => {
 ///////////////////////////////////////////////////READ METHODS///////////////////////////////////
 // 1:
 export const BASIC_PRICE = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "BASIC_PRICE",
@@ -129,7 +129,7 @@ export const BASIC_PRICE = async () => {
 };
 // 2:
 export const LAST_LEVEL = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "LAST_LEVEL",
@@ -139,7 +139,7 @@ export const LAST_LEVEL = async () => {
 };
 // 3:
 export const balances = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "balances",
@@ -150,7 +150,7 @@ export const balances = async () => {
 };
 // 4:
 export const contractOwner = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "contractOwner",
@@ -160,7 +160,7 @@ export const contractOwner = async () => {
 };
 //5
 export const depositToken = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "depositToken",
@@ -170,7 +170,7 @@ export const depositToken = async () => {
 };
 //8
 export const id1 = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "id1",
@@ -179,7 +179,7 @@ export const id1 = async () => {
 };
 //9
 export const getIdToAddress = async (id) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "idToAddress",
@@ -189,7 +189,7 @@ export const getIdToAddress = async (id) => {
 };
 //10
 export const isUserExists = async (address) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "isUserExists",
@@ -199,7 +199,7 @@ export const isUserExists = async (address) => {
 };
 //11
 export const lastUserId = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "lastUserId",
@@ -208,7 +208,7 @@ export const lastUserId = async () => {
 };
 //12
 export const levelPrice = async (Level) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "levelPrice",
@@ -220,7 +220,7 @@ export const levelPrice = async (Level) => {
 //13
 
 export const locked = async () => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "locked",
@@ -232,7 +232,7 @@ export const locked = async () => {
 //14
 
 export const userIds = async (ID) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "userIds",
@@ -244,7 +244,7 @@ export const userIds = async (ID) => {
 
 //15
 export const users = async (address) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "users",
@@ -255,7 +255,7 @@ export const users = async (address) => {
 
 //16
 export const getSlotFilled = async (address, matrix, level) => {
-  const result = await readContract(wagmiAdapter.wagmiConfig, {
+  const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
     functionName: "getSlotsFilled",

@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useConnect, useDisconnect, useAccount } from "wagmi";
 import { HiMiniXMark } from "react-icons/hi2";
-// import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
@@ -114,9 +114,12 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         </div>
         <h2 className="font-bold text-[20px] mt-10 md:m-0 md:mx-6 mb-6 mx-6">
           {/* Connect Wallet */}
-             <appkit-button
-               balance={"hide"}
-               />
+            <ConnectButton
+                          showBalance={false}
+                          accountStatus="address"
+                          chainStatus="none"
+                          label="Connect"
+                        />
         </h2>
 
         {/* {wallets.map((wallet) => (

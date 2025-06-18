@@ -7,7 +7,7 @@ import DrawerIcon from "../../assets/icons/drawerIcon.png";
 import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { useAccount, useConnect } from "wagmi";
-import { useAppKit } from "@reown/appkit/react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
@@ -103,20 +103,23 @@ const Navbar = ({ home, setShowBar }) => {
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
             {isConnected ? (
-                 <appkit-button
-               balance={"hide"}
-               />
+              <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+              />
             ) : (
               <div
                 style={{ cursor: "pointer" }}
                 // onClick={() => setShowSidebar(!showSidebar)}
               >
-                <p>
-                  {" "}
-                    <appkit-button
-               balance={"hide"}
-               />
-                </p>
+                <p> <ConnectButton
+                showBalance={false}
+                accountStatus="address"
+                chainStatus="none"
+                label="Connect"
+              /></p>
               </div>
             )}
           </p>
@@ -213,6 +216,40 @@ const Navbar = ({ home, setShowBar }) => {
 
 export default Navbar;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { useState, useEffect, useCallback } from "react";
 // import { FaGripLines, FaRegBell } from "react-icons/fa6";
 // import { useSelector, useDispatch } from "react-redux";
@@ -223,6 +260,7 @@ export default Navbar;
 // import { Link } from "react-router-dom";
 // import { HiMiniXMark } from "react-icons/hi2";
 // import { useAccount, useConnect } from "wagmi";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
 // import { collection, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 // import { snapshot } from "viem/actions";
 
@@ -363,7 +401,7 @@ export default Navbar;
 //             />
 //             {newNotifications.length > 0 && (
 //               <span style={{ borderRadius: 100, height: 10 }} className="absolute top-2 right-5 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-
+                
 //               </span>
 //             )}
 //           </Link>
