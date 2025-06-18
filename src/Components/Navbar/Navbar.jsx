@@ -1,54 +1,21 @@
-import { useState, useEffect } from "react";
-import { HiMiniXMark } from "react-icons/hi2";
-import { useSelector, useDispatch } from "react-redux";
-import { resetNewNotifications } from "../../redux/notificationSlice";
-import Menu from "../DashboardMenu/Menu";
-import DrawerIcon from "../../assets/icons/drawerIcon.png";
-import AlertIcon from "../../assets/icons/alertIcon.png";
-import { Link } from "react-router-dom";
-import { useAccount, useConnect } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useState, useEffect } from 'react';
+import { HiMiniXMark } from 'react-icons/hi2';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetNewNotifications } from '../../redux/notificationSlice';
+import Menu from '../DashboardMenu/Menu';
+import DrawerIcon from '../../assets/icons/drawerIcon.png';
+import AlertIcon from '../../assets/icons/alertIcon.png';
+import { Link } from 'react-router-dom';
+import { useAccount, useConnect } from 'wagmi';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
-  const { isConnected } = useAccount();
-  const [notification, setNotification] = useState(false);
+  const { isConnected, address } = useAccount();
+  // const [notification, setNotification] = useState(false);
   const [newNotifications, setNewNotifications] = useState([]);
   const dispatch = useDispatch();
-  const [showSidebar, setShowSidebar] = useState(false);
-
-  const { connectors, connect } = useConnect();
-
-  const wallets = [
-    //   {
-    //   id: 1,
-    //   name: "Trust Wallet",
-    //   description: "DApp in App",
-    //   image: "/assets/AuthImages/trust.png",
-    //   type: "trustwallet",
-    // },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-      type: "injected",
-    },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "Desktop/DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-      type: "metamask",
-    },
-    {
-      id: 4,
-      name: "WalletConnect",
-      description: "Any Wallet and browser",
-      image: "/assets/AuthImages/connect.png",
-      type: "walletconnect",
-    },
-  ];
+  // const { connectors, connect } = useConnect();
 
   const handleMenu = () => {
     setMenu(!menu);
@@ -64,80 +31,71 @@ const Navbar = ({ home, setShowBar }) => {
     home(true);
   };
 
-  const handleConnect = (walletName) => {
-    const connector = connectors.find(
-      (c) => c.name.toLowerCase() === walletName.toLowerCase()
-    );
-    if (connector) {
-      connect({ connector });
-      // setShowSidebar(false);
-    }
+  const handleConnectClick = () => {
+    setShowBar(true);
   };
 
   useEffect(() => {
-    document.body.style.overflow = menu ? "hidden" : "auto";
+    document.body.style.overflow = menu ? 'hidden' : 'auto';
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, [menu]);
 
   return (
-    <div className="relative bg-[#1C1F2E] vh-100 z-[999]">
-      <div className="text-white flex items-center pl-2 justify-between">
+    <div className='relative bg-[#1C1F2E] vh-100 z-[999]'>
+      <div className='text-white flex items-center pl-2 justify-between'>
         <div
-          className="bg-black bg-opacity-45 flex items-center cursor-pointer text-sm p-3 rounded-full"
+          className='bg-black bg-opacity-45 flex items-center cursor-pointer text-sm p-3 rounded-full'
           onClick={handleMenu}
         >
-          <img src={DrawerIcon} alt="drawer" className="h-3 w-3 object-cover" />
+          <img src={DrawerIcon} alt='drawer' className='h-3 w-3 object-cover' />
         </div>
 
-        <Link className="flex justify-center items-center" to="/home">
+        <Link className='flex justify-center items-center' to='/home'>
           <img
-            src="/assets/HomeImages/logo.png"
-            alt="logo"
-            className="h-9 w-12 ms-2 object-cover"
+            src='/assets/HomeImages/logo.png'
+            alt='logo'
+            className='h-9 w-12 ms-2 object-cover'
           />
-          <p className="ml-4 font-medium">theeagles.io</p>
+          <p className='ml-4 font-medium'>theeagles.io</p>
         </Link>
 
-        <div className="flex gap-2 p-4">
-          <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
-            {isConnected ? (
-              <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect"
-              />
-            ) : (
-              <div
-                style={{ cursor: "pointer" }}
-                // onClick={() => setShowSidebar(!showSidebar)}
+        <div className='flex gap-2 p-4'>
+          <p className='text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer'>
+            {!isConnected ? (
+              <p
+                className='text-textColor3 text-xs bg-opacity-30 cursor-pointer'
+                onClick={handleConnectClick}
               >
-                <p> <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect"
-              /></p>
-              </div>
+                Connect Wallet
+              </p>
+            ) : (
+              <span
+                className='w-[70px] overflow-x-auto whitespace-nowrap block'
+                style={{
+                  scrollbarWidth: 'none',
+                }}
+              >
+                {address}
+              </span>
             )}
           </p>
 
           <Link
             onClick={hanldeNotification}
-            to="/notifications"
-            className="bg-black bg-opacity-45 text-base p-3 rounded-full cursor-pointer relative"
+            to='/notifications'
+            className='bg-black bg-opacity-45 text-base p-3 rounded-full cursor-pointer relative'
           >
             <img
               src={AlertIcon}
-              alt="alerts"
-              className="h-3 w-3 object-cover"
+              alt='alerts'
+              className='h-3 w-3 object-cover'
             />
             {newNotifications.length > 0 && (
               <span
                 style={{ borderRadius: 100, height: 10 }}
-                className="absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5"
+                className='absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5'
               ></span>
             )}
           </Link>
@@ -145,20 +103,20 @@ const Navbar = ({ home, setShowBar }) => {
       </div>
 
       {menu && (
-        <div className="fixed top-0 left-0 z-[999] w-full h-screen overflow-hidden text-textColor3 bg-black transition-all duration-500">
-          <div className="px-3 flex items-center justify-between border-b border-textColor2">
-            <div className="w-[70px]">
+        <div className='fixed top-0 left-0 z-[999] w-full h-screen overflow-hidden text-textColor3 bg-black transition-all duration-500'>
+          <div className='px-3 flex items-center justify-between border-b border-textColor2'>
+            <div className='w-[70px]'>
               <img
-                src="/assets/HomeImages/logo.png"
-                alt="logo"
-                className="h-12 w-12 rounded-full object-cover"
+                src='/assets/HomeImages/logo.png'
+                alt='logo'
+                className='h-12 w-12 rounded-full object-cover'
               />
             </div>
 
-            <div className="flex justify-end py-4">
-              <div className="inline-block bg-gray-800 p-2 rounded-full shadow-2xl">
+            <div className='flex justify-end py-4'>
+              <div className='inline-block bg-gray-800 p-2 rounded-full shadow-2xl'>
                 <HiMiniXMark
-                  className="text-white text-3xl cursor-pointer"
+                  className='text-white text-3xl cursor-pointer'
                   onClick={handleRendering}
                 />
               </div>
@@ -167,88 +125,11 @@ const Navbar = ({ home, setShowBar }) => {
           <Menu menu={setMenu} home={home} />
         </div>
       )}
-
-      {showSidebar && (
-        <div
-          style={{ zIndex: 10000 }}
-          className={`fixed top-0 left-0 h-screen w-full bg-black py-4 px-3 transition-all duration-500`}
-        >
-          <div className="flex justify-end">
-            <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
-              <HiMiniXMark
-                className="text-white text-3xl"
-                // onClick={() => setShowSidebar(false)}
-              />
-            </div>
-          </div>
-
-          {wallets.map((wallet) => (
-            <div
-              key={wallet.id}
-              onClick={() => handleConnect(wallet.name)}
-              className="cursor-pointer mt-3 bg-zinc-900 text-textColor2 rounded-lg flex items-center gap-6 py-5 px-3"
-            >
-              <div className="h-16 w-16 bg-textColor3 rounded-full flex justify-center items-center">
-                <img
-                  src={wallet.image}
-                  alt={wallet.name}
-                  className="h-[48px] w-[48px]"
-                />
-              </div>
-              <div>
-                <h1 className="text-2xl font-medium text-textColor3">
-                  {wallet.name}
-                </h1>
-                <p className="text-xs">{wallet.description}</p>
-              </div>
-            </div>
-          ))}
-
-          <p className="text-textColor2 text-center mt-16 text-sm">
-            Got a Question?{" "}
-            <span className="text-textColor3 font-medium">Contact Support</span>
-          </p>
-        </div>
-      )}
     </div>
   );
 };
 
 export default Navbar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useState, useEffect, useCallback } from "react";
 // import { FaGripLines, FaRegBell } from "react-icons/fa6";
@@ -401,7 +282,7 @@ export default Navbar;
 //             />
 //             {newNotifications.length > 0 && (
 //               <span style={{ borderRadius: 100, height: 10 }} className="absolute top-2 right-5 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                
+
 //               </span>
 //             )}
 //           </Link>
