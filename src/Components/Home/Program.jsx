@@ -1,6 +1,6 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
-
+import updated from "../../assets/icons/updated.png"
 const Program = ({ userData, preview }) => {
   const lvlx1 = Number(userData?.[2]) || 0;
   const lvlx2 = Number(userData?.[3]) || 0;
@@ -119,9 +119,12 @@ const Program = ({ userData, preview }) => {
                 </button>
               </div>
             </div> */}
-            <div className="relative w-1/2 bg-[#171B26] shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg">
+            <div className="relative w-full bg-[#171B26] shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg">
+<img src={updated} alt="card image" />
+
+
   {/* Blur overlay for the card content */}
-  <div className="blur-sm">
+  {/* <div className="blur-sm">
     <div className="flex justify-between text-textColor3">
       <h1 className="text-2xl capitalize">x3</h1>
       <p className="flex items-center gap-1">
@@ -143,15 +146,15 @@ const Program = ({ userData, preview }) => {
         {`Upgrade for $`}
       </button>
     </div>
-  </div>
+  </div> */}
   
   {/* Coming Soon Overlay */}
-  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-lg">
+  {/* <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-lg">
     <div className="text-center">
       <h2 className="text-white text-xl font-bold mb-2">Coming Soon</h2>
       <p className="text-gray-300 text-sm">This feature will be available soon!</p>
     </div>
-  </div>
+  </div> */}
 </div>
           </div>
           </div>

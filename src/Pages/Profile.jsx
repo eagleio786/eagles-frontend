@@ -205,6 +205,10 @@ console.log("kashif",profileImage);
                     />
                   ) : (
                     <GrGallery className="text-xl text-textColor3" />
+                                              // <div>
+                                              //   <IoPersonCircleSharp className="text-8xl text-textColor3" />
+                                              // </div>
+                    
                   )}
                 </div>
                 <label className="absolute bottom-0 right-0 bg-white p-1 rounded-full cursor-pointer">
