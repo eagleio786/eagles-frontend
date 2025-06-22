@@ -8,10 +8,10 @@ import {
 import { ethers } from "ethers";
 
 import {
-  tokenPocketWallet,
+  // tokenPocketWallet,
   walletConnectWallet,
-  metaMaskWallet,
-  trustWallet,
+  // metaMaskWallet,
+  // trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -25,9 +25,6 @@ const connectors = connectorsForWallets(
     {
       groupName: "Recommended",
       wallets: [
-          trustWallet,
-          metaMaskWallet,
-          tokenPocketWallet,
         walletConnectWallet,
       ],
 
