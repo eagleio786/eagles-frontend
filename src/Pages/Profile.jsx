@@ -70,7 +70,7 @@ function Profile({ user }) {
     try {
       // Step 1: Check file size (optional)
       if (file.size > 1024 * 1024 * 1) {
-        alert("Image too large. Please select a file under 1MB.");
+        alert("Image too large. select a file under 1MB.");
         return;
       }
       // Step 2: Compress the image
@@ -200,7 +200,7 @@ console.log("kashif",profileImage);
                   {profileImage ? (
                     <img
                       src={profileImage}
-                      alt="Profile"
+                      alt="Profile ddsd"
                       className="w-full h-full object-cover"
                     />
                   ) : (

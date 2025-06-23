@@ -3,6 +3,7 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { IoCopy, IoPersonCircleSharp, IoSettingsSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { UserPlus } from "lucide-react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { useConnect, useDisconnect, useAccount, useSwitchChain } from "wagmi";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -209,11 +210,16 @@ const Home = ({ showBar, setShowBar }) => {
                       {user ? (
                         <>
                           <div className="h-[70px] w-[70px] rounded-full overflow-hidden bg-[#5c5c5c] flex justify-center items-center">
-                            <img
-                              src={user?.profileImage}
-                              alt="Profile"
-                              className="w-full h-full object-cover"
-                            />
+                            {user.profileImage ? (
+                              <img
+                                src={user.profileImage}
+                                className="w-full h-full object-cover"
+                                alt="Profile"
+                              />
+                            ) : (
+                              <UserPlus />
+                            )}
+                            {/* <img src={user.profileImage} alt="Profile" /> */}
                           </div>
                         </>
                       ) : (
