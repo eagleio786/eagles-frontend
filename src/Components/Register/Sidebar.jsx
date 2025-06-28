@@ -16,20 +16,20 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     //   image: "/assets/AuthImages/trust.png",
     //   type: "trustwallet",
     // },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-      type: "injected",
-    },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "Desktop/DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-      type: "metamask",
-    },
+    // {
+    //   id: 2,
+    //   name: "TokenPocket",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/pocket.png",
+    //   type: "injected",
+    // },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "Desktop/DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    //   type: "metamask",
+    // },
     {
       id: 4,
       name: "WalletConnect",
@@ -108,21 +108,21 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
             <HiMiniXMark
               className="text-white text-3xl cursor-pointer"
-              // onClick={() => setShowSidebar(false)}
+              onClick={() => setShowSidebar(false)}
             />
           </div>
         </div>
         <h2 className="font-bold text-[20px] mt-10 md:m-0 md:mx-6 mb-6 mx-6">
-          {/* Connect Wallet */}
-            <ConnectButton
+          Connect Wallet
+            {/* <ConnectButton
                           showBalance={false}
                           accountStatus="address"
                           chainStatus="none"
                           label="Connect"
-                        />
+                        /> */}
         </h2>
 
-        {/* {wallets.map((wallet) => (
+        {wallets.map((wallet) => (
           <div
             key={wallet.id}
             onClick={() => handleConnect(wallet.type)}
@@ -140,7 +140,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
               <p className="text-xs text-gray-400">{wallet.description}</p>
             </div>
           </div>
-        ))} */}
+        ))}
 
         <p className="text-textColor2 text-center mt-6 text-sm">
           Got Questions?{" "}

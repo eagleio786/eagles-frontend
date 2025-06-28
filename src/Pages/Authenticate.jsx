@@ -31,7 +31,7 @@ const Authenticate = () => {
   }, [address, isConnected]);
 
   const handleConnectClick = () => {
-    // setShowSidebar(true);
+    setShowSidebar(true);
   };
 
   const handleConnect = (walletName) => {
@@ -51,18 +51,18 @@ const Authenticate = () => {
     //   description: 'DApp in App',
     //   image: '/assets/AuthImages/trust.png',
     // },
-    {
-      id: 2,
-      name: 'TokenPocket',
-      description: 'DApp in App',
-      image: '/assets/AuthImages/pocket.png',
-    },
-    {
-      id: 3,
-      name: 'MetaMask',
-      description: 'DApp in App',
-      image: '/assets/AuthImages/Mask.png',
-    },
+    // {
+    //   id: 2,
+    //   name: 'TokenPocket',
+    //   description: 'DApp in App',
+    //   image: '/assets/AuthImages/pocket.png',
+    // },
+    // {
+    //   id: 3,
+    //   name: 'MetaMask',
+    //   description: 'DApp in App',
+    //   image: '/assets/AuthImages/Mask.png',
+    // },
     {
       id: 4,
       name: 'WalletConnect',
@@ -103,13 +103,13 @@ const Authenticate = () => {
                 className='bg-gradient-to-r from-[#9B51E0] to-[#01F7FF] w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-12 text-white font-medium rounded-lg'
               >
                 <button className='font-bold'>
-                  {/* Connect wallet */}
-                    <ConnectButton
+                  Connect wallet
+                    {/* <ConnectButton
                                   showBalance={false}
                                   accountStatus="address"
                                   chainStatus="none"
                                   label="Connect"
-                                />
+                                /> */}
                   </button>
               </div>
               <div className='bg-gradient-to-r from-[#01F7FF] to-[#9B51E0] text-white w-3/4 mx-auto flex items-center justify-center px-8 py-3 mt-6  font-medium rounded-lg'>
@@ -197,7 +197,7 @@ const Authenticate = () => {
             </div>
           </div>
 
-          {/* {wallets.map((wallet) => (
+          {wallets.map((wallet) => (
             <div
               key={wallet.id}
               onClick={() => handleConnect(wallet.name)}
@@ -217,11 +217,11 @@ const Authenticate = () => {
                 <p className='text-xs'>{wallet.description}</p>
               </div>
             </div>
-          ))} */}
+          ))}
 
           <p className='text-textColor2 text-center mt-16 text-sm'>
             Got a Question?{' '}
-            <span className='text-textColor3 font-medium'>Contact Support</span>
+            <span className='text-textColor3 font-medium'>Contact Sunpport</span>
           </p>
         </div>
       </div>

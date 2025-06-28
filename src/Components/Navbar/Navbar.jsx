@@ -27,20 +27,20 @@ const Navbar = ({ home, setShowBar }) => {
     //   image: "/assets/AuthImages/trust.png",
     //   type: "trustwallet",
     // },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-      type: "injected",
-    },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "Desktop/DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-      type: "metamask",
-    },
+    // {
+    //   id: 2,
+    //   name: "TokenPocket",
+    //   description: "DApp in App",
+    //   image: "/assets/AuthImages/pocket.png",
+    //   type: "injected",
+    // },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "Desktop/DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    //   type: "metamask",
+    // },
     {
       id: 4,
       name: "WalletConnect",
@@ -112,14 +112,14 @@ const Navbar = ({ home, setShowBar }) => {
             ) : (
               <div
                 style={{ cursor: "pointer" }}
-                // onClick={() => setShowSidebar(!showSidebar)}
+                onClick={() => setShowSidebar(!showSidebar)}
               >
-                <p> <ConnectButton
+                {/* <p> <ConnectButton
                 showBalance={false}
                 accountStatus="address"
                 chainStatus="none"
-                label="Connect"
-              /></p>
+                label="Connect jj"
+              /></p> */}
               </div>
             )}
           </p>
