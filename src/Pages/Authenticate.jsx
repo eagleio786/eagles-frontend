@@ -57,12 +57,12 @@ const Authenticate = () => {
     //   description: 'DApp in App',
     //   image: '/assets/AuthImages/pocket.png',
     // },
-    // {
-    //   id: 3,
-    //   name: 'MetaMask',
-    //   description: 'DApp in App',
-    //   image: '/assets/AuthImages/Mask.png',
-    // },
+    {
+      id: 3,
+      name: 'MetaMask',
+      description: 'DApp in App',
+      image: '/assets/AuthImages/Mask.png',
+    },
     {
       id: 4,
       name: 'WalletConnect',
@@ -81,7 +81,7 @@ const Authenticate = () => {
       <div className='relative overflow-hidden'>
         <div className='py-4'>
           <div className='flex justify-end px-3'>
-            <div className='inline-block bg-Background p-2 rounded-full shadow-2xl'>
+            <div className='inline-block bg-Background p-2 rounded-full shadow-2xl nj'>
               <HiMiniXMark
                 className='text-white text-3xl'
                 onClick={() => navigate('/')}

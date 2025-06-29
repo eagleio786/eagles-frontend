@@ -8,6 +8,7 @@ import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { useAccount, useConnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useDisconnect } from 'wagmi'
 
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = ({ home, setShowBar }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
+  const { disconnect } = useDisconnect()
 
   const { connectors, connect } = useConnect();
 
@@ -34,13 +36,13 @@ const Navbar = ({ home, setShowBar }) => {
     //   image: "/assets/AuthImages/pocket.png",
     //   type: "injected",
     // },
-    // {
-    //   id: 3,
-    //   name: "MetaMask",
-    //   description: "Desktop/DApp in App",
-    //   image: "/assets/AuthImages/Mask.png",
-    //   type: "metamask",
-    // },
+    {
+      id: 3,
+      name: "MetaMask",
+      description: "Desktop/DApp in App",
+      image: "/assets/AuthImages/Mask.png",
+      type: "metamask",
+    },
     {
       id: 4,
       name: "WalletConnect",
@@ -94,7 +96,7 @@ const Navbar = ({ home, setShowBar }) => {
         <Link className="flex justify-center items-center" to="/home">
           <img
             src="/assets/HomeImages/logo.png"
-            alt="logo"
+            alt="lognnno"
             className="h-9 w-12 ms-2 object-cover"
           />
           <p className="ml-4 font-medium">theeagles.io</p>
@@ -103,23 +105,15 @@ const Navbar = ({ home, setShowBar }) => {
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
             {isConnected ? (
-              <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect"
-              />
+              <div
+              onClick={()=> disconnect()}
+              >disconnect</div>
             ) : (
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => setShowSidebar(!showSidebar)}
               >
-                {/* <p> <ConnectButton
-                showBalance={false}
-                accountStatus="address"
-                chainStatus="none"
-                label="Connect jj"
-              /></p> */}
+         connect 
               </div>
             )}
           </p>
@@ -177,7 +171,7 @@ const Navbar = ({ home, setShowBar }) => {
             <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
               <HiMiniXMark
                 className="text-white text-3xl"
-                // onClick={() => setShowSidebar(false)}
+                onClick={() => setShowSidebar(false)}
               />
             </div>
           </div>
@@ -215,40 +209,6 @@ const Navbar = ({ home, setShowBar }) => {
 };
 
 export default Navbar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useState, useEffect, useCallback } from "react";
 // import { FaGripLines, FaRegBell } from "react-icons/fa6";
@@ -401,7 +361,7 @@ export default Navbar;
 //             />
 //             {newNotifications.length > 0 && (
 //               <span style={{ borderRadius: 100, height: 10 }} className="absolute top-2 right-5 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                
+
 //               </span>
 //             )}
 //           </Link>

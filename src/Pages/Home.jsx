@@ -142,18 +142,18 @@ const Home = ({ showBar, setShowBar, user }) => {
     //   description: "DApp in App",
     //   image: "/assets/AuthImages/trust.png",
     // },
-    {
-      id: 2,
-      name: "TokenPocket",
-      description: "DApp in App",
-      image: "/assets/AuthImages/pocket.png",
-    },
     // {
-    //   id: 3,
-    //   name: "MetaMask",
+    //   id: 2,
+    //   name: "TokenPocket",
     //   description: "DApp in App",
-    //   image: "/assets/AuthImages/Mask.png",
+    //   image: "/assets/AuthImages/pocket.png",
     // },
+    {
+      id: 3,
+      name: "MetaMask",
+      description: "DApp in App",
+      image: "/assets/AuthImages/Mask.png",
+    },
     {
       id: 4,
       name: "WalletConnect",

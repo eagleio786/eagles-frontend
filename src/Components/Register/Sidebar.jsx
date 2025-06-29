@@ -23,13 +23,13 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     //   image: "/assets/AuthImages/pocket.png",
     //   type: "injected",
     // },
-    // {
-    //   id: 3,
-    //   name: "MetaMask",
-    //   description: "Desktop/DApp in App",
-    //   image: "/assets/AuthImages/Mask.png",
-    //   type: "metamask",
-    // },
+    {
+      id: 3,
+      name: "MetaMask",
+      description: "Desktop/DApp in App",
+      image: "/assets/AuthImages/Mask.png",
+      type: "metamask",
+    },
     {
       id: 4,
       name: "WalletConnect",
@@ -104,7 +104,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         className={`fixed top-0 h-screen bg-black py-6 px-4 transition-all duration-500 ease-in-out ${showSidebar ? "right-0" : "-right-full"
           } w-full`}
       >
-        <div className="flex justify-end">
+        <div className="flex justify-end ">
           <div className="inline-block bg-Background p-2 rounded-full shadow-2xl">
             <HiMiniXMark
               className="text-white text-3xl cursor-pointer"
