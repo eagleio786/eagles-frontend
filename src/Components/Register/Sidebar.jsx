@@ -23,13 +23,13 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     //   image: "/assets/AuthImages/pocket.png",
     //   type: "injected",
     // },
-    {
-      id: 3,
-      name: "MetaMask",
-      description: "Desktop/DApp in App",
-      image: "/assets/AuthImages/Mask.png",
-      type: "metamask",
-    },
+    // {
+    //   id: 3,
+    //   name: "MetaMask",
+    //   description: "Desktop/DApp in App",
+    //   image: "/assets/AuthImages/Mask.png",
+    //   type: "metamask",
+    // },
     {
       id: 4,
       name: "WalletConnect",
