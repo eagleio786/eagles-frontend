@@ -72,7 +72,7 @@ const Navbar = ({ home, setShowBar }) => {
     );
     if (connector) {
       connect({ connector });
-      // setShowSidebar(false);
+      setShowSidebar(false);
     }
   };
 
