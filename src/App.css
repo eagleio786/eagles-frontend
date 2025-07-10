@@ -107,3 +107,7 @@ body {
   background-size: contain;
   background-image: url('./assets/icons/userImg.png');
 }
+.bg-img-2 {
+  background-size: contain;
+  background-image: url('../public/Frame.png');
+}
