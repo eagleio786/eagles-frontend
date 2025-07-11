@@ -142,12 +142,12 @@ const Home = ({ showBar, setShowBar, user }) => {
     //   description: "DApp in App",
     //   image: "/assets/AuthImages/trust.png",
     // },
-    // {
-    //   id: 2,
-    //   name: "TokenPocket",
-    //   description: "DApp in App",
-    //   image: "/assets/AuthImages/pocket.png",
-    // },
+    {
+      id: 2,
+      name: "TokenPocket",
+      description: "DApp in App",
+      image: "/assets/AuthImages/pocket.png",
+    },
     {
       id: 3,
       name: "MetaMask",
@@ -156,9 +156,9 @@ const Home = ({ showBar, setShowBar, user }) => {
     },
     {
       id: 4,
-      name: "WalletConnect",
+      name: "Trust Wallet",
       description: "Any Wallet and browser",
-      image: "/assets/AuthImages/connect.png",
+      image: "/assets/AuthImages/trust.png",
     },
   ];
   // useEffect(() => {

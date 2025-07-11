@@ -11,20 +11,60 @@ import ProfitIcon from "../../assets/icons/profitIcon.png";
 import PartnersIcon from "../../assets/icons/partnersIcon.png";
 import teamIcon from "../../assets/icons/teamIcon.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getIdToAddress } from "../../Config/Contract-Methods";
+import {
+  getIdToAddress,
+  X3get24HourDirects,
+  X3get24HourPayment,
+  X3get24HourTeamCount,
+  X3getTotalDirects,
+  X3getTotalTeamCount,
+  X3Users,
+} from "../../Config/Contract-Methods";
 const Cards = ({ PT, userData }) => {
   const [partner24hCount, setPartner24hCount] = useState(0);
   const [team24hCount, setTeam24hCount] = useState(0);
   const [total24hProfit, setTotal24hProfit] = useState(0);
   const [teamCount, setTeamCount] = useState(0);
+  const [val, setVal] = useState(0);
+  const [val24, setVal24] = useState(0);
+  const [team24hCountval, setTeam24hCountval] = useState(0);
+  const [totalteamCount, settotalteamCount] = useState(0);
   const [Par, setPar] = useState();
   const [Par24, setPar24] = useState();
+  const[totaldirects, setTotaldirects] = useState(0);
   const totalProfit = userData?.[4]?.toString() / 1e18;
   const userId = userData[1]?.toString();
   const { address } = useAccount();
   const [searchAdress, setsearchAdress] = useState("");
   const { id } = useParams();
+const [hrdirect24, sethrdirect24] = useState(0)
+  // let team24hCountval;/
+  // let totaldirects;
+  // let totalteamCount;
+  useEffect(() => {
+    gettingdetails();
+  }, [address]);
 
+  const gettingdetails = async () => {
+    try {
+      let X3totalcount = await X3Users(address);
+      setVal(Number(X3totalcount[3]) / (1e18).toFixed(2));
+      let X324hrcount = await X3get24HourPayment(address);
+      setVal24(Number(X324hrcount) / (1e18).toFixed(2));
+      let val2 = await X3get24HourTeamCount(address);
+      setTeam24hCountval(Number(val2));
+      let x = await X3getTotalDirects(address);
+      // totaldirects = Number(x);
+      setTotaldirects(Number(x))
+      let y = await X3getTotalTeamCount(address);
+      settotalteamCount(Number(y));
+      let data=await X3get24HourDirects(address)
+sethrdirect24(Number(data))
+      console.log("kashif ali", val2);
+    } catch (error) {
+      console.log("error while fetching details from X3", error);
+    }
+  };
   const apiFun = async () => {
     try {
       const response = await axios.get(`${ApiUrl}/refferal/${userId}`);
@@ -102,24 +142,21 @@ const Cards = ({ PT, userData }) => {
   }, [userId, PT.Personal]);
 
   // Query for total earnings using GraphQL
-  const grapFunction=()=>{
-    
-  }
+  const grapFunction = () => {};
   const getUnixTimestamp24HrsAgo = () => {
     return Math.floor(Date.now() / 1000) - 24 * 60 * 60;
   };
   const timestamp = useMemo(() => getUnixTimestamp24HrsAgo(), []);
-const effectiveWalletAddress = useMemo(() => {
-  return searchAdress || address;
-}, [searchAdress, address]);
+  const effectiveWalletAddress = useMemo(() => {
+    return searchAdress || address;
+  }, [searchAdress, address]);
 
- const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
-  client,
-  variables: { walletAddress: effectiveWalletAddress, timestamp },
-  fetchPolicy: "cache-first",
-  skip: !effectiveWalletAddress,
-});
-
+  const { loading, error, data } = useQuery(GET_FUNDS_DISTRIBUTED, {
+    client,
+    variables: { walletAddress: effectiveWalletAddress, timestamp },
+    fetchPolicy: "cache-first",
+    skip: !effectiveWalletAddress,
+  });
 
   const calculateTotalEarnings = (transactions) => {
     let totalEarnings = BigInt(0);
@@ -145,7 +182,7 @@ const effectiveWalletAddress = useMemo(() => {
     [totalEarnings]
   );
 
-  console.log("<-24->", formattedEarnings,effectiveWalletAddress);
+  console.log("<-24->", formattedEarnings, effectiveWalletAddress);
   return (
     <div className="space-y-4">
       <div className="flex">
@@ -170,7 +207,10 @@ const effectiveWalletAddress = useMemo(() => {
             {loading ? "0" : formattedEarnings || "0"}
           </p> */}
             <p className="font-medium text-2xl">
-              {totalProfit ? totalProfit.toFixed(2) : "0"}$
+              {totalProfit
+                ? (Number(totalProfit) + Number(val)).toFixed(2)
+                : 0 + val}
+              $
             </p>
           </div>
         </div>
@@ -192,7 +232,10 @@ const effectiveWalletAddress = useMemo(() => {
               <div className="bg-green-500 p-1 rounded-full mr-1">
                 <GoArrowUp className="text-white" />
               </div>
-              {loading ? "0" : formattedEarnings || "0"}
+              {loading
+                ? (Number(formattedEarnings) + Number(val24)).toFixed(2)
+                : 0 + val24}
+              {/* {loading ? "0" : formattedEarnings || "0"} */}
             </p>
           </div>
         </div>
@@ -202,6 +245,8 @@ const effectiveWalletAddress = useMemo(() => {
           icon={PartnersIcon}
           title="Partners"
           count={Par}
+          team24hCountval={hrdirect24}
+          totalteamCount={totaldirects}
           count24={Par24}
           bg="bg-person2"
         />
@@ -210,6 +255,8 @@ const effectiveWalletAddress = useMemo(() => {
           icon={teamIcon}
           count={teamCount}
           count24={team24hCount}
+          team24hCountval={team24hCountval}
+          totalteamCount={totalteamCount}
           bg="bg-person3"
         />
       </div>
@@ -217,7 +264,15 @@ const effectiveWalletAddress = useMemo(() => {
   );
 };
 
-const StatCard = ({ title, count, count24, bg, icon }) => {
+const StatCard = ({
+  title,
+  count,
+  count24,
+  bg,
+  icon,
+  team24hCountval,
+  totalteamCount,
+}) => {
   return (
     <div
       className={`bg-[#171B26] px-2 shadow-xl shadow-[#00000079] py-3 w-1/2 rounded-lg ${bg}`}
@@ -233,14 +288,16 @@ const StatCard = ({ title, count, count24, bg, icon }) => {
         </span>
       </p>
       <p className="text-3xl text-textColor3 font-semibold mt-1">
-        {count || 0}
+
+                  {(Number(count)+Number(team24hCountval)) || 0+Number(team24hCountval)}
+
       </p>
       <div className="w-[85%] mx-auto mt-7 flex justify-between p-1 rounded-full bg-[#a67912] bg-opacity-20">
         <div className="flex items-center font-medium text-xl text-green-500">
           <div className="bg-green-500 p-1 rounded-full mr-2">
             <GoArrowUp className="text-white" />
           </div>
-          {count24 || 0}
+          {(Number(count24)+Number(team24hCountval)) || 0+Number(team24hCountval)}
         </div>
         <div className="gradient-circle"></div>
       </div>

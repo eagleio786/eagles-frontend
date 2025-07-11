@@ -16,13 +16,13 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     //   image: "/assets/AuthImages/trust.png",
     //   type: "trustwallet",
     // },
-    // {
-    //   id: 2,
-    //   name: "TokenPocket",
-    //   description: "DApp in App",
-    //   image: "/assets/AuthImages/pocket.png",
-    //   type: "injected",
-    // },
+    {
+      id: 2,
+      name: "TokenPocket",
+      description: "DApp in App",
+      image: "/assets/AuthImages/pocket.png",
+      type: "injected",
+    },
     {
       id: 3,
       name: "MetaMask",
@@ -32,9 +32,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     },
     {
       id: 4,
-      name: "WalletConnect",
+      name: "walletconnect",
       description: "Any Wallet and browser",
-      image: "/assets/AuthImages/connect.png",
+      image: "/assets/AuthImages/trust.png",
       type: "walletconnect",
     },
   ];

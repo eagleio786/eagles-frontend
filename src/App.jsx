@@ -35,7 +35,7 @@ import ProfileView from "./Pages/ProfileView";
 import FundsList from "./Pages/FundList";
 import Notifications from "./Pages/Notifications";
 import { useNotificationListener } from "./useNotificationListener";
-
+import Levelx3 from "./Pages/LevelX3";
 const ScrollToTop = () => {
   const location = useLocation();
 
@@ -117,6 +117,7 @@ function App() {
         <Route path="/profile" element={<Profile user={user} />} />
         {showHome && <Route path="/lvlxone" element={<Levelx1 />} />}
         {showHome && <Route path="/lvlxtwo" element={<Levelx2 />} />}
+        {showHome && <Route path="/lvlxthree" element={<Levelx3 />} />}
         <Route path="/Upgradexone" element={<UpgradeLvl1 />} />
         <Route path="/Upgradextwo" element={<UpgradeLvl2 />} />
         <Route path="/auth" element={<Authenticate />} />

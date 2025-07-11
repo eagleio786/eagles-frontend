@@ -8,7 +8,7 @@ import AlertIcon from "../../assets/icons/alertIcon.png";
 import { Link } from "react-router-dom";
 import { useAccount, useConnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useDisconnect } from 'wagmi'
+import { useDisconnect } from "wagmi";
 
 const Navbar = ({ home, setShowBar }) => {
   const [menu, setMenu] = useState(false);
@@ -17,7 +17,7 @@ const Navbar = ({ home, setShowBar }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
-  const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect();
 
   const { connectors, connect } = useConnect();
 
@@ -29,13 +29,13 @@ const Navbar = ({ home, setShowBar }) => {
     //   image: "/assets/AuthImages/trust.png",
     //   type: "trustwallet",
     // },
-    // {
-    //   id: 2,
-    //   name: "TokenPocket",
-    //   description: "DApp in App",
-    //   image: "/assets/AuthImages/pocket.png",
-    //   type: "injected",
-    // },
+    {
+      id: 2,
+      name: "TokenPocket",
+      description: "DApp in App",
+      image: "/assets/AuthImages/pocket.png",
+      type: "injected",
+    },
     {
       id: 3,
       name: "MetaMask",
@@ -45,9 +45,9 @@ const Navbar = ({ home, setShowBar }) => {
     },
     {
       id: 4,
-      name: "WalletConnect",
+      name: "walletconnect",
       description: "Any Wallet and browser",
-      image: "/assets/AuthImages/connect.png",
+      image: "/assets/AuthImages/trust.png",
       type: "walletconnect",
     },
   ];
@@ -105,15 +105,13 @@ const Navbar = ({ home, setShowBar }) => {
         <div className="flex gap-2 p-4">
           <p className="text-textColor3 text-xs px-3 py-2 rounded-md bg-textColor3 bg-opacity-30 cursor-pointer">
             {isConnected ? (
-              <div
-              onClick={()=> disconnect()}
-              >disconnect</div>
+              <div onClick={() => disconnect()}>disconnect</div>
             ) : (
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => setShowSidebar(!showSidebar)}
               >
-         connect 
+                connect
               </div>
             )}
           </p>
@@ -179,7 +177,9 @@ const Navbar = ({ home, setShowBar }) => {
           {wallets.map((wallet) => (
             <div
               key={wallet.id}
-              onClick={() => handleConnect(wallet.name)}
+              onClick={() => handleConnect(wallet.name)
+                
+              }
               className="cursor-pointer mt-3 bg-zinc-900 text-textColor2 rounded-lg flex items-center gap-6 py-5 px-3"
             >
               <div className="h-16 w-16 bg-textColor3 rounded-full flex justify-center items-center">

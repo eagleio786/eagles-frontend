@@ -6,6 +6,10 @@ import {
   ABI,
   USDTTestNetABI,
   USDTContractAdress,
+  X3DiamondAddress,
+  X3DiamondAbi,
+  usdtTestnetAbi,
+  USDTTestnetadd,
 } from "./config";
 
 import { waitForTransactionReceipt } from "wagmi/actions";
@@ -276,3 +280,118 @@ export const getSlotFilled = async (address, matrix, level) => {
 
 //   return result;
 // };
+
+/////////////////////////////////////////////////////////// X3 Methods///////////////////////////////////
+
+export const X3Users = async (address) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "users",
+    args: [address],
+  });
+  console.log("X3 ", address, " : ", result);
+
+  return result;
+};
+
+export const X3USDTapprove = async (amount) => {
+  let val = amount * 1000000000000000000; // USDT has 18 decimals
+  const result = await writeContract(config, {
+    abi: usdtTestnetAbi,
+    address: USDTTestnetadd,
+    functionName: "approve",
+    args: [X3DiamondAddress, val],
+  });
+  return result;
+};
+
+export const X3register = async () => {
+  const result = await writeContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "register",
+  });
+  return result;
+};
+
+
+export const X3activateLevel = async (level) => {
+  const result = await writeContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "upgradeX3Level",
+    args: [level],
+  });
+  return result;
+};
+
+export const X3getSlotsFilled = async (add,level,matrix) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "getSlotsFilled",
+    args: [add,matrix, level],
+  });
+  return result;
+};
+export const X3isLocked = async (add,level) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "isLocked",
+    args: [add,level],
+  });
+  return result;
+};
+
+// register user exsist
+export const X3get24HourDirects = async (add) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "get24HourDirects",
+    args: [add],
+  });
+  return result;
+};
+export const X3get24HourPayment = async (add) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "get24HourPayment",
+    args: [add],
+  });
+  return result;
+};
+export const X3get24HourTeamCount = async (add) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "get24HourTeamCount",
+    args: [add],
+  });
+  return result;
+};
+export const X3getTotalDirects = async (add) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "getTotalDirects",
+    args: [add],
+  });
+  return result;
+};
+
+export const X3getTotalTeamCount = async (add) => {
+  const result = await readContract(config, {
+    abi: X3DiamondAbi,
+    address: X3DiamondAddress,
+    functionName: "getTotalTeamCount",
+    args: [add],
+  });
+  return result;
+};
+
+
+

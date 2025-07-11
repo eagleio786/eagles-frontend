@@ -13,6 +13,9 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif", "Montserrat"],
       },
+      screens: {
+        xs: { max: "410px" }, // ✅ custom breakpoint for ≤410px
+      },
     },
   },
   plugins: [],

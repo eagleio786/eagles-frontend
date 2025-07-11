@@ -1,41 +1,31 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { X3Users } from "../../Config/Contract-Methods";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 const Program = ({ userData, preview }) => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const tomorrow = new Date();
-      tomorrow.setDate(now.getDate() + 1);
-      tomorrow.setHours(12, 0, 0, 0); // Set to 12:00 PM
-
-      const difference = tomorrow - now;
-
-      if (difference > 0) {
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / 1000 / 60) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-
-        setTimeLeft({ hours, minutes, seconds });
-      } else {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   const lvlx1 = Number(userData?.[2]) || 0;
   const lvlx2 = Number(userData?.[3]) || 0;
-  const lvlx3 = 4;
+  // const lvlx3 = 4; // get this
+  const { address } = useAccount();
+  const [lvlx3, setlvlx3] = useState(0);
+  useEffect(() => {
+    X3userdata(address);
+  }, [address]);
 
-  const numberOfCirclesX3 = 8;
+  const X3userdata = async () => {
+    try {
+      // let data = await X3Users(address);
+      let data = await X3Users(address);
+      console.log("X3", data);
+      setlvlx3(Number(data?.[2]) || 0);
+    } catch (error) {
+      console.log("error while fetching x3 data", error);
+    }
+  };
+  // X3userdata();
+  const numberOfCirclesX3 = 7;
   const numberOfCircles = 12;
   const circles = Array.from({ length: numberOfCircles }, (_, index) => index);
   const circlesX3 = Array.from(
@@ -67,7 +57,6 @@ const Program = ({ userData, preview }) => {
     { cost: 2500 },
     { cost: 5000 },
   ];
-
   return (
     <div className="w-full h-full mt-4 pb-3 flex justify-between gap-2">
       {/* X1 Program */}
@@ -149,45 +138,13 @@ const Program = ({ userData, preview }) => {
             </Link>
           </div>
           {/* x3 program */}
-          <div className="w-full flex justify-center pt-3 relative">
-            <div className="absolute w-1/2 h-full z-20 flex justify-center items-center">
-              <div className="bg-black/60 backdrop-blur-sm w-full h-full rounded-lg flex flex-col justify-center items-center px-2">
-                <div className="text-white text-center">
-                  <div className="text-sm sm:text-base font-semibold mb-2">
-                    Launches in:
-                  </div>
-                  <div className="flex justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                    <div className="flex flex-col items-center">
-                      <span className="font-bold text-lg sm:text-xl">
-                        {timeLeft.hours.toString().padStart(2, '0')}
-                      </span>
-                      <span className="text-xs opacity-75">HRS</span>
-                    </div>
-                    <span className="font-bold text-lg sm:text-xl">:</span>
-                    <div className="flex flex-col items-center">
-                      <span className="font-bold text-lg sm:text-xl">
-                        {timeLeft.minutes.toString().padStart(2, '0')}
-                      </span>
-                      <span className="text-xs opacity-75">MIN</span>
-                    </div>
-                    <span className="font-bold text-lg sm:text-xl">:</span>
-                    <div className="flex flex-col items-center">
-                      <span className="font-bold text-lg sm:text-xl">
-                        {timeLeft.seconds.toString().padStart(2, '0')}
-                      </span>
-                      <span className="text-xs opacity-75">SEC</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Link to="/lvlxthree" className="w-1/2 pointer-events-none">
-              <div className="bg-[#171B26] shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg filter blur-sm">
+          <div className="w-full  flex justify-center pt-3">
+            <Link to="/lvlxthree" className="w-1/2">
+              <div className="bg-[#171B26] shadow-lg shadow-[#00000079] px-2 py-2 rounded-lg">
                 <div className="flex justify-between text-textColor3">
                   <h1 className="text-2xl capitalize">x3</h1>
                   <p className="flex items-center gap-1">
-                    {PriceX3[lvlx3]?.cost || 0}$
+                    {PriceX3[lvlx3]?.cost || "max" } $
                     <span>
                       <GoArrowUpRight className="mb-4" />
                     </span>
@@ -198,7 +155,7 @@ const Program = ({ userData, preview }) => {
                     <div
                       key={index}
                       className={`w-7 h-7 rounded-full ${
-                        index < lvlx3 ? "bg-img-2" : "bg-[#5c5c5c]"
+                        index < lvlx3 ? "bg-img-X3" : "bg-[#5c5c5c]"
                       }`}
                     ></div>
                   ))}
@@ -212,7 +169,7 @@ const Program = ({ userData, preview }) => {
                   >
                     {lvlx3 >= 7
                       ? "Max Level Reached"
-                      : `Upgrade for ${PriceX3[lvlx3 + 1]?.cost}$`}
+                      : `Upgrade for ${PriceX3[lvlx3 ]?.cost}$`}
                   </button>
                 </div>
               </div>

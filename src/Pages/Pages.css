@@ -24,10 +24,8 @@
 }
 
 .levels {
-  background: linear-gradient(120deg,
-      #01F7FF,
-
-      #9B51E0);
+  background: linear-gradient(120deg, #01f7ff, #9b51e0);
+  border-radius: 20px;
   height: auto;
   flex-basis: 35%;
   padding: 10px 10px;
@@ -129,10 +127,12 @@
 }
 
 .hello {
-  background: linear-gradient(90deg,
-      rgb(243, 113, 113),
-      #de781e61,
-      rgba(25, 91, 156, 0.409));
+  background: linear-gradient(
+    90deg,
+    rgb(243, 113, 113),
+    #de781e61,
+    rgba(25, 91, 156, 0.409)
+  );
   background-color: rgba(0, 255, 255, 0.721);
   border-radius: 10px;
 }
