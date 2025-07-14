@@ -31,16 +31,17 @@ const Cards = ({ PT, userData }) => {
   const [totalteamCount, settotalteamCount] = useState(0);
   const [Par, setPar] = useState();
   const [Par24, setPar24] = useState();
-  const[totaldirects, setTotaldirects] = useState(0);
+  const [totaldirects, setTotaldirects] = useState(0);
   const totalProfit = userData?.[4]?.toString() / 1e18;
   const userId = userData[1]?.toString();
   const { address } = useAccount();
   const [searchAdress, setsearchAdress] = useState("");
   const { id } = useParams();
-const [hrdirect24, sethrdirect24] = useState(0)
+  const [hrdirect24, sethrdirect24] = useState(0);
   // let team24hCountval;/
   // let totaldirects;
   // let totalteamCount;
+  // let address="0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B"
   useEffect(() => {
     gettingdetails();
   }, [address]);
@@ -55,11 +56,11 @@ const [hrdirect24, sethrdirect24] = useState(0)
       setTeam24hCountval(Number(val2));
       let x = await X3getTotalDirects(address);
       // totaldirects = Number(x);
-      setTotaldirects(Number(x))
+      setTotaldirects(Number(x));
       let y = await X3getTotalTeamCount(address);
       settotalteamCount(Number(y));
-      let data=await X3get24HourDirects(address)
-sethrdirect24(Number(data))
+      let data = await X3get24HourDirects(address);
+      sethrdirect24(Number(data));
       console.log("kashif ali", val2);
     } catch (error) {
       console.log("error while fetching details from X3", error);
@@ -182,7 +183,7 @@ sethrdirect24(Number(data))
     [totalEarnings]
   );
 
-  console.log("<-24->", formattedEarnings, effectiveWalletAddress);
+  console.log("<-24->", formattedEarnings, val24,Par,hrdirect24,totaldirects,Par24);
   return (
     <div className="space-y-4">
       <div className="flex">
@@ -234,7 +235,7 @@ sethrdirect24(Number(data))
               </div>
               {loading
                 ? (Number(formattedEarnings) + Number(val24)).toFixed(2)
-                : 0 + val24}
+                : (Number(formattedEarnings) + Number(val24)).toFixed(2)}
               {/* {loading ? "0" : formattedEarnings || "0"} */}
             </p>
           </div>
@@ -288,16 +289,15 @@ const StatCard = ({
         </span>
       </p>
       <p className="text-3xl text-textColor3 font-semibold mt-1">
-
-                  {(Number(count)+Number(team24hCountval)) || 0+Number(team24hCountval)}
-
+        {Number(count) + Number(team24hCountval) || 0 + Number(team24hCountval)}
       </p>
       <div className="w-[85%] mx-auto mt-7 flex justify-between p-1 rounded-full bg-[#a67912] bg-opacity-20">
         <div className="flex items-center font-medium text-xl text-green-500">
           <div className="bg-green-500 p-1 rounded-full mr-2">
             <GoArrowUp className="text-white" />
           </div>
-          {(Number(count24)+Number(team24hCountval)) || 0+Number(team24hCountval)}
+          {Number(count24) + Number(team24hCountval) ||
+            0 + Number(team24hCountval)}
         </div>
         <div className="gradient-circle"></div>
       </div>
