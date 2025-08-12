@@ -1,52 +1,33 @@
-name: Deploy Next.js to AWS EC2 with PM2
+name: Next.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [18.x] # Next.js supports Node 18.x and 20.x
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Set up environment variables
+      run: |
+        echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> .env
 
-      - name: Build Next.js app
-        run: npm run build
-
-      - name: Zip build files
-        run: zip -r build.zip ./*
-
-      - name: Copy files to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "build.zip"
-          target: "~/app"
-
-      - name: SSH and deploy with PM2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            cd ~/app
-            unzip -o build.zip
-            npm install --production
-            pm2 stop next-app || true
-            pm2 start npm --name "next-app" -- run start
-            pm2 save
+    - run: npm ci
+    - run: npm run build
+    - run: pm2 restart next-app --update-env
