@@ -1,62 +1,52 @@
-name: Deploy Eagles Project
+name: Deploy Next.js to AWS EC2 with PM2
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   deploy:
-    runs-on: self-hosted
-
-    strategy:
-      matrix:
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js with npm cache
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '18'
           cache: 'npm'
 
-      # 3️⃣ Set environment variables from GitHub Secrets
-      - name: Set up environment variables
-        run: |
-          echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> .env
-          echo "contractAddress=${{ secrets.contractAddress }}" >> .env
-          echo "contractABI=${{ secrets.contractABI }}" >> .env
+      - name: Install dependencies
+        run: npm install
 
-      # 4️⃣ Install dependencies for frontend
-      - name: Install frontend dependencies
-        run: |
-          cd front-end
-          npm ci
+      - name: Build Next.js app
+        run: npm run build
 
-      # 5️⃣ Build frontend
-      - name: Build frontend
-        run: |
-          cd front-end
-          npm run build
-          mkdir -p /home/runneruser/front-end/_work/eagles-frontend/eagles-frontend/dist
-          cp -r dist/* /home/runneruser/front-end/_work/eagles-frontend/eagles-frontend/dist/
+      - name: Zip build files
+        run: zip -r build.zip ./*
 
-      # 6️⃣ Install dependencies for backend
-      - name: Install backend dependencies
-        run: |
-          cd back-end
-          npm ci
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "build.zip"
+          target: "~/app"
 
-      # 7️⃣ Restart backend with PM2 on port 5000
-      - name: Restart backend with PM2
-        run: |
-          cd back-end
-          pm2 describe back-end > /dev/null \
-            && pm2 restart back-end \
-            || pm2 start npm --name "back-end" -- run start
-          pm2 save
+      - name: SSH and deploy with PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/app
+            unzip -o build.zip
+            npm install --production
+            pm2 stop next-app || true
+            pm2 start npm --name "next-app" -- run start
+            pm2 save
