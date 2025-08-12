@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy Eagles Project
 
 on:
   push:
@@ -7,22 +7,56 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  deploy:
     runs-on: self-hosted
 
     strategy:
       matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm i
-    - run: npm ci
-    - run: npm run build --if-present
+      # 1️⃣ Checkout repository
+      - uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js with npm cache
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # 3️⃣ Set environment variables from GitHub Secrets
+      - name: Set up environment variables
+        run: |
+          echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> .env
+          echo "contractAddress=${{ secrets.contractAddress }}" >> .env
+          echo "contractABI=${{ secrets.contractABI }}" >> .env
+
+      # 4️⃣ Install dependencies for frontend
+      - name: Install frontend dependencies
+        run: |
+          cd front-end
+          npm ci
+
+      # 5️⃣ Build frontend
+      - name: Build frontend
+        run: |
+          cd front-end
+          npm run build
+          mkdir -p /home/runneruser/front-end/_work/eagles-frontend/eagles-frontend/dist
+          cp -r dist/* /home/runneruser/front-end/_work/eagles-frontend/eagles-frontend/dist/
+
+      # 6️⃣ Install dependencies for backend
+      - name: Install backend dependencies
+        run: |
+          cd back-end
+          npm ci
+
+      # 7️⃣ Restart backend with PM2 on port 5000
+      - name: Restart backend with PM2
+        run: |
+          cd back-end
+          pm2 describe back-end > /dev/null \
+            && pm2 restart back-end \
+            || pm2 start npm --name "back-end" -- run start
+          pm2 save
