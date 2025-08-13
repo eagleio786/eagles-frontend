@@ -167,7 +167,7 @@ export const getTotalDirects = async (adress:string) => {
     abi: ABI,
     address: ContractAdress,
     functionName: "getTotalDirects",
-    args:adress,
+    args:[adress],
   });
   console.log("result", result);
   return result;
