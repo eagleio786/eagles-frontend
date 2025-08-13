@@ -1,5 +1,7 @@
 export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
-export const ContractAdress = " "; //mainnet X1 X2
+export const X3DiamondAddress = "0x017d61DE5Cd3F2AFB90066F760C26C3136b95Cf2"; //testnet
+
+export const ContractAdress = "0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe"; //mainnet X1 X2
 export const ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "AccessControlBadConfirmation", type: "error" },
@@ -1473,10 +1475,8 @@ export const USDTTestNetABI = [
 ];
 // export const ApiUrl = "http://localhost:5000";
 export const ApiUrl = "https://reffaralmoney.com";
-
 export const usdtdecimals = 1e18;
 export const mainnetDecimals = 1e18;
-export const X3DiamondAddress = "0x017d61DE5Cd3F2AFB90066F760C26C3136b95Cf2"; //testnet
 export const X3DiamondAbi = [
   {
     inputs: [
