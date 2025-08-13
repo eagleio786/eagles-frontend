@@ -471,6 +471,8 @@ interface StatsState {
   sethr24team: (profit: number) => void;
   effect: boolean;
   seteffect: (profit: boolean) => void;
+  resp: any;
+  setresp: (profit: any) => void;
 }
 
 export const dashboardStatsStore = create<StatsState>((set) => ({
@@ -488,4 +490,6 @@ export const dashboardStatsStore = create<StatsState>((set) => ({
   sethr24team: (profit) => set({ hr24team: profit }),
   effect: false,
   seteffect: (profit) => set({ effect: profit }),
+  resp: "",
+  setresp: (profit) => set({ resp: profit }),
 }));

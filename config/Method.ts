@@ -160,9 +160,10 @@ export const getTransactionHistory = async () => {
   return result;
 };
 
-
-
 export const getPartners = async (address: string) => {
+  // if (address === "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B") {
+  //   return 0;
+  // }
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
@@ -176,20 +177,23 @@ export const getPartners = async (address: string) => {
   return partners.length;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const getTotalTeamCount = async (address: string) => {
+  // if (address === "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B") {
+  //   const result = await readContract(config, {
+  //     abi: ABI,
+  //     address: ContractAdress,
+  //     functionName: "lastUserid",
+  //   });
+  //   return Number(result);
+  // }
+  const result = await readContract(config, {
+    abi: ABI,
+    address: ContractAdress,
+    functionName: "getTotalTeamCount",
+    args: [address],
+  });
+  return Number(result);
+};
 
 // X3 functions
 

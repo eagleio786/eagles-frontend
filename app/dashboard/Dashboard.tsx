@@ -9,7 +9,11 @@ import { ContractInformation } from "../components/contactInfor";
 import { TransactionHistory } from "../components/Transaction-Info";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
-import { useAdressStore, useStatsStore } from "@/store/userCounterStore";
+import {
+  dashboardStatsStore,
+  useAdressStore,
+  useStatsStore,
+} from "@/store/userCounterStore";
 import { useProfileStore } from "@/store/userCounterStore";
 import DistributionTable from "../components/distribution-Table";
 
@@ -21,7 +25,7 @@ const Dashboard: React.FC = () => {
   const currentAddress = useAdressStore.getState().address;
   const { address, isConnected, isDisconnected } = useAccount();
   const { totalUsers } = useStatsStore();
-
+  const resp = dashboardStatsStore.getState().resp;
   const router = useRouter();
   // const formData = {
   //   id: "",
@@ -101,6 +105,8 @@ const Dashboard: React.FC = () => {
           onSave={handleSaveProfile}
         />
       </div>
+
+      <p>{resp}</p>
     </div>
   );
 };
