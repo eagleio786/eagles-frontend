@@ -139,8 +139,8 @@ const UplinerId = async () => {
     let Kashif=(await getTotalDirects(currentAddress) as bigint)
     setX3(Number(X3val[2]));
     let profit = Number(val[4]) + Number(X3val[3]);
-    let partner = Number(Kashif) + Number(X3val[4]);
-    let team = Number(val[6]) + Number(X3val[5]);
+    let partner = Number(Kashif) ;
+    let team = Number(val[6]) ;
 
 let par=await get24HourDirects(currentAddress)
 let par24=await X3get24HourDirects(currentAddress)
