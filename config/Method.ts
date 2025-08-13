@@ -162,16 +162,20 @@ export const getTransactionHistory = async () => {
 
 
 
-export const getTotalDirects = async (adress:string) => {
+export const getPartners = async (address: string) => {
   const result = await readContract(config, {
     abi: ABI,
     address: ContractAdress,
-    functionName: "getTotalDirects",
-    args:[adress],
+    functionName: "getPartners",
+    args: [address],
   });
-  console.log("result", result);
-  return result;
+
+  const partners = result as string[]; // type assertion
+  console.log("result", partners);
+
+  return partners.length;
 };
+
 
 
 
