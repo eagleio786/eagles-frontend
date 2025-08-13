@@ -82,6 +82,7 @@ const profilefun = async () => {
     );
     const profileData = response.data?.data;
     setapiresp(response as any);
+    console.log(response,"reposns wwwwwwwwwwwwwwwwwwwwwwwww")
     if (profileData) {
       useProfileStore.getState().setProfile(profileData);
       console.log("✅ Profile updated:", profileData);

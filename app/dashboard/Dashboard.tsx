@@ -106,7 +106,17 @@ const Dashboard: React.FC = () => {
         />
       </div>
 
-      <p>{resp}</p>
+      <pre
+        style={{
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-word",
+          maxWidth: "400px", // set desired width
+          padding: "10px",
+          borderRadius: "6px",
+        }}
+      >
+        <code>{JSON.stringify(resp, null, 2)}</code>
+      </pre>
     </div>
   );
 };
