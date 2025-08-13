@@ -160,6 +160,33 @@ export const getTransactionHistory = async () => {
   return result;
 };
 
+
+
+export const getTotalDirects = async (adress:string) => {
+  const result = await readContract(config, {
+    abi: ABI,
+    address: ContractAdress,
+    functionName: "getTotalDirects",
+    args:adress,
+  });
+  console.log("result", result);
+  return result;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // X3 functions
 
 export const X3activateLevel = async (level: string) => {

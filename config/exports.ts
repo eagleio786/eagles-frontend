@@ -1,5 +1,5 @@
 export const USDTContractAdress = "0x55d398326f99059fF775485246999027B3197955";
-export const ContractAdress = "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B"; //mainnet X1 X2
+export const ContractAdress = " "; //mainnet X1 X2
 export const ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "AccessControlBadConfirmation", type: "error" },

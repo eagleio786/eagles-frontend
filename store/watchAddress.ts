@@ -18,6 +18,7 @@ import {
   get24HourDirects,
   get24HourPayment,
   get24HourTeamCount,
+  getTotalDirects,
   isLocked,
   lastUserid,
   users,
@@ -135,9 +136,10 @@ const UplinerId = async () => {
       BigInt,
       BigInt
     ];
+    let Kashif=(await getTotalDirects(currentAddress) as bigint)
     setX3(Number(X3val[2]));
     let profit = Number(val[4]) + Number(X3val[3]);
-    let partner = Number(val[5]) + Number(X3val[4]);
+    let partner = Number(Kashif) + Number(X3val[4]);
     let team = Number(val[6]) + Number(X3val[5]);
 
 let par=await get24HourDirects(currentAddress)
