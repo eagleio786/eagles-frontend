@@ -105,7 +105,7 @@ const Dashboard: React.FC = () => {
           onSave={handleSaveProfile}
         />
       </div>
-
+{/* 
       <pre
         style={{
           whiteSpace: "pre-wrap",
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <code>{JSON.stringify(resp, null, 2)}</code>
-      </pre>
+      </pre> */}
     </div>
   );
 };
