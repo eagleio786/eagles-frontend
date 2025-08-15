@@ -30,7 +30,7 @@ export const PlatformStatistics: React.FC = () => {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <span className="text-gray-400">Members Received</span>
-            <span className="text-green-400 font-bold text-lg">$7,332.50</span>
+            <span className="text-green-400 font-bold text-lg">$200,000 +</span>
           </div>
          
           <div className="flex justify-between items-center">

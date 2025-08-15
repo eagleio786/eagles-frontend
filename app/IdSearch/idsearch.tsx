@@ -122,7 +122,7 @@ const Idsearch: React.FC = () => {
               <p className="text-gray-400 text-xs">Members</p>
             </div>
             <div>
-              <p className="text-green-400 font-bold text-sm">$7,332</p>
+              <p className="text-green-400 font-bold text-sm">$200,000 +</p>
               <p className="text-gray-400 text-xs">Distributed</p>
             </div>
           </div>

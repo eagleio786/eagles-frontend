@@ -1,6 +1,6 @@
 // Header.tsx
 "use client";
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Zap } from "lucide-react";
 import { YourApp } from "./custombtn";
 import { useAccount } from "wagmi";
@@ -71,7 +71,8 @@ export const Header: React.FC = () => {
       currentAddress !== address &&
       pathname !== "/" &&
       !pathname.startsWith("/IdSearch") &&
-      prevPathRef.current !== "/IdSearch"
+      prevPathRef.current !== "/IdSearch" &&
+       !pathname.startsWith("/PersonalLink")
     ) {
       router.push("/login");
     }
@@ -82,8 +83,8 @@ export const Header: React.FC = () => {
 
       let totalMembers = (await lastUserid()) as bigint;
       console.log("total mem", totalMembers);
-
-      SetUserId(Number(totalMembers));
+      let total = Number(totalMembers) + 25445;
+      SetUserId(Number(total));
     } catch (error) {
       console.log("error while getting stats", error);
     }

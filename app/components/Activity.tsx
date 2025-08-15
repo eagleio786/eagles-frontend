@@ -26,7 +26,7 @@ export const Activity: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <Zap className="w-8 h-8 text-amber-400 animate-spin-slow" />
               <span className="text-amber-400 font-bold animate-number-count">
-                +1,284
+                +200,000
               </span>
             </div>
             <h4 className="text-white font-semibold mb-2">Transactions</h4>
@@ -48,7 +48,7 @@ export const Activity: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <BookOpen className="w-8 h-8 text-amber-500 animate-float" />
               <span className="text-amber-500 font-bold animate-number-count">
-                156
+                200,000 +
               </span>
             </div>
             <h4 className="text-white font-semibold mb-2">Active Learners</h4>

@@ -3,7 +3,6 @@ import {
   Edit,
   Share2,
   Copy,
-  ChevronDown,
   Plus,
   X,
   Mail,
@@ -85,7 +84,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     []
   );
   const router = useRouter();
-
   console.log("entries data:", entries);
 
   useEffect(() => {
@@ -496,7 +494,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
             </h4>
             <div className="flex items-center space-x-2 bg-gray-800/50 rounded-lg p-3">
               <span className="text-yellow-400 font-mono text-sm flex-1 break-all">
-                theeagles.io/IdSearch?id={userId || "0"}
+                theeagles.io/PersonalLink?id={userId || "0"}
               </span>
               <button
                 onClick={() =>
@@ -581,6 +579,8 @@ export const UserProfile: React.FC<UserProfileProps> = ({
     navigator.clipboard.writeText(text);
     alert("Successfully copied!");
   };
+  const UplinerId = useUplinerStore.getState().uplinerId;
+  const router = useRouter();
 
   return (
     <>
@@ -610,6 +610,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({
               <p className="text-yellow-400 font-semibold">
                 ID: {userId || "0"}
               </p>
+              <p  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)} className="text-white font-semibold">
+                Upliner Id: {UplinerId || "0"}
+              </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -637,7 +640,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
                 <Plus className="w-4 h-4" />
               )}
             </button>
-            <button
+            {/* <button
               onClick={() => setProfileExpanded(!profileExpanded)}
               className="text-gray-400 hover:text-yellow-400 transition-colors"
             >
@@ -646,7 +649,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
                   profileExpanded ? "" : "rotate-180"
                 }`}
               />
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -658,12 +661,12 @@ export const UserProfile: React.FC<UserProfileProps> = ({
               </p>
               <div className="flex items-center space-x-2 bg-gray-800/50 rounded-lg p-3">
                 <span className="text-yellow-400 font-mono text-sm flex-1">
-                  theeagles.io/IdSearch?id={userId || "0"}
+                  theeagles.io/PersonalLink?id={userId || "0"}
                 </span>
                 <button
                   onClick={() =>
                     handleCopyToClipboard(
-                      `theeagles.io/IdSearch?id=${userId || "0"}`
+                      `theeagles.io/PersonalLink?id=${userId || "0"}`
                     )
                   }
                   className="text-gray-400 hover:text-yellow-400 transition-colors"

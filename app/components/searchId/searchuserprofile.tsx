@@ -170,7 +170,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
             </h4>
             <div className="flex items-center space-x-2 bg-gray-800/50 rounded-lg p-3">
               <span className="text-yellow-400 font-mono text-sm flex-1 break-all">
-                theeagles.io/IdSearch?id={userId || "0"}
+                theeagles.io/PersonalLink?id={userId || "0"}
               </span>
               <button
                 onClick={() =>
@@ -294,7 +294,7 @@ export const UserProfilesear: React.FC<UserProfileProps> = ({
               </p>
               <div className="flex items-center space-x-2 bg-gray-800/50 rounded-lg p-3">
                 <span className="text-yellow-400 font-mono text-sm flex-1">
-                  theeagles.io/IdSearch?id={userId || "0"}
+                  theeagles.io/PersonalLink?id={userId || "0"}
                 </span>
                 <button
                   onClick={() =>

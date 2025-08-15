@@ -10,22 +10,22 @@ export const Hero: React.FC = () => {
   const { totalUsers} = useStatsStore();
 
   const mlmTipsAndQuotes = [
-    // "🚀 Success in MLM is about consistency, not luck.",
-    // "💡 Your network is your net worth.",
-    // "🔥 Talk to people every day — the fortune is in the follow-up.",
-    // "🧠 Learn daily, grow weekly, earn monthly.",
-    // "💬 Every 'no' brings you closer to a 'yes'.",
-    // "🎯 Don't aim for perfection, aim for progress.",
-    // "🏗️ Build relationships, not just downlines.",
-    // "📈 Your success depends on how many people you help succeed.",
-    // "🕒 You're not late. You're just getting started.",
-    // "💎 Consistency turns average people into legends.",
-    // "🧭 Leadership is not a title, it's influence.",
-    // "🛠️ Tools work when you work the tools.",
-    // "🌱 Grow your mindset and your income will follow.",
-    // "🗣️ Speak with belief, act with purpose.",
-    // "🌐 Your next superstar might be one message away.",
-    "You can put ID and you will get funds too But data is loading You will get everything right after some time Sorry for the inconvenience"
+    "🚀 Success in MLM is about consistency, not luck.",
+    "💡 Your network is your net worth.",
+    "🔥 Talk to people every day — the fortune is in the follow-up.",
+    "🧠 Learn daily, grow weekly, earn monthly.",
+    "💬 Every 'no' brings you closer to a 'yes'.",
+    "🎯 Don't aim for perfection, aim for progress.",
+    "🏗️ Build relationships, not just downlines.",
+    "📈 Your success depends on how many people you help succeed.",
+    "🕒 You're not late. You're just getting started.",
+    "💎 Consistency turns average people into legends.",
+    "🧭 Leadership is not a title, it's influence.",
+    "🛠️ Tools work when you work the tools.",
+    "🌱 Grow your mindset and your income will follow.",
+    "🗣️ Speak with belief, act with purpose.",
+    "🌐 Your next superstar might be one message away.",
+    // "You can put ID and you will get funds too But data is loading You will get everything right after some time Sorry for the inconvenience"
   ];
 
   useEffect(() => {
@@ -79,9 +79,9 @@ export const Hero: React.FC = () => {
             <span className="text-gray-300 font-medium text-xs sm:text-sm">
               {/* Desktop/Tablet Content */}
               <span className="hidden sm:inline">
-                🔗 Smart Contract Address:
+                🔗 Smart Contract Address X1/X2:
                 <span className="mx-2 font-mono text-yellow-300">
-                  0x742d35Cc6634C0532925a3b8D1C9d2c5fC2e7d8a
+                  0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe
                 </span>
                 •
                 <span className="mx-2 text-gray-300">
@@ -103,7 +103,47 @@ export const Hero: React.FC = () => {
                 </span>
                 •
                 <span className="mx-2 text-gray-300">
-                  💰 USDT Distributed: $7,332.50
+                  💰 USDT Distributed: $ 200,000+
+                </span>
+                •
+                <span className="mx-4 text-yellow-400">
+                  🔗 Smart Contract X3: 0x017d61DE5Cd3F2AFB90066F760C26C3136b95Cf2
+                </span>
+                •
+                <span className="mx-2 text-green-400">
+                  🚀 Join {totalUsers}+ Members
+                </span>
+                •
+                <span className="mx-2 text-yellow-300">
+                  💎 Secure & Transparent
+                </span>
+              </span>
+               <span className="hidden sm:inline">
+                🔗 Smart Contract Address X3:
+                <span className="mx-2 font-mono text-yellow-300">
+                  0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe
+                </span>
+                •
+                <span className="mx-2 text-gray-300">
+                  Network: BSC (Binance Smart Chain)
+                </span>
+                •
+                <span className="mx-2 text-gray-300">
+                  Status: Active & Verified
+                </span>
+                •
+                <span className="mx-2 text-yellow-300">
+                  ✅ Audited Contract
+                </span>
+                •
+                <span className="mx-2 text-gray-300">⚡ Real-time Updates</span>
+                •
+                <span className="mx-2 text-gray-300">
+                  👥 Total Members: {totalUsers}
+                </span>
+                •
+                <span className="mx-2 text-gray-300">
+                  💰 USDT Distributed: $200,000 +
                 </span>
                 •
                 <span className="mx-4 text-yellow-400">
@@ -125,7 +165,7 @@ export const Hero: React.FC = () => {
                 <span className="mx-1 font-mono text-yellow-300 text-xs">
                   0x742d...7d8a
                 </span>
-                • BSC Network • ✅ Verified • 👥 {totalUsers} Members • 💰 $7,332.50
+                • BSC Network • ✅ Verified • 👥 {totalUsers} Members • 💰 $200,000 +
                 Distributed •
                 <span className="mx-1 text-yellow-400">🚀 Join Now!</span>• 🔗
                 Contract: 0x742d...7d8a • ✅ Audited • 💎 Secure
@@ -283,7 +323,7 @@ export const Hero: React.FC = () => {
             </div>
             <div className="bg-gradient-to-r from-gray-900/60 to-black/60 backdrop-blur-lg border border-yellow-500/20 rounded-xl p-4 sm:p-6 text-center hover:border-yellow-500/40 transition-all duration-300">
               <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-2">
-                $7,332
+                $200,000 +
               </div>
               <div className="text-gray-400 text-sm sm:text-base">
                 USDT Distributed
