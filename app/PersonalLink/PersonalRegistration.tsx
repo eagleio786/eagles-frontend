@@ -205,7 +205,7 @@ else{
             </label>
             <input
               type="text"
-              value={uplineId}
+              value={uplineId || undefined}
               onChange={(e) => setUplineId(e.target.value)}
               className="w-full px-4 py-3 bg-gray-800/50 border border-yellow-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400 transition-all duration-300 hover:border-yellow-400/50"
               placeholder="Enter upline ID"
