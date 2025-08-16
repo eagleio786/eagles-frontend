@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+
 import {
   useProfileStore,
   useUplinerStore,
@@ -231,7 +232,13 @@ export const UserProfilesear: React.FC<UserProfileProps> = ({
   onEditProfile,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const userId = useUserId((state) => state.userIDper);
+  // const userId = useUserId((state) => state.userIDper);
+  const UplinerId = useUplinerStore((state) => state.uplinerId);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const userId = id;
 
   const handleNameClick = () => {
     setIsModalOpen(true);
@@ -269,6 +276,9 @@ export const UserProfilesear: React.FC<UserProfileProps> = ({
               </h2>
               <p className="text-yellow-400 font-semibold">
                 ID: {userId || "0"}
+              </p>
+                 <p  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)} className="text-white font-semibold">
+                Upliner Id: {UplinerId || "0"}
               </p>
             </div>
           </div>

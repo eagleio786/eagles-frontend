@@ -82,12 +82,14 @@ const profilefun = async () => {
     );
     const profileData = response.data?.data;
     setapiresp(response as any);
-    console.log(response,"reposns wwwwwwwwwwwwwwwwwwwwwwwww")
+    console.log(response.data,"reposns wwwwwwwwwwwwwwwwwwwwwwwww")
     if (profileData) {
       useProfileStore.getState().setProfile(profileData);
       console.log("✅ Profile updated:", profileData);
     } else {
       console.warn("⚠️ No profile data found in response.");
+          useProfileStore.getState().setProfile(defaultProfile);
+
     }
   } catch (error) {
     console.error("❌ Error while getting profile:", error);
@@ -153,6 +155,10 @@ const UplinerId = async () => {
     let X3tea = await X3get24HourTeamCount(currentAddress);
     let partner24hr = Number(par) + Number(par24);
     let team24hr = Number(tea) + Number(X3tea);
+    sethr24Totalpartners(partner24hr);
+    sethr24TotalTeam(team24hr);
+    setUplinerId(Number(val2[1]).toString());
+    
     if (currentAddress === "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B") {
       let team = (await lastUserid()) as bigint;
       let prof = profit / 1e18;
@@ -170,14 +176,11 @@ const UplinerId = async () => {
       setTotalProfit(prof);
       setTotalpartners(partner);
     }
-    sethr24TotalTeam(team24hr);
-    sethr24Totalpartners(partner24hr);
-
     // setTotalProfit(profit);
     console.log("upliner id is ", val2);
-    setUplinerId(Number(val2[1]).toString());
   } catch (error) {
     console.log("error while getting users data", error);
+
   }
 };
 const setLevels = useX1LevelStore.getState().setLevels; // ✅ FIXED

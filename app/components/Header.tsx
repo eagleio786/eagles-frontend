@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
       pathname !== "/" &&
       !pathname.startsWith("/IdSearch") &&
       prevPathRef.current !== "/IdSearch" &&
-       !pathname.startsWith("/PersonalLink")
+      !pathname.startsWith("/PersonalLink")
     ) {
       router.push("/login");
     }

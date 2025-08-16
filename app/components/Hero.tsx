@@ -3,11 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SearchModal } from "./SearchModal";
 import { useStatsStore } from "@/store/userCounterStore";
+import { useDisconnect } from "wagmi";
+
 export const Hero: React.FC = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
-  const { totalUsers} = useStatsStore();
+  const { totalUsers } = useStatsStore();
+  const { disconnect } = useDisconnect();
 
   const mlmTipsAndQuotes = [
     "🚀 Success in MLM is about consistency, not luck.",
@@ -107,7 +110,8 @@ export const Hero: React.FC = () => {
                 </span>
                 •
                 <span className="mx-4 text-yellow-400">
-                  🔗 Smart Contract X3: 0x017d61DE5Cd3F2AFB90066F760C26C3136b95Cf2
+                  🔗 Smart Contract X3:
+                  0x017d61DE5Cd3F2AFB90066F760C26C3136b95Cf2
                 </span>
                 •
                 <span className="mx-2 text-green-400">
@@ -118,7 +122,7 @@ export const Hero: React.FC = () => {
                   💎 Secure & Transparent
                 </span>
               </span>
-               <span className="hidden sm:inline">
+              <span className="hidden sm:inline">
                 🔗 Smart Contract Address X3:
                 <span className="mx-2 font-mono text-yellow-300">
                   0xa0F4B186B5363e91A2ef9e58bF930b845Ad00BDe
@@ -165,8 +169,8 @@ export const Hero: React.FC = () => {
                 <span className="mx-1 font-mono text-yellow-300 text-xs">
                   0x742d...7d8a
                 </span>
-                • BSC Network • ✅ Verified • 👥 {totalUsers} Members • 💰 $200,000 +
-                Distributed •
+                • BSC Network • ✅ Verified • 👥 {totalUsers} Members • 💰
+                $200,000 + Distributed •
                 <span className="mx-1 text-yellow-400">🚀 Join Now!</span>• 🔗
                 Contract: 0x742d...7d8a • ✅ Audited • 💎 Secure
               </span>
@@ -300,7 +304,10 @@ export const Hero: React.FC = () => {
               Register
             </button>
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                disconnect();
+                setIsModalOpen(true);
+              }}
               className="group bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700 text-black px-6 sm:px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-600/25 animate-bounce-subtle animation-delay-300 w-full sm:w-40 max-w-xs"
             >
               Search ID
