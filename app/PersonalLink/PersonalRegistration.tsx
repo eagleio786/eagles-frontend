@@ -28,14 +28,6 @@ handleSearch()
 const handleSearch = async () => {
     console.log("id handle search is working");
 
-    // if (!searchId.trim()) {
-    //   setSearchError("Please enter a valid ID");
-    //   return;
-    // }
-    // setIsLoading(true);
-    // setSearchError("");
-    // setSearchResult(null);
-
     try {
       console.log("id in try block");
 
@@ -53,7 +45,7 @@ else{
 }
      
     } catch (error) {
-      console.log("error while getting address for id");
+      console.log("error while getting address for id",error);
       setIsLoading(false);
     }
   };

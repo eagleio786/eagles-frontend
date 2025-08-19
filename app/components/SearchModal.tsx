@@ -55,7 +55,7 @@ export const SearchModal: React.FC<{
         onClose(); // close modal after navigating
       }
     } catch (error) {
-      console.log("error while getting address for id");
+      console.log("error while getting address for id",error);
       setIsLoading(false);
     }
   };

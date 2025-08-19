@@ -67,7 +67,7 @@ const Idsearch: React.FC = () => {
         setAddress(resp as string);
       }
     } catch (error) {
-      console.log("error while getting address for id");
+      console.log("error while getting address for id",error);
       setIsLoading(false);
     }
   };
