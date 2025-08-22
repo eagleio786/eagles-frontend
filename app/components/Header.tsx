@@ -16,6 +16,10 @@ import { lastUserid } from "@/config/Method";
 import { useTransactionStore } from "@/store/transactionstore";
 import { useDistributionStore } from "@/store/distribution-store";
 import { useSocket } from "./hooks/useSocket";
+import axios from "axios";
+import { ApiUrl } from "@/config/exports";
+import Image from "next/image";
+import img from "../../public/image.png"
 export const Header: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -80,11 +84,10 @@ export const Header: React.FC = () => {
   const DashboardStats = async () => {
     try {
       const SetUserId = useStatsStore.getState().setTotalUsers;
-
+      const amtazStats = await axios.get(`${ApiUrl}/api/first-entry`);
       let totalMembers = (await lastUserid()) as bigint;
       console.log("total mem", totalMembers);
-      let total = Number(totalMembers) + 25445;
-      SetUserId(Number(total));
+      SetUserId(Number(totalMembers) + amtazStats.data.TeamMembers);
     } catch (error) {
       console.log("error while getting stats", error);
     }
@@ -118,20 +121,25 @@ export const Header: React.FC = () => {
   console.log("taste", entries);
 
   return (
-    <header className="relative z-50 bg-gradient-to-r from-black/80 to-gray-900/80 backdrop-blur-lg border-b border-yellow-500/20">
+<header className="relative z-50 bg-gradient-to-r from-black/80 to-gray-900/80 backdrop-blur-lg border-b border-yellow-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div
             onClick={() => router.push("/")}
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-2 cursor-pointer group"
           >
-            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
+            <div className="w-14 h-14 sm:w-12 sm:h-12 m-0 bg-black rounded-lg flex items-center justify-center transition-all duration-300 ease-in-out group-hover:scale-110">
+              <Image 
+                src={img} 
+                alt="logo image" 
+                className="w-10 h-10 sm:w-8 sm:h-8 text-black transition-all duration-300" 
+              />
             </div>
             <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
               THE EAGLES.IO
             </h1>
           </div>
+
           <YourApp />
         </div>
       </div>

@@ -206,13 +206,13 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
             title = "New Registration";
             message = `ID ${fromAddress} registered in Matrix ${matrixDisplay} - Amount: ${formatAmount(
               entry.amount
-            )} USD`;
+            )} USDT`;
             type = "success";
           } else {
             title = "Level Upgrade";
             message = `You received ${formatAmount(
               entry.amount
-            )} USD from ID ${fromAddress} by level upgrade (Level ${
+            )} USDT from ID ${fromAddress} by level upgrade (Level ${
               entry.level
             }, Matrix ${matrixDisplay})`;
             type = "success";
@@ -581,6 +581,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   };
   const UplinerId = useUplinerStore.getState().uplinerId;
   const router = useRouter();
+  const currentAddress = useAdressStore.getState().address;
 
   return (
     <>
@@ -610,9 +611,18 @@ export const UserProfile: React.FC<UserProfileProps> = ({
               <p className="text-yellow-400 font-semibold">
                 ID: {userId || "0"}
               </p>
-              <p  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)} className="text-white font-semibold">
-                Upliner Id: {UplinerId || "0"}
-              </p>
+
+              {currentAddress ===
+              "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B" ? (
+                <></>
+              ) : (
+                <p
+                  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)}
+                  className="text-white font-semibold"
+                >
+                  Refferal BY: {UplinerId || "0"}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex items-center space-x-2">

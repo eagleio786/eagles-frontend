@@ -1473,7 +1473,7 @@ export const USDTTestNetABI = [
     type: "function",
   },
 ];
-// export const ApiUrl = "http://localhost:5001";
+// export const ApiUrl = "http://localhost:5000";
 export const ApiUrl = "https://reffaralmoney.com";
 export const usdtdecimals = 1e18;
 export const mainnetDecimals = 1e18;
