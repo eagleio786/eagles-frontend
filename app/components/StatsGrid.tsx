@@ -1,5 +1,5 @@
 "use client";
-import { DollarSign, TrendingUp, Users,MoveUp } from "lucide-react";
+import { DollarSign, TrendingUp, Users,MoveUp,User } from "lucide-react";
 import { dashboardStatsStore } from "@/store/userCounterStore";
 import { mainnetDecimals, usdtdecimals } from "@/config/exports";
 
@@ -21,7 +21,7 @@ export const StatsGrid: React.FC = () => {
       >
         {icon}
       </div>
-      <h3 className="text-gray-300 text-xs lg:text-sm mb-1 lg:mb-2">{title}</h3>
+      <h3 className="text-white text-xl lg:text-sm mb-1 lg:mb-2">{title}</h3>
       <p className="text-lg lg:text-2xl font-bold text-white">{value}</p>
     </div>
   );
@@ -39,7 +39,7 @@ export const StatsGrid: React.FC = () => {
       >
         {icon}
       </div>
-      <h3 className="text-gray-300 text-xs lg:text-sm mb-1 lg:mb-2">{title}</h3>
+      <h3 className="text-white text-xl lg:text-sm mb-1 lg:mb-2">{title}</h3>
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1 lg:gap-2">
         <p className="text-lg lg:text-2xl font-bold text-white">
           {primaryValue}
@@ -69,14 +69,14 @@ export const StatsGrid: React.FC = () => {
         gradient=" from-teal-400 to-cyan-500"
       />
       <DualStatCard
-        title="Partners"
+        title="Directs"
         primaryValue={partners.toString()}
         secondaryValue={hr24partners.toString()} // Replace with your actual secondary value or variable
-        icon={<Users className="w-4 h-4 lg:w-6 lg:h-6 text-black" />}
+        icon={<User className="w-4 h-4 lg:w-6 lg:h-6 text-black" />}
         gradient="from-emerald-400 to-green-500"
       />
       <DualStatCard
-        title="Team Members"
+        title="Teams"
         primaryValue={team.toString()}
         secondaryValue={hr24team.toString()} // Replace with your actual secondary value or variable
         icon={<Users className="w-4 h-4 lg:w-6 lg:h-6 text-black" />}

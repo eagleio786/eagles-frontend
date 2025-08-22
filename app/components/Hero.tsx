@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { SearchModal } from "./SearchModal";
 import { useStatsStore } from "@/store/userCounterStore";
 import { useDisconnect } from "wagmi";
+import WelcomeModal from "./WelcomeModal";
 
 export const Hero: React.FC = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
@@ -11,6 +12,7 @@ export const Hero: React.FC = () => {
   const router = useRouter();
   const { totalUsers } = useStatsStore();
   const { disconnect } = useDisconnect();
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false); // Add welcome modal state
 
   const mlmTipsAndQuotes = [
     "🚀 Success in MLM is about consistency, not luck.",
@@ -40,7 +42,9 @@ export const Hero: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [mlmTipsAndQuotes.length]);
-
+  const showWelcomeModal = () => {
+    setIsWelcomeModalOpen(true);
+  };
   return (
     <>
       {/* Contract Address Ticker - Moved from Header */}
@@ -298,7 +302,8 @@ export const Hero: React.FC = () => {
               Login
             </button>
             <button
-              onClick={() => router.push("../register")}
+                            onClick={showWelcomeModal}
+
               className="group bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-black px-6 sm:px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 animate-bounce-subtle animation-delay-200 w-full sm:w-40 max-w-xs"
             >
               Register
@@ -317,6 +322,10 @@ export const Hero: React.FC = () => {
           <SearchModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
+          />
+           <WelcomeModal
+            isOpen={isWelcomeModalOpen}
+            onClose={() => setIsWelcomeModalOpen(false)}
           />
           {/* Success Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto px-4">

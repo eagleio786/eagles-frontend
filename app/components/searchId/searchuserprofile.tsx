@@ -15,6 +15,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 
 import {
+  useAdressStore,
   useProfileStore,
   useUplinerStore,
   useUserId,
@@ -249,6 +250,8 @@ export const UserProfilesear: React.FC<UserProfileProps> = ({
     navigator.clipboard.writeText(text);
     alert("sucessfully cpoied!");
   };
+  const currentAddress = useAdressStore.getState().address;
+
   return (
     <>
       <div className="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-lg border border-yellow-500/20 rounded-2xl p-6 mb-8">
@@ -277,9 +280,17 @@ export const UserProfilesear: React.FC<UserProfileProps> = ({
               <p className="text-yellow-400 font-semibold">
                 ID: {userId || "0"}
               </p>
-                 <p  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)} className="text-white font-semibold">
-                Upliner Id: {UplinerId || "0"}
-              </p>
+              {currentAddress ===
+              "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B" ? (
+                <></>
+              ) : (
+                <p
+                  onClick={() => router.push(`/IdSearch?id=${UplinerId}`)}
+                  className="text-white font-semibold"
+                >
+                  Refferal BY: {UplinerId || "0"}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex items-center space-x-2">

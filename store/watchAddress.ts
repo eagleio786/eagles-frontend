@@ -82,14 +82,13 @@ const profilefun = async () => {
     );
     const profileData = response.data?.data;
     setapiresp(response as any);
-    console.log(response.data,"reposns wwwwwwwwwwwwwwwwwwwwwwwww")
+    console.log(response.data, "reposns wwwwwwwwwwwwwwwwwwwwwwwww");
     if (profileData) {
       useProfileStore.getState().setProfile(profileData);
       console.log("✅ Profile updated:", profileData);
     } else {
       console.warn("⚠️ No profile data found in response.");
-          useProfileStore.getState().setProfile(defaultProfile);
-
+      useProfileStore.getState().setProfile(defaultProfile);
     }
   } catch (error) {
     console.error("❌ Error while getting profile:", error);
@@ -144,6 +143,11 @@ const UplinerId = async () => {
       BigInt,
       BigInt
     ];
+    const AlluserStats = await axios.get(
+      `${ApiUrl}/partnersTeam/${currentAddress}`
+    );
+    console.log("partners and team for all users", AlluserStats);
+
     let Kashif = (await getPartners(currentAddress)) as number;
     setX3(Number(X3val[2]));
     let profit = Number(val[4]) + Number(X3val[3]);
@@ -155,32 +159,34 @@ const UplinerId = async () => {
     let X3tea = await X3get24HourTeamCount(currentAddress);
     let partner24hr = Number(par) + Number(par24);
     let team24hr = Number(tea) + Number(X3tea);
-    sethr24Totalpartners(partner24hr);
-    sethr24TotalTeam(team24hr);
+
     setUplinerId(Number(val2[1]).toString());
-    
+
     if (currentAddress === "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B") {
+      const amtazStats = await axios.get(`${ApiUrl}/api/first-entry`);
+      console.log("amtaz stats", amtazStats.data);
+
       let team = (await lastUserid()) as bigint;
       let prof = profit / 1e18;
-      let prof2 = prof + 25418;
-
+      let prof2 = prof + amtazStats.data.TotalProfit;
+      sethr24Totalpartners(amtazStats.data.Hr24partners);
+      sethr24TotalTeam(amtazStats.data.hr24TeamMembers);
       setTotalProfit(prof2);
-      setTotalTeam(Number(team) + 25445);
-      setTotalpartners(partner + 1289);
+      setTotalTeam(Number(team) + amtazStats.data.TeamMembers);
+      setTotalpartners(partner + amtazStats.data.partners);
       console.log("bakwas in if condition", team, profit, prof2);
     } else {
-      let team = Number(Kashif) + Number(fun18);
-      console.log("bakwas in else condition", team);
-      setTotalTeam(team);
+      setTotalTeam(AlluserStats.data.totalTeam);
       let prof = profit / 1e18;
       setTotalProfit(prof);
-      setTotalpartners(partner);
+      setTotalpartners(AlluserStats.data.partners);
+      sethr24Totalpartners(partner24hr);
+      sethr24TotalTeam(team24hr);
     }
     // setTotalProfit(profit);
     console.log("upliner id is ", val2);
   } catch (error) {
     console.log("error while getting users data", error);
-
   }
 };
 const setLevels = useX1LevelStore.getState().setLevels; // ✅ FIXED
@@ -277,10 +283,26 @@ const getDashStats = async () => {
   try {
     let val = await get24HourPayment(currentAddress);
     let valX3 = await X3get24HourPayment(currentAddress);
-    let final = Number(val) + Number(valX3);
-    console.log("zzz", final / usdtdecimals);
 
-    sethr24ProfitProfit(final / usdtdecimals);
+    if (currentAddress === "0x31eaCE9383eE97A5cF2FD6A1B254F27683DedE1B") {
+      const amtazStats = await axios.get(`${ApiUrl}/api/first-entry`);
+      console.log("val comming ", Number(val) - 174 * usdtdecimals, "second",
+        Number(valX3),"third val",
+        amtazStats.data.DailyProfit * usdtdecimals)
+
+      let final =
+        Number(val) -
+        174 * usdtdecimals +
+        Number(valX3) +
+        amtazStats.data.DailyProfit * usdtdecimals;
+
+      sethr24ProfitProfit(final / usdtdecimals);
+    } else {
+      let final = Number(val) + Number(valX3);
+      console.log("zzz", final / usdtdecimals);
+
+      sethr24ProfitProfit(final / usdtdecimals);
+    }
   } catch (error) {
     console.log("error while getting stats", error);
   }

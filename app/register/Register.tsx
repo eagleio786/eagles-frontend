@@ -6,6 +6,7 @@ import { getIdToAddress, USDTapprove, getTxn, register } from "@/config/Method";
 import { usdtdecimals } from "@/config/exports";
 import { toast, ToastContainer } from "react-toastify";
 import { dashboardStatsStore } from "@/store/userCounterStore";
+import RegistrationSuccessModal from "../components/registrationSucessModal";
 
 const RegistrationPage: React.FC = () => {
   const [uplineId, setUplineId] = useState("1");
@@ -14,6 +15,7 @@ const RegistrationPage: React.FC = () => {
   const [hasRequiredBalance, setHasRequiredBalance] = useState(false);
   const [isUSDTApproved, setIsUSDTApproved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // Add success modal state
   const { address } = useAccount();
   const router = useRouter();
   const effect = dashboardStatsStore.getState().effect;
@@ -96,8 +98,14 @@ const RegistrationPage: React.FC = () => {
           setIsLoading(false);
           return;
         }
-        router.push("/dashboard");
+        
+        // ✅ Show success modal instead of direct redirect
         setIsLoading(false);
+        setShowSuccessModal(true);
+        
+        // Remove the direct router.push since the modal will handle it
+        // router.push("/dashboard");
+        
       } catch (err) {
         console.error("❌ Error during registration:", err);
         toast("An error occurred during registration. Please try again.");
@@ -235,6 +243,15 @@ const RegistrationPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <RegistrationSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        userName="Eagle" // You can pass actual user name if available
+        userId={uplineId} // You can pass actual user ID if available
+      />
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
